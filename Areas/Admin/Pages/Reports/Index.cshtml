@@ -1,124 +1,106 @@
 ﻿@page
-@model Astaberry.Areas.Admin.Pages.Reports.IndexModel
+@model CrystalByRiya.Areas.Admin.Pages.Reports.IndexModel
 
-@{
-    ViewData["Title"] = "Index";
-    double? Subamount = 0;
-    double? TotalAmount = 0;
-    double? DiscountAmount = 0;
-}
-<style id="table_style" type="text/css">
-    body {
-        font-family: Arial;
-        font-size: 10pt;
-    }
+<div class="container-fluid mt-3">
+    <div class="row">
+        <!-- Total Orders -->
+        <div class="col-lg-4 col-sm-6">
+            <div class="card gradient-1">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Total Orders</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">@Model.TotalOrders</h2>
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
+                </div>
+            </div>
+        </div>
 
-    table {
-        border: 1px solid #ccc;
-        border-collapse: collapse;
-    }
+        <!-- Total Sales -->
+        <div class="col-lg-4 col-sm-6">
+            <div class="card gradient-2">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Total Sales</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">@Model.TotalSales</h2>
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
+                </div>
+            </div>
+        </div>
 
-        table th {
-            background-color: #F7F7F7;
-            color: #333;
-            font-weight: bold;
-        }
+        <!-- Total Registered Users -->
+        <div class="col-lg-4 col-sm-6">
+            <div class="card gradient-3">
+                <div class="card-body">
+                    <h3 class="card-title text-white">Total Registered Users</h3>
+                    <div class="d-inline-block">
+                        <h2 class="text-white">@Model.TotalRegisteredUsers</h2>
+                    </div>
+                    <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        table th, table td {
-            padding: 5px;
-            border: 1px solid #ccc;
-        }
-</style>
-<form asp-page-handler="Search">
-    <table class="table"><tr><td>Order Status</td><td><select class="form-control" name="Status"><option>Select</option><option>Pending</option><option>Completed</option><option>Cancelled</option></select></td><td><input type="submit" value="Submit" class="btn btn-primary" /></td><td><input type="button" class="btn btn-primary" value="Print" id="exportBtn1"/></td></tr></table>
-</form>
-<div>
-    <table class="table text-center table-bordered verticle-middle" id="Printtbl">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.TblOrderId[0].Orderid)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TblOrderId[0].Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TblOrderId[0].CouponCodeapplied)
-                </th>
-                <th>
-                    Contact No.
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TblOrderId[0].Status)
-                </th>
-                <th>
-                    Amount
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.TblOrderId)
-            {
-                Subamount += Convert.ToDouble(item.TotalAmount);
-                DiscountAmount += Convert.ToDouble(item.CouponCodeapplied);
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Orderid)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CouponCodeapplied)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Emailid)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalAmount)
-                    </td>
-                </tr>
-            }
-            <tr>
-                <td colspan="5" style="text-align:right;">
-                    Sub Total:
-                </td>
-                <td colspan="1">₹ @Subamount</td>
-            </tr>
-            <tr>
-
-                <td colspan="5" style="text-align:right;">
-                    Discount:
-                </td>
-                <td colspan="1">₹ @DiscountAmount</td>
-            </tr>
-            <tr>
-                <td colspan="5" style="text-align:right;">
-                    Total Amount:
-                </td>
-                @{
-                    TotalAmount = Subamount - DiscountAmount;
-                }
-                <td colspan="1">₹ @TotalAmount</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Sales Chart -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body pb-0 d-flex justify-content-between">
+                    <div>
+                        <h4 class="mb-1">Sales Overview</h4>
+                        <p>Total Earnings of the Month</p>
+                        <h3 class="m-0">Rs @Model.TotalSales</h3>
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="d-inline-block mr-3"><a class="text-dark" href="#">Day</a></li>
+                            <li class="d-inline-block mr-3"><a class="text-dark" href="#">Week</a></li>
+                            <li class="d-inline-block"><a class="text-dark" href="#">Month</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div id="chartdiv" style="border: 1px solid #ccc"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#exportBtn1").click(function () {
-            TableToExcel.convert(document.getElementById("Printtbl"), {
-                name: "SalesReport.xlsx",
-                sheet: {
-                    name: "Sheet1"
-                }
+@section Scripts {
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawSalesChart);
+
+        function drawSalesChart() {
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/Order',
+                    success: function (chartsdata) {
+                        var Data = chartsdata;
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Product Name');
+                        data.addColumn('number', 'Total Sales');
+
+                        // Populate data into chart
+                        for (var i = 0; i < Data.length; i++) {
+                            data.addRow([Data[i].productName, Data[i].totalSales]);
+                        }
+
+                        var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+                        chart.draw(data, { title: "Total Sales", width: 900, height: 500 });
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                });
             });
-        });
-    });
-</script>
+        }
+    </script>
+}

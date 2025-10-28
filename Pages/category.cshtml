@@ -1,0 +1,124 @@
+﻿  @page "{Url}"
+@model CrystalByRiya.Pages.categoryModel
+@{
+
+}
+@section Metatags {
+    <title> Crystals By Riya | @Model.Category.MenuList</title>
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Crystals By Riya | @Model.Category.MenuList" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+    <meta property="og:description" content="@Model.Category.Description" />
+
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:title" content="Crystals By Riya | @Model.Category.MenuList">
+    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+}
+
+<main class="main-content">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title-content content-style-2">
+                        @if (Model.Category != null)
+                        {
+                            <div class="bread-crumbs"><a asp-page="/">Home<span class="breadcrumb-sep">&gt;</span></a><a asp-page="/category/@Model.Category.Url">@Model.Category.MenuList</a></div>
+                        }
+                        else
+                        {
+                            <h2>no breadcrumb</h2>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center mb-2">
+                        @if (Model.Category != null)
+                        {
+                            <h2 class="title">@Model.Category.MenuList</h2>
+                        }
+                        else
+                        {
+                            <h2 class="title">No Title</h2>
+                        }
+                    </div>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="product-category-desc text-center">
+                        @if (Model.Category != null)
+                        {
+                            <p>@Model.Category.Description</p>
+                        }
+                        else
+                        {
+                            <p>Category description is not available.</p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Title Area ==-->
+    <!--== Start Category Area Wrapper ==-->
+    <section class="category-productx-area pt-3 pt-md-5 area-padding">
+        <div class="container">
+            <div class="row gy-2">
+                @if (Model.SubCatList != null && Model.SubCatList.Any())
+                {
+                    @foreach (var item in Model.SubCatList)
+                    {
+                        <div class="col-6 col-md-3">
+                            <div class="category-item">
+                                <div class="category-thumb">
+                                    <a asp-page="/productlist" asp-route-subcatname="@item.SubCategoryname.Replace(' ', '-')">
+                                        <img src="@item.Categoryimage" alt="Shop" class="lazyload">
+                                        <span class="bg-thumb" data-bg-img=" @Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @item.ThumbnailImage)"></span>
+                                        <span class="thumb-overlay"></span>
+                                    </a>
+                                </div>
+                                <div class="category-footer position-relative">
+                                    <div class="category-info d-block">
+                                        <div class="content-inner text-center">
+                                            <h4 class="title"><a asp-page="/productlist" asp-route-subcatname="@item.SubCategoryname.Replace(' ', '-')">@item.SubCategoryname.ToUpperInvariant()</a></h4>
+                                            <div class="numbers">
+                                                <!-- Ensure the SubCategoryName exists in the dictionary before accessing it -->
+                                                @if (Model.SubcategoryProductCounts.ContainsKey(item.SubCategoryname))
+                                                {
+                                                    <span class="number">(@Model.SubcategoryProductCounts[item.SubCategoryname] Products)</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="number">(0 Products)</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category-action-button-parent">
+                                        <a asp-page="/productlist" asp-route-catname="@Model.Catname" asp-route-subcatname="@item.SubCategoryname.Replace(' ', '-')" class="btn category-action-button">View Products</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No subcategories available.</p>
+                }
+            </div>
+        </div>
+    </section>
+    <!--== End Category Area Wrapper ==-->
+</main>

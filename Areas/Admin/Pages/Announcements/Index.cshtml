@@ -1,0 +1,35 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Announcements.IndexModel
+@{
+    ViewData["Title"] = "Announcements";
+}
+
+<h2>Announcements</h2>
+
+<p>
+    <a asp-page="Create" class="btn btn-danger">Create New Announcement</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Announcement Text</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var announcement in Model.Announcements)
+        {
+            <tr>
+                <td>@announcement.Id</td>
+                <td>@announcement.AnnouncementText</td>
+                <td>
+                    <a asp-page="Edit" asp-route-id="@announcement.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-page="Details" asp-route-id="@announcement.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-page="Delete" asp-route-id="@announcement.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

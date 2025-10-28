@@ -1,0 +1,120 @@
+﻿@page
+@model CrystalByRiya.Pages.blogModel
+@{
+}
+@section Metatags {
+    <title> Crystal By Riya | Blogs</title>
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Crystals By Riya | Blogs" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:title" content="Crystal By Riya | Blogs">
+    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
+    <meta name="twitter:creator" content="Crystals By Riya">
+    <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+}
+
+<main class="main-content">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title-content content-style-2">
+                        <div class="bread-crumbs"><a asp-page="/">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Blogs</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center">
+                        <h2 class="title">Blogs</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Title Area ==-->
+    <!--== Start Product Area Wrapper ==-->
+    <section class="blog-list-area pt-3 pt-md-4 area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-12">
+
+                    <div class="blog-list-item-parent">
+                        <div class="row">
+                            @foreach (var item in Model.Blogs)
+                            {
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="blog-item-parent">
+                                        <div class="blog-item-thumb position-relative mb-1">
+                                            <div class="img-parent" data-date="@item.PublishedDate.ToShortDateString()">
+                                                <img src="@item.ThumbnailImage" alt="">
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="blog-item-content">
+                                            <div class="meta">
+                                                <a href="#">@item.Category</a>                                               
+                                            </div>
+                                            <div class="inner-content">
+                                                <h5 class="title">
+                                                    <a asp-route-blogid="@item.Blogid" asp-route-url="@item.CustomUrl" asp-page="/blogdetail">@item.BlogTitle</a>
+                                                </h5>
+                                                  <p>@item.ShortDescription</p>
+                                            </div>
+                                            <a asp-route-blogid="@item.Blogid" asp-route-url="@item.CustomUrl" asp-page="/blogdetail" class="btn btn-read-more mt-2">Read more</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
+
+                    <div class="pagination-area mt-5">
+                        <nav>
+                            <ul class="page-numbers">
+                                @if (Model.CurrentPage > 1)
+                                {
+                                    <li>
+                                        <a class="page-number prev" asp-route-page="@(Model.CurrentPage - 1)">
+                                            <i class="icofont-long-arrow-left"></i>
+                                        </a>
+                                    </li>
+                                }
+
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    <li>
+                                        <a class="page-number @(i == Model.CurrentPage ? "active" : "")" asp-route-page="@i">@i</a>
+                                    </li>
+                                }
+
+                                @if (Model.CurrentPage < Model.TotalPages)
+                                {
+                                    <li>
+                                        <a class="page-number next" asp-route-page="@(Model.CurrentPage + 1)">
+                                            <i class="icofont-long-arrow-right"></i>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!--== End Product Area Wrapper ==-->
+</main>

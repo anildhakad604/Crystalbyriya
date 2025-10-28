@@ -5,45 +5,38 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Astaberry.Models;
-using Microsoft.AspNetCore.Http;
+using CrystalByRiya.Models;
 
-namespace Astaberry.Areas.Admin.Pages.Blog
+namespace CrystalByRiya.Areas.Admin.Pages.Blog
 {
     public class DetailsModel : PageModel
     {
-        private readonly Astaberry.Models.ApplicationDbContext _context;
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
 
-        public DetailsModel(Astaberry.Models.ApplicationDbContext context)
+        public DetailsModel(CrystalByRiya.Models.ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public TblBlog TblBlog { get; set; }
+        public Blogs Blogs { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            string logedin = HttpContext.Session.GetString("Login");
-            if (string.IsNullOrEmpty(logedin))
+            if (id == null)
             {
-                return RedirectToPage("../Login");
+                return NotFound();
+            }
 
+            var blogs = await _context.TblBlogs.FirstOrDefaultAsync(m => m.Blogid == id);
+            if (blogs == null)
+            {
+                return NotFound();
             }
             else
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                TblBlog = await _context.TblBlogs.FirstOrDefaultAsync(m => m.Blogid == id);
-
-                if (TblBlog == null)
-                {
-                    return NotFound();
-                }
-                return Page();
+                Blogs = blogs;
             }
+            return Page();
         }
     }
 }

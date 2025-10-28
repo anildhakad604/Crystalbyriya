@@ -1,0 +1,72 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Coupon.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CouponCodes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CouponCodes.Id" />
+            <div class="form-group">
+                
+                <label asp-for="CouponCodes.CouponCode" class="control-label"></label>
+                <input asp-for="CouponCodes.CouponCode" class="form-control" />
+                <span asp-validation-for="CouponCodes.CouponCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CouponCodes.CouponName" class="control-label"></label>
+                <input asp-for="CouponCodes.CouponName" class="form-control" />
+                <span asp-validation-for="CouponCodes.CouponName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CouponCodes.Description" class="control-label"></label>
+                <input asp-for="CouponCodes.Description" class="form-control" />
+                <span asp-validation-for="CouponCodes.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CouponCodes.ApplicableFrom" class="control-label"></label>
+                <input asp-for="CouponCodes.ApplicableFrom" class="form-control" />
+                <span asp-validation-for="CouponCodes.ApplicableFrom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CouponCodes.ApplicableTo" class="control-label"></label>
+                <input asp-for="CouponCodes.ApplicableTo" class="form-control" />
+                <span asp-validation-for="CouponCodes.ApplicableTo" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CouponCodes.IsActive" /> @Html.DisplayNameFor(model => model.CouponCodes.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CouponCodes.DiscountPercentage" class="control-label"></label>
+                <input asp-for="CouponCodes.DiscountPercentage" class="form-control" />
+                <span asp-validation-for="CouponCodes.DiscountPercentage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

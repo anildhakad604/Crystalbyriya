@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using CrystalByRiya.Models;
+
+namespace CrystalByRiya.Areas.Admin.Pages.Instagrams
+{
+    public class IndexModel : PageModel
+    {
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
+
+        public IndexModel(CrystalByRiya.Models.ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public IList<Instagram> Instagram { get;set; } = default!;
+
+        public async Task OnGetAsync()
+        {
+            Instagram = await _context.TblInstagram.ToListAsync();
+        }
+    }
+}

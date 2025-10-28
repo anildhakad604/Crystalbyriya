@@ -1,0 +1,100 @@
+﻿
+
+@page
+@model CrystalByRiya.Pages.wishlistModel
+@{
+}
+<main class="main-content site-wrapper-reveal">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title-content content-style-2">
+                        <div class="bread-crumbs">
+                            <a href="/index">Home<span class="breadcrumb-sep">&gt;</span></a>
+                            <a href="javascript:void(0)">Wishlist</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center mb-2">
+                        <h2 class="title">Wishlist</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--== Start wishlist Area Wrapper ==-->
+    <div class="product-area wishlist-page-area pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="wishlist-table-wrap">
+                        <div class="wishlist-table table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="pro-remove"></th>
+                                        <th class="pro-thumbnail"></th>
+                                        <th class="pro-name">Product</th>
+                                        <th class="pro-stock-status">Stock Status</th>
+                                        <th class="pro-price">Price</th>
+                                        <th class="pro-action"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.WishlistItems != null && Model.WishlistItems.Count > 0)
+                                    {
+                                        @foreach (var item in Model.WishlistItems)
+                                        {
+                                            <tr>
+                                                <td class="pro-remove">
+                                                    <a asp-route-id="@item.ProductId" asp-route-productname="@item.ProductName" asp-page-handler="DeleteFromWishlist"><i class="lastudioicon-e-remove"></i></a>
+                                                </td>
+
+                                               
+                                                <td class="pro-thumbnail">
+                                                    <div class="product-thumb">
+                                                        <a asp-page="detail" asp-route-skucode="@item.ProductId" asp-route-productname="@item.ProductName.Replace(' ','-')">
+                                                            <img src="@Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @item.Image)" alt="Shop">
+                                                            <span class="bg-thumb" data-bg-img="@item.Image"></span>
+                                                            <span class="thumb-overlay"></span>
+                                                        </a>
+                                                     
+                                                    </div>
+                                                </td>
+                                                <td class="pro-name" name="productname"><span>@item.ProductName</span></td>
+                                                <td class="pro-stock-status"><span>In Stock</span></td>
+                                                <td class="pro-price">&#8377;@item.Price</td>
+                                                <td class="pro-action">
+                                                    <a asp-page="/detail" asp-route-skucode="@item.ProductId" asp-route-productname="@item.ProductName.Replace(' ','-')" class="btn product-action-button">
+                                                        <i class="lastudioicon-bag-3 me-1"></i> ADD TO CART
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="6">
+                                                <div class="alert alert-info text-center">Your wishlist is empty.</div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End wishlist Area Wrapper ==-->
+ 
+</main>

@@ -1,0 +1,88 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Gallery.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ImageGallery</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ImageGallery.Productid" class="control-label"></label>
+                <input asp-for="ImageGallery.Productid" class="form-control" required/>
+                <span asp-validation-for="ImageGallery.Productid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageGallery.Url" class="control-label"></label>
+                <input asp-for="ImageGallery.Url" name="Url" class="form-control" type="file" multiple id="imageUpload" accept="image/*"  required/>
+                <span asp-validation-for="ImageGallery.Url" class="text-danger"></span>
+            </div>
+            <div id="imagePreviewContainer" style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <!-- Thumbnails will be added dynamically here -->
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageGallery.Type" class="control-label"></label>
+                <select asp-for="ImageGallery.Type" class="form-control" >
+                    <option value="0">Image</option>
+                </select>
+                <span asp-validation-for="ImageGallery.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageGallery.AltText" class="control-label"></label>
+                <input asp-for="ImageGallery.AltText" class="form-control"  required/>
+                <span asp-validation-for="ImageGallery.AltText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const files = event.target.files;
+            const previewContainer = document.getElementById('imagePreviewContainer');
+
+            // Clear previous previews
+            previewContainer.innerHTML = '';
+
+            // Loop through all selected files
+            Array.from(files).forEach(file => {
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        // Create a new image element for preview
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.maxWidth = '100px';
+                        img.style.maxHeight = '100px';
+                        img.style.border = '1px solid #ddd';
+                        img.style.padding = '5px';
+                        img.style.marginBottom = '10px';
+
+                        // Add the image to the preview container
+                        previewContainer.appendChild(img);
+                    };
+
+                    reader.readAsDataURL(file); // Read the file as a Data URL
+                }
+            });
+        });
+    </script>
+}

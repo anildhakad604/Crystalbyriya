@@ -1,0 +1,51 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Employee.IndexModel
+@{
+    ViewData["Title"] = "Employee List";
+}
+
+
+<h2 style="margin-bottom: 20px;">Employee List </h2>
+<a asp-page="./Create" class="btn btn-danger" style="margin-bottom: 20px;">Add New Employee</a>
+
+<!-- Table to display employee data -->
+<table class="table table-striped table-bordered">
+    <thead class="text-center" style="background-color:black; color:#fff;">
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Employees != null && Model.Employees.Any())
+        {
+            foreach (var employee in Model.Employees)
+            {
+                <tr class="text-center">
+                    <td>@employee.Username</td>
+                    <td>@employee.Email</td>
+                    <td>@employee.ContactNo</td>
+                    <td>@employee.Role</td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@employee.Id" class="btn btn-info">Details</a>
+                        <a asp-page="./Edit" asp-route-id="@employee.Id" class="btn btn-success">Edit</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@employee.Id" class="d-inline">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this employee?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No employees found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

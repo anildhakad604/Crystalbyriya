@@ -1,61 +1,110 @@
-﻿
-using Astaberry.Models;
+﻿using CrystalByRiya;
+using CrystalByRiya.@class;
+using CrystalByRiya.Classes;
+using CrystalByRiya.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
-
+using  CrystalByRiya.Classes;
+using System.IO.Compression;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<AddToWishlistModel>();
+builder.Services.AddScoped<AddToCartItems>();
+builder.Services.AddScoped<AwsCredentials>();
+builder.Services.AddScoped<AmazonS3>();
 
-
-// Add services to the container.
-
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;  // Enable compression for HTTPS requests as well
+    options.Providers.Add<GzipCompressionProvider>();  // Add GZIP compression
+    options.Providers.Add<BrotliCompressionProvider>();  // Add Brotli compression (optional, modern and efficient)
+});
+// Add Razor Pages with runtime compilation for dynamic changes
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
+
+// Add PhonePe payment service (scoped for each request)
+builder.Services.AddScoped<PhonePePaymentService>();
+
+// Configure Session with idle timeout of 40 minutes
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(40);
+    options.IdleTimeout = TimeSpan.FromMinutes(40);  // Adjust idle timeout based on your needs
+    options.Cookie.HttpOnly = true;  // Ensure the cookie can't be accessed via client-side script
+    options.Cookie.IsEssential = true;  // Mark the session cookie as essential
 });
+
+
+// Configure file upload size limits
 builder.Services.Configure<FormOptions>(options =>
 {
-    options.MultipartBodyLengthLimit = 300 * 1024 * 1024;
+    options.MultipartBodyLengthLimit = 300 * 1024 * 1024;  // 300 MB upload limit
 });
 
-builder.Services.AddMvc(option => option.EnableEndpointRouting = false);
-builder.Services.AddControllersWithViews();
-builder.Services.AddDbContextPool<ApplicationDbContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("CrystalByRiyaConnection"))
+// Add support for MVC Controllers and Views
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();  // Allow runtime compilation for both pages and views
 
-    );
+// Enable Antiforgery to prevent CSRF attacks
+builder.Services.AddAntiforgery();
 
+// Configure Entity Framework with SQL Server and Connection String
+builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CrystalByRiyaConnection"))
+);
+
+// Register IHttpContextAccessor to access session, cookies, etc. in services or controllers
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(MyAllowSpecificOrigins,
+    builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();  
+    });
+});
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Error"); 
     app.UseHsts();
 }
 else
 {
-    app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage();  
 }
 
-//var options = new RewriteOptions();
-//options.AddRedirectToHttps();
-//options.Rules.Add(new RedirectToWwwRule());
-//app.UseRewriter(options);
-
+app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseSession();
+/*var options = new RewriteOptions();
+options.AddRedirectToHttps();
+options.Rules.Add(new RedirectToWwwRule());
+app.UseRewriter(options);
+*/
 app.UseRouting();
-app.UseStatusCodePagesWithReExecute("/NotFound");
-app.UseCors(MyAllowSpecificOrigins);
-app.UseMvc();
-app.UseMvcWithDefaultRoute();
+
+app.UseCors(MyAllowSpecificOrigins);   
+
+app.UseAuthentication();               
 app.UseAuthorization();
-app.MapRazorPages();
+
+app.UseSession();                     
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapRazorPages();
+});
+
 app.Run();
 
+
+// Enable Routing and set the correct URL path format

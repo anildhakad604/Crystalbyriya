@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Astaberry.Models
+﻿namespace CrystalByRiya.Models
 {
-    public class Admins
+    public class Admin
     {
         public int Id { get; set; }
         public string EmailId { get; set; }

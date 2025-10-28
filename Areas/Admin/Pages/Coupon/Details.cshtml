@@ -1,0 +1,61 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Coupon.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CouponCodes</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CouponCodes.CouponCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CouponCodes.CouponCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CouponCodes.CouponName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CouponCodes.CouponName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CouponCodes.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CouponCodes.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CouponCodes.ApplicableFrom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CouponCodes.ApplicableFrom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CouponCodes.ApplicableTo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CouponCodes.ApplicableTo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CouponCodes.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CouponCodes.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CouponCodes.DiscountPercentage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CouponCodes.DiscountPercentage)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.CouponCodes.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

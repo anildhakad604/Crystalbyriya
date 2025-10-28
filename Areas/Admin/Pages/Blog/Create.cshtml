@@ -1,92 +1,128 @@
 ﻿@page
-@model Astaberry.Areas.Admin.Pages.Blog.CreateModel
+@model CrystalByRiya.Areas.Admin.Pages.Blog.CreateModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<form method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="TblBlog.BlogTitle" class="control-label"></label>
-        <input asp-for="TblBlog.BlogTitle" name="BlogTitle" class="form-control" />
-        <span asp-validation-for="TblBlog.BlogTitle" class="text-danger"></span>
+<h1>Create</h1>
+
+<h4>Blogs</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Blogs.BlogTitle" class="control-label"></label>
+                <input asp-for="Blogs.BlogTitle" class="form-control" required />
+                <span asp-validation-for="Blogs.BlogTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.ShortDescription" class="control-label"></label>
+                <input asp-for="Blogs.ShortDescription" class="form-control" required />
+                <span asp-validation-for="Blogs.ShortDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.Blogdescription" class="control-label"></label>
+                <textarea  name="editor" class="form-control" style="height: 1250px;" required></textarea>
+            
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.PublishedDate" class="control-label"></label>
+                <input asp-for="Blogs.PublishedDate" class="form-control" required />
+                <span asp-validation-for="Blogs.PublishedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.Author" class="control-label"></label>
+                <input asp-for="Blogs.Author" class="form-control" required />
+                <span asp-validation-for="Blogs.Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.Category" class="control-label"></label>
+                <input asp-for="Blogs.Category" class="form-control" required />
+                <span asp-validation-for="Blogs.Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.Image" class="control-label"></label>
+                <input name="Image" class="form-control" type="file" required />
+               
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.CustomUrl" class="control-label"></label>
+                <input asp-for="Blogs.CustomUrl" class="form-control" required />
+                <span asp-validation-for="Blogs.CustomUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.ThumbnailImage" class="control-label"></label>
+              
+                <input name="ThumbnailImage" class="form-control" type="file" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.Keywords" class="control-label"></label>
+                <input asp-for="Blogs.Keywords" class="form-control" required />
+                <span asp-validation-for="Blogs.Keywords" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Blogs.IsActive" /> @Html.DisplayNameFor(model => model.Blogs.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.Alttext" class="control-label"></label>
+                <input asp-for="Blogs.Alttext" class="form-control" required />
+                <span asp-validation-for="Blogs.Alttext" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.Tags" class="control-label"></label>
+                <input asp-for="Blogs.Tags" class="form-control" required />
+                <span asp-validation-for="Blogs.Tags" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blogs.MetaTag" class="control-label"></label>
+                <input asp-for="Blogs.MetaTag" class="form-control" required />
+                <span asp-validation-for="Blogs.MetaTag" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="Blogs.MetaDescription" class="control-label"></label>
+                <input asp-for="Blogs.MetaDescription" class="form-control" required />
+                <span asp-validation-for="Blogs.MetaDescription" class="text-danger"></span>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Blogs.MetaTitle" class="control-label"></label>
+                    <textarea asp-for="Blogs.MetaTitle" class="form-control" style="height:1250px;" name="title" required></textarea>
+                    <span asp-validation-for="Blogs.MetaTitle" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.Blogdescription" class="control-label"></label>
-        <textarea id="editor" name="Blogdescription" asp-for="TblBlog.Blogdescription">        
-                                </textarea>
-        <span asp-validation-for="TblBlog.Blogdescription" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.Date" class="control-label"></label>
-        <input asp-for="TblBlog.Date" name="Date" class="form-control" />
-        <span asp-validation-for="TblBlog.Date" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.Author" class="control-label"></label>
-        <input asp-for="TblBlog.Author" name="Author" class="form-control" />
-        <span asp-validation-for="TblBlog.Author" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.Category" class="control-label"></label>
-        <select asp-for="TblBlog.Category" name="Category" class="form-control">
-            <option>Select</option>
-            <option>Skin Care</option>
-            <option>Hair Care</option>
-            <option>Professional Beauty</option>
-            <option>News And Events</option>
-        </select>
-        <span asp-validation-for="TblBlog.Category" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.ThumbnailImage" class="control-label">Thumbnail Image Size 469*199</label>
-        <input asp-for="TblBlog.ThumbnailImage" type="file" name="thumbnail" class="form-control" />
-        <span asp-validation-for="TblBlog.ThumbnailImage" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.Image" class="control-label">Image Size 890*350</label>
-        <input asp-for="TblBlog.Image" type="file" name="Image" class="form-control" />
-        <span asp-validation-for="TblBlog.Image" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.Month" class="control-label"></label>
-        <input asp-for="TblBlog.Month" name="Month" class="form-control" />
-        <span asp-validation-for="TblBlog.Month" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.Year" class="control-label"></label>
-        <input asp-for="TblBlog.Year" name="Year" class="form-control" />
-        <span asp-validation-for="TblBlog.Year" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.CustomUrl" class="control-label"></label>
-        <input asp-for="TblBlog.CustomUrl" name="CustomUrl" class="form-control" />
-        <span asp-validation-for="TblBlog.CustomUrl" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="TblBlog.Keywords" class="control-label"></label>
-        <input asp-for="TblBlog.Keywords" name="Keywords" class="form-control" />
-        <span asp-validation-for="TblBlog.Keywords" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </div>
-</form>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="//cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <!-- Include Froala Editor CSS and JS -->
+
+    <script src="https://cdn.ckeditor.com/4.22.0/full-all/ckeditor.js"></script>
+
+
+
+
     <script>
-        const config = {
-            filebrowserImageBrowseUrl: "BlogImageBrowser",
-            filebrowserImageWindowWidth: 750,
-            filebrowserImageWindowHeight: 606,
-            filebrowserBrowseUrl: "Bloglinkbrowser",
-            filebrowserWindowWidth: 350,
-            filebrowserWindowHeight: 500
-        };
-        const editor = document.getElementById("editor");
-        CKEDITOR.replace(editor, config);
+        CKEDITOR.replace( 'editor' );
+        CKEDITOR.replace( 'title' );
     </script>
+    
 }
+

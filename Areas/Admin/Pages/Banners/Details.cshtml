@@ -1,0 +1,55 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Banners.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Banners</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.MobileImageName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.MobileImageName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.DesktopImageName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.DesktopImageName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.TargetUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.TargetUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.AltText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.AltText)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.Text)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.Text)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Banners.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

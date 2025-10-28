@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
@@ -8,6 +9,7 @@ namespace CrystalByRiya.Pages
     [IgnoreAntiforgeryToken]
     public class ErrorModel : PageModel
     {
+        public string Currenturl { get; private set; }
         public string? RequestId { get; set; }
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
@@ -21,6 +23,7 @@ namespace CrystalByRiya.Pages
 
         public void OnGet()
         {
+            Currenturl = HttpContext.Request.GetDisplayUrl();
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
         }
     }

@@ -1,0 +1,133 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Productsizes.IndexModel
+
+@{
+    ViewData["Title"] = "Product Sizes";
+}
+
+<h1>Product Sizes</h1>
+
+<!-- Create New Button -->
+<p>
+    <a asp-page="Create" class="btn btn-danger">Create New</a>
+</p>
+
+<!-- Search and Low Stock Filter -->
+<form method="get" class="mb-4">
+    <div class="input-group mb-3">
+        <input type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Search by Product ID or SKU Code" class="form-control" />
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-search"></i> Search
+        </button>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" name="ShowLowStock" value="true" class="form-check-input" id="lowStockCheck" @(Model.ShowLowStock ? "checked" : "") />
+        <label class="form-check-label" for="lowStockCheck">Show Products with Stock Less Than 5</label>
+    </div>
+</form>
+
+<!-- Table for Product Sizes -->
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.ProductSizes[0].ProductID)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductSizes[0].Size)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductSizes[0].SKUCode)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductSizes[0].ImageURL)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductSizes[0].StockQuantity)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductSizes[0].Price)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProductSizes)
+        {
+            <tr class="@(item.StockQuantity < 5 ? "table-danger" : "")">
+                <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+                <td>@Html.DisplayFor(modelItem => item.Size)</td>
+                <td>@Html.DisplayFor(modelItem => item.SKUCode)</td>
+                <td>
+                    <img src="https://djelgxoby50a9.cloudfront.net/Images/@(item.ImageURL)" height="50" width="50" class="lazyload" />
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.StockQuantity)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>
+                    <form method="post" asp-page-handler="UpdateStock" asp-route-skuCode="@item.SKUCode">
+                        <button type="submit" class="btn btn-sm btn-warning">Update Stock</button>
+                    </form>
+                    <a asp-page="./Edit" asp-route-id="@item.SizeID" class="btn btn-sm btn-info">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.SizeID" class="btn btn-sm btn-success">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.SizeID" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Pagination Controls -->
+<div class="text-center mt-4">
+    @if (Model.CurrentPage > 1)
+    {
+        <a asp-page="./Index" asp-route-currentPage="@(Model.CurrentPage - 1)" asp-route-SearchTerm="@Model.SearchTerm" asp-route-ShowLowStock="@Model.ShowLowStock" class="btn btn-outline-secondary">Previous</a>
+    }
+
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        if (i == Model.CurrentPage)
+        {
+            <span class="btn btn-primary">@i</span>
+        }
+        else
+        {
+            <a asp-page="./Index" asp-route-currentPage="@i" asp-route-SearchTerm="@Model.SearchTerm" asp-route-ShowLowStock="@Model.ShowLowStock" class="btn btn-outline-secondary">@i</a>
+        }
+    }
+
+    @if (Model.CurrentPage < Model.TotalPages)
+    {
+        <a asp-page="./Index" asp-route-currentPage="@(Model.CurrentPage + 1)" asp-route-SearchTerm="@Model.SearchTerm" asp-route-ShowLowStock="@Model.ShowLowStock" class="btn btn-outline-secondary">Next</a>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("searchInput").addEventListener("input", async function () {
+            const searchTerm = this.value.trim();
+            const suggestionsDropdown = document.getElementById("suggestionsDropdown");
+            suggestionsDropdown.innerHTML = ""; // Clear previous suggestions
+
+            if (searchTerm.length > 0) {
+                try {
+                    // Fetch suggestions from the API
+                    const response = await fetch(`/api/ProductSizesApi/suggestions?searchTerm=${encodeURIComponent(searchTerm)}`);
+                    const suggestions = await response.json();
+
+                    if (suggestions.length > 0) {
+                        suggestions.forEach(suggestion => {
+                            const item = document.createElement("a");
+                            item.className = "list-group-item list-group-item-action";
+                            item.href = `?SearchTerm=${suggestion.productID}`;
+                            item.textContent = `${suggestion.productID} (${suggestion.skuCode})`;
+                            item.addEventListener("click", function (e) {
+                                e.preventDefault();
+                                document.getElementById("searchInput").value = suggestion.productID;
+                                suggestionsDropdown.innerHTML = ""; // Clear suggestions
+                            });
+                            suggestionsDropdown.appendChild(item);
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error fetching suggestions:", error);
+                }
+            }
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener("click", function (e) {
+            const dropdown = document.getElementById("suggestionsDropdown");
+            if (!dropdown.contains(e.target) && e.target.id !== "searchInput") {
+                dropdown.innerHTML = "";
+            }
+        });
+    </script>
+}

@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using CrystalByRiya.Models;
+
+namespace CrystalByRiya.Areas.Admin.Pages.BlogsFaq
+{
+    public class DeleteModel : PageModel
+    {
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
+
+        public DeleteModel(CrystalByRiya.Models.ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        [BindProperty]
+        public BlogFaq BlogFaq { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blogfaq = await _context.TblBlogsFaq.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (blogfaq == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                BlogFaq = blogfaq;
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var blogfaq = await _context.TblBlogsFaq.FindAsync(id);
+            if (blogfaq != null)
+            {
+                BlogFaq = blogfaq;
+                _context.TblBlogsFaq.Remove(BlogFaq);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
+        }
+    }
+}

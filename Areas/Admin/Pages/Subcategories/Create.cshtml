@@ -1,0 +1,53 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Subcategories.CreateModel
+
+<h2>Create Subcategory</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Subcategory.SubCategoryname" class="control-label"></label>
+        <input asp-for="Subcategory.SubCategoryname" class="form-control" required/>
+        <span asp-validation-for="Subcategory.SubCategoryname" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Subcategory.Categoryimage" class="control-label"></label>
+        <input name="CategoryImage" class="form-control" type="file" required/>
+   
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Subcategory.CategoryId" class="control-label"></label>
+        <input asp-for="Subcategory.CategoryId" class="form-control" required/>
+        <span asp-validation-for="Subcategory.CategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Subcategory.CategoryDescription" class="control-label"></label>
+        <textarea asp-for="Subcategory.CategoryDescription" class="form-control" required></textarea>
+        <span asp-validation-for="Subcategory.CategoryDescription" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Subcategory.ThumbnailImage" class="control-label"></label>
+        <input name="ThumbnailImage" class="form-control" type="file" required/>
+      
+    </div>
+    <div class="form-group">
+        <label asp-for="Subcategory.MetaTag" class="control-label"></label>
+        <input asp-for="Subcategory.MetaTag" class="form-control" required/>
+        <span asp-validation-for="Subcategory.MetaTag" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Subcategory.MetaDescription" class="control-label"></label>
+        <input asp-for="Subcategory.MetaDescription" class="form-control" required/>
+        <span asp-validation-for="Subcategory.MetaDescription" class="text-danger"></span>
+    </div>
+  
+   
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+</form>
+

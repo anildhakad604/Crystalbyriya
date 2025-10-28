@@ -5,35 +5,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Astaberry.Models;
-using Microsoft.AspNetCore.Http;
+using CrystalByRiya.Models;
 
-namespace Astaberry.Areas.Admin.Pages.Blog
+namespace CrystalByRiya.Areas.Admin.Pages.Blog
 {
     public class IndexModel : PageModel
     {
-        private readonly Astaberry.Models.ApplicationDbContext _context;
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
 
-        public IndexModel(Astaberry.Models.ApplicationDbContext context)
+        public IndexModel(CrystalByRiya.Models.ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IList<TblBlog> TblBlog { get;set; }
+        public IList<Blogs> Blogs { get;set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task OnGetAsync()
         {
-            string logedin = HttpContext.Session.GetString("Login");
-            if (string.IsNullOrEmpty(logedin))
-            {
-                return RedirectToPage("../Login");
-
-            }
-            else
-            {
-                TblBlog = await _context.TblBlogs.ToListAsync();
-                return Page();
-            }
+            Blogs = await _context.TblBlogs.ToListAsync();
         }
     }
 }

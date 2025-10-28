@@ -1,0 +1,46 @@
+﻿@page "{id:int}"
+@model CrystalByRiya.Areas.Admin.Pages.Employee.EditModel
+
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+<h2>Edit Employee</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="EditEmployee.Username" class="control-label">Username</label>
+        <input asp-for="EditEmployee.Username" class="form-control" readonly />
+        <span asp-validation-for="EditEmployee.Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EditEmployee.Email" class="control-label">Email</label>
+        <input asp-for="EditEmployee.Email" class="form-control" />
+        <span asp-validation-for="EditEmployee.Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EditEmployee.Password" class="control-label">Password</label>
+        <input asp-for="EditEmployee.Password" class="form-control" type="password" />
+        <span asp-validation-for="EditEmployee.Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EditEmployee.ContactNo" class="control-label">Contact No</label>
+        <input asp-for="EditEmployee.ContactNo" class="form-control" />
+        <span asp-validation-for="EditEmployee.ContactNo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EditEmployee.Role" class="control-label">Role</label>
+        <input asp-for="EditEmployee.Role" class="form-control" />
+        <span asp-validation-for="EditEmployee.Role" class="text-danger"></span>
+    </div>
+
+    
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a href="./Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

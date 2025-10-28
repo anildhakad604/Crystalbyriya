@@ -1,0 +1,114 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.AddToCart.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Cart</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Cart.Id" />
+            <div class="form-group">
+                
+                <label asp-for="Cart.ProductId" class="control-label"></label>
+                <input asp-for="Cart.ProductId" class="form-control" />
+                <span asp-validation-for="Cart.ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.UserName" class="control-label"></label>
+                <input asp-for="Cart.UserName" class="form-control" />
+                <span asp-validation-for="Cart.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.UserEmail" class="control-label"></label>
+                <input asp-for="Cart.UserEmail" class="form-control" />
+                <span asp-validation-for="Cart.UserEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.Phone" class="control-label"></label>
+                <input asp-for="Cart.Phone" class="form-control" />
+                <span asp-validation-for="Cart.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.ProductName" class="control-label"></label>
+                <input asp-for="Cart.ProductName" class="form-control" />
+                <span asp-validation-for="Cart.ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.Price" class="control-label"></label>
+                <input asp-for="Cart.Price" class="form-control" />
+                <span asp-validation-for="Cart.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.Date" class="control-label"></label>
+                <input asp-for="Cart.Date" class="form-control" />
+                <span asp-validation-for="Cart.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.Marketing" class="control-label"></label>
+                <input asp-for="Cart.Marketing" class="form-control" />
+                <span asp-validation-for="Cart.Marketing" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.material" class="control-label"></label>
+                <input asp-for="Cart.material" class="form-control" />
+                <span asp-validation-for="Cart.material" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.size" class="control-label"></label>
+                <input asp-for="Cart.size" class="form-control" />
+                <span asp-validation-for="Cart.size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.addon" class="control-label"></label>
+                <input asp-for="Cart.addon" class="form-control" />
+                <span asp-validation-for="Cart.addon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.Qty" class="control-label"></label>
+                <input asp-for="Cart.Qty" class="form-control" />
+                <span asp-validation-for="Cart.Qty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.Gst" class="control-label"></label>
+                <input asp-for="Cart.Gst" class="form-control" />
+                <span asp-validation-for="Cart.Gst" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="Cart.Image" class="control-label"></label>
+                <input asp-for="Cart.Image" class="form-control" />
+                <span asp-validation-for="Cart.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

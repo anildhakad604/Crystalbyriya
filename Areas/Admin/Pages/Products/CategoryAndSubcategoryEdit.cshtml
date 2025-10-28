@@ -1,0 +1,52 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Products.CategoryandSubCategoryEditModel
+@{
+    ViewData["Title"] = "Edit Category and SubCategory";
+}
+
+<h2>Edit Category and SubCategory</h2>
+
+<form method="post">
+    <div>
+        <div class="form-group">
+            <input class="form-control form-control-lg" type="text" name="SkuCode" placeholder="Sku Code" value="@Model.SkuCode" readonly />
+        </div>
+        <ul class="checkbox-group">
+            @foreach (var category in Model.Categories)
+            {
+                <div>
+                <li>
+                    <input type="checkbox" name="SelectedCategoryIds" value="@category.Id" @(Model.SelectedCategoryIds.Contains(category.Id) ? "checked" : "") />
+                    <b>@category.Id - @category.MenuList</b>
+                </li>
+                <ul class="Subcategory">
+                        @foreach (var item in Model.SubCategories.Where(e => e.CategoryId == category.Id))
+                        {
+                        <div>
+                            <label>
+                                <input type="checkbox" name="SelectedSubCategoryIds" value="@item.SubCategoryid" @(Model.SelectedSubCategoryIds.Contains(item.SubCategoryid) ? "checked" : "") />
+                                    @item.SubCategoryid - @item.SubCategoryname
+                            </label>
+                        </div>
+                        }
+                </ul>
+        </div>
+            }
+    </ul>
+    </div>
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a asp-page="CategoryandSubCategoryDelete" asp-route-sku="@Model.SkuCode" class="btn btn-danger">Delete</a>
+</form>
+
+<style>
+    .SubCategory {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkbox-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+</style>

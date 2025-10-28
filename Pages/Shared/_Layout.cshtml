@@ -1,51 +1,842 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+  @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    string UserEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
+
+    var aspPage = string.IsNullOrEmpty(UserEmail) ? "myaccount" : "dashboard";
+    var aspPageWishlist = string.IsNullOrEmpty(UserEmail) ? "myaccount" : "wishlist";
+    var aspPageCart = string.IsNullOrEmpty(UserEmail) ? "myaccount" : "cart";
+
+}
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://djelgxoby50a9.cloudfront.net/" />
+    <script>
+        // Function to hide the loader once the image is loaded
+        function imageLoaded(skuCode) {
+        var loader = document.getElementById('loader-' + skuCode);
+        if (loader) {
+        loader.style.display = 'none'; // Hide the loader
+        }
+        }
+    </script>
+
+
+    <style>
+        /* Clear button (cross) styling */
+        .clear-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .clear-icon:hover {
+                color: red; /* Optional hover color for cross icon */
+            }
+
+        .search-form {
+            position: relative;
+        }
+
+        /* Adjust search input width to accommodate the clear icon */
+        #search-input1 {
+            padding-right: 35px;
+        }
+    </style>
+
+    <style>
+        .image-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #000;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CrystalByRiya</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/CrystalByRiya.styles.css" asp-append-version="true" />
+    <meta name="p:domain_verify" content="dcd1bbdbc9fb7362b0f230be5c5b717a" />
+
+
+
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="https://djelgxoby50a9.cloudfront.net/logo/logo.png" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+
+    <!-- Google Fonts with display=swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <!--== Bootstrap CSS ==-->
+    <link href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/bootstrap.min.css" rel="stylesheet" />
+    <!--== Font-awesome Icons CSS ==-->
+    <!--== Icofont Min Icons CSS ==-->
+    <link href="~/assetsv2/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/assetsv2/css/icofont.min.css" rel="stylesheet" />
+    <link href="~/assetsv2/css/lastudioicons.css" rel="stylesheet" />
+    <!--== lastudioIcons CSS ==-->
+    <link rel="stylesheet" href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/mmenu.min.css" />
+    <!--== Animate CSS ==-->
+    <link href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/animate.css" rel="stylesheet" />
+    <!--== Aos CSS ==-->
+    <link href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/aos.css" rel="stylesheet" />
+    <!--== FancyBox CSS ==-->
+    <link href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/jquery.fancybox.min.css" rel="stylesheet" />
+    <!--== Slicknav CSS ==-->
+    <link href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/slicknav.css" rel="stylesheet" />
+    <!--== Swiper CSS ==-->
+    <link href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/swiper.min.css" rel="stylesheet" />
+    <!--== Slick CSS ==-->
+    <link href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/slick.css" rel="stylesheet" />
+
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="https://djelgxoby50a9.cloudfront.net/assetsv2/css/style.css" rel="stylesheet" />
+
+    @RenderSection("Metatags", false)
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-W4X7LV8H');</script>
+    <!-- End Google Tag Manager -->
+
+
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">CrystalByRiya</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W4X7LV8H"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- End Google Tag Manager (noscript) -->
+    <!--wrapper start-->
+    <div class="wrapper home-default-wrapper" id="page">
+        <!--== Start Header Wrapper ==-->
+        <header class="header-area header-default header-style2 header-transparent sticky-header">
+            <div class="container-fluid">
+                <div class="row row-gutter-0 align-items-center">
+                    <div class="col-12">
+                        <div class="header-align">
+                            <div class="header-mob-left-area">
+                                <div class="header-logo-area d-none d-xl-block">
+                                    <a href="/Index">
+                                        <img class="logo-main" src="https://djelgxoby50a9.cloudfront.net/logo/logo.png" alt="Logo" />
+                                    </a>
+                                </div>
+
+                                <div class="header-action-area d-xl-none">
+                                    <a href="#menu" class="btn-menu d-xl-none m-0">
+                                        <i class="lastudioicon-menu-3-1"></i>
+                                    </a>
+                                    <div class="header-action-login">
+                                        <a asp-page="@aspPage">
+                                            <button class="btn-login">
+                                                <i class="lastudioicon-single-01-2"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="header-align-left mx-auto">
+                                <div class="header-logo-area d-xl-none">
+                                    <a href="/Index">
+                                        <img class="logo-main" src="https://djelgxoby50a9.cloudfront.net/logo/logo.png" alt="Logo" />
+                                    </a>
+                                </div>
+                                <div class="header-navigation-area d-none d-xl-flex justify-content-center">
+                                    <ul class="main-menu nav justify-content-center position-relative">
+                                        @await Component.InvokeAsync("Category")
+
+                                        <li><a href="/contactus">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="header-align-right">
+                                <div class="header-action-area">
+                                    <div class="header-action-search d-none d-xl-block">
+                                        <button class="btn-search btn-search-menu">
+                                            <i class="lastudioicon-zoom-1"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="header-action-login d-none d-xl-block">
+                                        <a asp-page="@aspPage">
+                                            <button class="btn-login">
+                                                <i class="lastudioicon-single-01-2"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+
+
+                                    <div class="header-action-wishlist">
+                                        <a asp-page="@aspPageWishlist">
+                                            <button class="btn-wishlist nav-wishlist">
+                                                <span class="wishlist-count">0</span>
+                                                <i class="lastudioicon-heart-2"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="header-action-cart">
+                                        <a asp-page="@aspPageCart">
+                                            <button class="btn-cart cart-icon">
+                                                <span class="cart-count">0</span>
+                                                <i class="lastudioicon-shopping-cart-2"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 pb-2 d-xl-none">
+                        <div class="mob-header-search-form d-flex justify-content-center">
+                            <div class="search-form">
+                                <form id="search-form2" method="get" onsubmit="return false;">
+                                    <div class="form-input-item">
+                                        <input type="text" id="search-input2" placeholder="Search">
+                                        <button class="search-button"><i class="lastudioicon-zoom-1"></i></button>
+                                        <div id="search-results-inline2" class="search-results2" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; z-index: 1000; width: 100%;">
+                                            <!-- Search results will be dynamically injected here -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </header>
+        <!--== End Header Wrapper ==-->
+        @RenderBody()
+        <!--== Start Footer Area Wrapper ==-->
+        <!--== Start Featured Area Wrapper ==-->
+        <section class="featured-area area-padding bg-white">
+            <div class="container">
+                <div class="row gy-3">
+                    <div class="col-md-4">
+                        <a href="https://api.whatsapp.com/send?phone=918287945785" target="_blank" class="featured-item">
+                            <div class="content">
+                                <span class="icon mb-3">
+                                    <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/featured-icons/1.png" alt="icon" class="img-fluid">
+                                </span>
+                                <div class="inner-content">
+                                    <h4 class="title">Customization</h4>
+                                    <p>For customization, contact us via WhatsApp or our Instagram handle</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4">
+                        <a asp-page="/contactus" class="featured-item">
+                            <div class="content">
+                                <span class="icon mb-3">
+                                    <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/featured-icons/2.png" alt="icon" class="img-fluid">
+                                </span>
+                                <div class="inner-content">
+                                    <h4 class="title">Get In Touch</h4>
+                                    <p>Happy to help you , dm us on whatsapp or email </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-4">
+                        <a href="#" class="featured-item">
+                            <div class="content">
+                                <span class="icon mb-3">
+                                    <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/featured-icons/3.png" alt="icon" class="img-fluid">
+                                </span>
+                                <div class="inner-content">
+                                    <h4 class="title">Rewards</h4>
+                                    <p>Follow us on instagram, share the screenshot and earn 100 points</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Featured Area Wrapper ==-->
+        <footer class="footer-area footer-style7">
+            <div class="moving-text-slider-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text-white text-center fw-semibold">Whatever you are seeking is already seeking you.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-main">
+                <div class="container">
+                    <div class="row gy-3">
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="widget-item  ml-11 ml-xs-0">
+                                <div class="footer-logo-area">
+                                    <a href="/Index">
+                                        <img class="logo-main" src="https://djelgxoby50a9.cloudfront.net/logo/logo.png" alt="Logo">
+                                    </a>
+                                    <p class="mb-0">This journey of crystals and self-reflection inspired me to share it with others. It's about nurturing self-love, developing self-dependence, and understanding how crystals can change our lives, so let’s uplift each other and seek magic within us.</p>
+                                    <h6 class="fw-semibold mt-5 mt-md-3">FOLLOW US ON</h6>
+                                    <div class="widget-social-icons m-0">
+                                        <a href="https://m.facebook.com/p/crystalsbyriya-100076325670695/" target="_blank"><i class="lastudioicon lastudioicon-b-facebook"></i></a>
+                                        <a class="mr-30" href="https://www.instagram.com/crystalsbyriya?igsh=MThsYzk4aGJvdjY0OQ==" target="_blank"><i class="lastudioicon lastudioicon-b-instagram"></i></a>
+                                        <a href="https://m.youtube.com/@@crystalsbyriya" target="_blank"><i class="lastudioicon lastudioicon-b-youtube-play"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="widget-item ml-11 ml-xs-0 mt-xs-30">
+                                <h4>QUICK LINKS</h4>
+                                <nav class="widget-menu-wrap">
+                                    <ul class="nav-menu nav">
+                                        <li><a asp-page="/category" asp-route-Url="by-Category">By Category</a></li>
+                                        <li><a asp-page="/category" asp-route-Url="by-Intention">By Intention</a></li>
+                                        <li><a asp-page="/category" asp-route-Url="by-Chakras">By Chakras</a></li>
+                                        <li><a asp-page="/category" asp-route-Url="by-Crystals">By Crystals</a></li>
+                                        <li><a asp-page="/category" asp-route-Url="Silver-Products">Silver Products</a></li>
+                                        <li><a href="/blog">Blogs</a></li>
+                                        <li><a href="/contactus">Contact Us</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="widget-item ml-11 ml-xs-0 mt-sm-30">
+                                <h4>CUSTOMER CARE</h4>
+                                <nav class="widget-menu-wrap">
+                                    <ul class="nav-menu nav">
+                                        <li><a href="/Privacy">Privacy Policy</a></li>
+                                        <li><a href="/shipping">Shipping Policy</a></li>
+                                        <li><a href="/exchange">Refund and Return</a></li>
+                                        <li><a href="/termandconditions">Terms of Service</a></li>
+                                        <li><a href="https://api.whatsapp.com/send?phone=918287945785">Customization</a></li>
+                                        <li><a href="https://www.shiprocket.in/shipment-tracking/" target="_blank">Track Your Order</a></li>
+                                        <li><a href="/faq">FAQs</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="widget-item ml-11 mt-sm-30">
+                                <h4>NEWSLETTER</h4>
+                                <div class="newsletter-content-wrap mb-4">
+                                    <form id="newsletterForm">
+                                        <input class="form-control" type="email" id="email" placeholder="Enter your email address..." required>
+                                        <button class="btn btn-newsletter" type="submit">Subscribe</button>
+                                    </form>
+                                </div>
+
+
+
+                                <div class="payments-secure-content-wrap">
+                                    <p class="mb-1" style="color: var(--secondary-color);">100% secure payments</p>
+                                    <div class="payments-method">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/payment-method.png" alt="img" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="widget-item text-center">
+                                <p class="mb-0">Meraki Crystals and Gems @@ 2024 | All Rights Reserved. Designed & developed By <a href="https://www.asharpinfotech.com/" style="color: var(--tertiary-color);">Asharp Infotech</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--== End Footer Area Wrapper ==-->
+
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - CrystalByRiya - <a asp-area="" asp-page="/Privacy">Privacy</a>
+
+    <div class="chat-popup-parent">
+        <!--== Instagram Button ==-->
+        <a href="https://www.instagram.com/crystalsbyriya/" class="instagram" target="_blank">
+            <i class="lni lni-instagram-original"></i>
+        </a>
+
+        <!--== WhatsApp Button ==-->
+        <a href="https://api.whatsapp.com/send?phone=918287945785" class="whatsapp" target="_blank">
+            <i class="lni lni-whatsapp"></i>
+        </a>
+    </div>
+
+    <a href="javascript:void(0)" class="chat-btn float">
+        <i class="lni lni-popup chat-open"></i>
+        <i class="lni lni-close chat-close d-none"></i>
+    </a>
+
+    <!--== Scroll Top Button ==-->
+    <div class="scroll-to-top" id="scrollToTopBtn">
+        <span class="icofont-arrow-up"></span>
+    </div>
+
+
+    <!--== Start Aside Search Menu ==-->
+
+    <div class="search-box-wrapper">
+        <div class="search-box-content-inner">
+            <div class="search-box-form-wrap">
+                <div class="search-note">
+                    <p>Start typing to search for products</p>
+                </div>
+
+                <!-- Form for search input -->
+                <form id="search-form" method="get" onsubmit="return false;">
+                    <div class="search-form position-relative d-flex">
+                        <label for="search-input" class="sr-only">Search</label>
+                        <input type="search" name="SearchTerm" class="form-control" placeholder="Search" id="search-input1">
+                    </div>
+
+                </form>
+
+                <!-- Inline search results area -->
+                <div id="search-results-inline" class="search-results" style="display: none; position: absolute; background-color: white; border: 1px solid #ccc; z-index: 1000; width: 100%;">
+
+                    <!-- Search results will be dynamically injected here -->
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+
+
+
+
+
+    <style>
+        /* Styling to ensure text is left-aligned and formatted */
+        #search-results-inline {
+            text-align: left; /* Ensure text inside this container is left-aligned */
+        }
+
+            #search-results-inline div {
+                text-align: left; /* Left-align the product names */
+                padding: 10px; /* Optional: Add padding for better spacing */
+                border-bottom: 1px solid #ddd; /* Optional: Add a bottom border to separate results */
+            }
+    </style>
+
+
+
+
+
+
+    <!--== End Aside Search Menu ==-->
+    <!--== Start Sidebar Cart Menu ==-->
+
+    <div class="sidebar-cart-overlay"></div>
+    <!--== End Sidebar Cart Menu ==-->
+    <!--== Start Wishlist Cart Menu ==-->
+    <!--== End Wishlist Cart Menu ==-->
+    <!-- Blog Quick View Modal -->
+    <!-- Auto PopUp -->
+    <!--== Start Side Menu ==-->
+    <aside id="menu">
+        <span class="d-flex justify-content-center align-items-center position-relative">
+            <a href="/Index" class="off-canvas-close">
+                <i class="lastudioicon-e-remove"></i>
+            </a>
+            <a href="/Index">
+                <img src="https://djelgxoby50a9.cloudfront.net/logo/logo.png" alt="" class="off-canvas-logo">
+            </a>
+        </span>
+
+        <ul class="mob-main-nav">
+            @*  <li style="--td: 1;"><a href="">Our Story</a></li> *@
+            <li class="mob-has-submenu" style="--td: 2;">
+                <a asp-page="/category" asp-route-Url="by-Category">By Category</a>
+                <ul class="mob-submenu-nav">
+                    <li style="--td: 1;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="BRACELETS">BRACELETS</a></li>
+                    <li style="--td: 2;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="CHIP-JARS">CHIP JARS</a></li>
+                    <li style="--td: 3;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="CLEANSING-KIT">CLEANSING KIT</a></li>
+                    <li style="--td: 4;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="CLUSTERS">CLUSTERS</a></li>
+                    <li style="--td: 5;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="Crystal-Bottle">Crystal Bottle</a></li>
+                    <li style="--td: 6;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="CANDLES">CANDLES</a></li>
+                    <li style="--td: 7;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="Crystal-Bowls">Crystal Bowls</a></li>
+                    <li style="--td: 8;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="DOOR-HANGER">DOOR HANGER</a></li>
+                    <li style="--td: 9;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="Earrings">Earrings</a></li>
+
+                    <li style="--td: 10;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="GEMSTONES">GEMSTONES</a></li>
+
+                    <li style="--td: 11;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="IDOLS">IDOLS</a></li>
+                    <li style="--td: 12;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="INTENTION-BRACELETS">INTENTION BRACELETS</a></li>
+                    <li style="--td: 13;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="JAAP-MALA">JAAP MALA</a></li>
+
+                    <li style="--td: 14;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="MUSHROOM">MUSHROOM</a></li>
+                    <li style="--td: 15;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="NECKLACE">NECKLACE</a></li>
+                    <li style="--td: 16;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="PENDANTS">PENDANTS</a></li>
+
+                    <li style="--td: 17;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="PUFFY-HEARTS">PUFFY HEARTS</a></li>
+                    <li style="--td: 18;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="PYRAMID">PYRAMID</a></li>
+
+                    <li style="--td: 19;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="RINGS">RINGS</a></li>
+                    <li style="--td: 20;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="Rakhi">Rakhi</a></li>
+                    <li style="--td: 21;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="Rough-raw-stone">Rough raw stone</a></li>
+
+                    <li style="--td: 22;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="SEVEN-CHAKRA-PRODUCTS">SEVEN CHAKRA PRODUCTS</a></li>
+                    <li style="--td: 23;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="SKINCARE/FACE TOOLS">SKINCARE/ FACE TOOLS</a></li>
+                    <li style="--td: 24;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="SPHERE-BALLS">SPHERE BALLS</a></li>
+                    <li style="--td: 25;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="TERMINATOR">TERMINATOR</a></li>
+
+                    <li style="--td: 26;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="TOWERS">TOWERS</a></li>
+                    <li style="--td: 27;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="TREE">TREE</a></li>
+                    <li style="--td: 28;"><a asp-page="/productlist" asp-route-catname="by-category" asp-route-subcatname="TUMBLES">TUMBLES</a></li>
+
+
+                </ul>
+            </li>
+
+            <li style="--td: 3;">
+                <a asp-page="/category" asp-route-Url="by-Intention">By Intention</a>
+                <ul class="mob-submenu-nav">
+
+                    <li style="--td: 1;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="ANGER-MANAGEMENT">ANGER MANAGEMENT</a></li>
+                    <li style="--td: 2;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="ANTI-DEPRESSION">ANTI DEPRESSION</a></li>
+                    <li style="--td: 3;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="BEAUTY-AND-SKIN-CARE">BEAUTY AND SKIN CARE</a></li>
+                    <li style="--td: 4;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="BUSINESS">BUSINESS</a></li>
+                    <li style="--td: 5;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Crystals-CAREER,-GROWTH">CAREER AND GROWTH</a></li>
+
+                    <li style="--td: 6;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="EDUCATION">EDUCATION</a></li>
+                    <li style="--td: 7;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="GOOD-LUCK">GOOD LUCK</a></li>
+                    <li style="--td: 8;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Crystals-HAPPINESS,-POSITIVITY">HAPPINESS,POSITIVITY</a></li>
+                    <li style="--td: 9;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="HEALING">HEALING</a></li>
+
+                    <li style="--td: 10;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="HEALTH-AND-WELLNESS">HEALTH AND WELLNESS</a></li>
+                    <li style="--td: 11;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="CONFIDENCE-AND-COURAGE">CONFIDENCE AND COURAGE</a></li>
+                    <li style="--td: 12;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Crystals-LOVE-And-Relationship">LOVE And Relationship</a></li>
+                    <li style="--td: 13;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="MANIFESTATION">MANIFESTATION</a></li>
+
+                    <li style="--td: 14;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="MARRIAGE">MARRIAGE</a></li>
+                    <li style="--td: 15;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="MONEY-AND-ABUNDANCE">MONEY AND ABUNDANCE</a></li>
+                    <li style="--td: 16;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="MOTIVATION">MOTIVATION</a></li>
+
+                    <li style="--td: 17;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="PCOD-OR-PCOS">PCOD OR PCOS</a></li>
+                    <li style="--td: 18;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="PREGNANCY">PREGNANCY</a></li>
+                    <li style="--td: 19;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="PROTECTION-AND-EVIL-EYE">PROTECTION AND EVIL EYE</a></li>
+
+                    <li style="--td: 20;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="SELF-LOVE-AND-PEACE">SELF LOVE AND PEACE</a></li>
+                    <li style="--td: 21;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="SUCCESS">SUCCESS</a></li>
+                    <li style="--td: 22;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="WEIGHT-LOSS">WEIGHT LOSS</a></li>
+                    <li style="--td: 23;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Spirituality">Spirituality</a></li>
+
+                    <li style="--td: 24;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Insomnia">Insomnia</a></li>
+                    <li style="--td: 25;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Communication-Skills">Communication Skills</a></li>
+                    <li style="--td: 26;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Clarity">Clarity</a></li>
+                    <li style="--td: 27;"><a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Intuition">Intuition</a></li>
+
+
+
+
+
+                </ul>
+            </li>
+            <li style="--td: 4;">
+                <a asp-page="/category" asp-route-Url="by-Crystals">By Crystals</a>
+                <ul class="mob-submenu-nav">
+
+                    <li style="--td: 1;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Amber"> Amber</a></li>
+                    <li style="--td: 2;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Agate">Agate</a></li>
+                    <li style="--td: 3;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Amethyst">Amethyst</a></li>
+                    <li style="--td: 4;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Abalone-Shell">Abalone Shell</a></li>
+
+
+
+
+                    <li style="--td: 5;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Ametrine">Ametrine</a></li>
+                    <li style="--td: 6;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Amazonite">Amazonite</a></li>
+
+                    <li style="--td: 7;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Angel-Quartz">Angel Quartz</a></li>
+
+                    <li style="--td: 8;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Angelite">Angelite</a></li>
+                    <li style="--td: 9;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Aquamarine">Aquamarine</a></li>
+                    <li style="--td: 10;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Aragonite">Aragonite</a></li>
+                    <li style="--td: 11;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Azurite">Azurite</a></li>
+
+                    <li style="--td: 12;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Black-Onyx">Black Onyx</a></li>
+                    <li style="--td: 13;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Black-Rutile">Black Rutile</a></li>
+                    <li style="--td: 14;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Black-Sheen-Obsidian">Black Sheen Obsidian</a></li>
+                    <li style="--td: 15;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Black-Tourmaline">Black Tourmaline</a></li>
+                    <li style="--td: 16;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blood-Stone">Blood Stone</a></li>
+                    <li style="--td: 17;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Saphire">Blue Saphire</a></li>
+                    <li style="--td: 18;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Tigers-Eye">Blue Tigers Eye</a></li>
+                    <li style="--td: 19;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Topaz">Blue Topaz</a></li>
+
+
+                    <li style="--td: 20;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Apetite">Blue Apetite</a></li>
+                    <li style="--td: 21;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Calcedony">Blue Calcedony</a></li>
+                    <li style="--td: 22;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Gold-Stone">Blue Gold Stone</a></li>
+                    <li style="--td: 23;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Kyanite">Blue Kyanite</a></li>
+
+                    <li style="--td: 24;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Lace-Agate">Blue Lace Agate</a></li>
+                    <li style="--td: 25;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Blue-Opal">Blue Opal</a></li>
+                    <li style="--td: 26;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Botswana">Botswana</a></li>
+                    <li style="--td: 27;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Carnelian">Carnelian</a></li>
+
+                    <li style="--td: 28;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Cats-Eye">Cat's Eye</a></li>
+                    <li style="--td: 29;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Cheroite">Cheroite</a></li>
+                    <li style="--td: 30;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Chrysocolla">Chrysocolla</a></li>
+                    <li style="--td: 31;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Citrine">Citrine</a></li>
+                    <li style="--td: 32;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Chrome-Diopside">Chrome Diopside</a></li>
+
+
+                    <li style="--td: 33;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Clear-Quartz">Clear Quartz</a></li>
+                    <li style="--td: 34;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Dalmatian-Jasper">Dalmatian Jasper</a></li>
+                    <li style="--td: 35;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Dendrite-Opal">Dendrite Opal</a></li>
+                    <li style="--td: 36;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Emerald">Emerald</a></li>
+
+                    <li style="--td: 37;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Evil-Eye">Evil Eye</a></li>
+                    <li style="--td: 38;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Flower-Agate">Flower Agate</a></li>
+                    <li style="--td: 39;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Fluorite">Fluorite</a></li>
+                    <li style="--td: 40;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Garnet">Garnet</a></li>
+
+                    <li style="--td: 41;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Green-Aventurine">Green Aventurine</a></li>
+                    <li style="--td: 42;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Green-Appetite">Green Appetite</a></li>
+                    <li style="--td: 43;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Green-Tourmaline">Green Tourmaline</a></li>
+                    <li style="--td: 44;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Green-Jade">Green Jade</a></li>
+
+                    <li style="--td: 45;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Green-Onyx">Green Onyx</a></li>
+                    <li style="--td: 46;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Green-Opal">Green Opal</a></li>
+                    <li style="--td: 47;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Grey-Monnstone">Grey Moonstone</a></li>
+
+                    <li style="--td: 48;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Green-Strawberry-Quartz">Green Strawberry Quartz</a></li>
+                    <li style="--td: 49;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Green-Tiger-eye">Green Tiger Eye</a></li>
+                    <li style="--td: 50;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Guava-Quartz">Guava Quartz</a></li>
+                    <li style="--td: 51;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Hematite">Hematite</a></li>
+
+                    <li style="--td: 52;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="HONEY-Calcite">HONEY Calcite</a></li>
+                    <li style="--td: 53;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Howlite">Howlite</a></li>
+                    <li style="--td: 54;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Herkimer-Diamond">Herkimer Diamond</a></li>
+                    <li style="--td: 55;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Hessonite">Hessonite</a></li>
+                    <li style="--td: 56;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Iolite">Iolite</a></li>
+                    <li style="--td: 57;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="K2-Jasper">K2 Jasper</a></li>
+
+                    <li style="--td: 58;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Kambaba-Jasper">Kambaba Jasper</a></li>
+                    <li style="--td: 59;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Kunzite">Kunzite</a></li>
+                    <li style="--td: 60;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Labradorite">Labradorite</a></li>
+                    <li style="--td: 61;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Lapis-Lazuli">Lapis Lazuli</a></li>
+                    <li style="--td: 62;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Leopard-Skin-Jasper">Leopard Skin Jasper</a></li>
+
+                    <li style="--td: 63;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Larimar">Larimar</a></li>
+                    <li style="--td: 64;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Lava">Lava</a></li>
+                    <li style="--td: 65;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Lemon-Quartz">Lemon Quartz</a></li>
+                    <li style="--td: 66;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Lepidolite">Lepidolite</a></li>
+                    <li style="--td: 67;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Lodolite">Lodolite</a></li>
+
+                    <li style="--td: 68;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Malachite">Malachite</a></li>
+                    <li style="--td: 69;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Mookaite-Jasper">Mookaite Jasper</a></li>
+                    <li style="--td: 70;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Moonstone">Moonstone</a></li>
+                    <li style="--td: 71;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Morganite">Morganite</a></li>
+
+                    <li style="--td: 72;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Mother-Of-Pearl">Mother Of Pearl</a></li>
+                    <li style="--td: 73;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Multi-Fluorite">Multi Fluorite</a></li>
+                    <li style="--td: 74;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Multi-Tourmaline">Multi Tourmaline</a></li>
+
+
+                    <li style="--td: 75;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Mystic-Aura-Quartz">Mystic Aura Quartz</a></li>
+                    <li style="--td: 76;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Neon-Appetite">Neon Appetite</a></li>
+                    <li style="--td: 77;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Onyx">Onyx</a></li>
+
+                    <li style="--td: 78;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Opal">Opal</a></li>
+                    <li style="--td: 79;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Opalite">Opalite</a></li>
+                    <li style="--td: 80;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Orthoceras">Orthoceras</a></li>
+                    <li style="--td: 81;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Peach-Moonstone">Peach Moonstone</a></li>
+
+                    <li style="--td: 82;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Peridot">Peridot</a></li>
+                    <li style="--td: 83;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Pink-Opal">Pink Opal</a></li>
+                    <li style="--td: 84;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Petrified-Wood">Petrified Wood</a></li>
+                    <li style="--td: 85;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Picture-Jasper">Picture Jasper</a></li>
+                    <li style="--td: 86;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Pink-Tigers-eye">Pink Tigers Eye</a></li>
+
+                    <li style="--td: 87;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Prehnite">Prehnite</a></li>
+                    <li style="--td: 88;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Pyrite">Pyrite</a></li>
+                    <li style="--td: 89;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="PURPURITE">PURPURITE</a></li>
+                    <li style="--td: 90;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Rainbow-Moonstone">Rainbow Moonstone</a></li>
+
+                    <li style="--td: 91;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Rainbow-Obsidian">Rainbow Obsidian</a></li>
+                    <li style="--td: 92;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Rainbow-Quartz">Rainbow Quartz</a></li>
+                    <li style="--td: 93;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Red-Carnelian">Red Carnelian</a></li>
+                    <li style="--td: 94;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Red-Garnet">Red Garnet</a></li>
+
+                    <li style="--td: 95;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Red-Jasper">Red Jasper</a></li>
+                    <li style="--td: 96;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Red-Tiger-Eye">Red Tiger Eye</a></li>
+                    <li style="--td: 97;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Rhodochrosite">Rhodochrosite</a></li>
+                    <li style="--td: 98;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Rhodonite">Rhodonite</a></li>
+                    <li style="--td: 99;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Rose-Quartz">Rose Quartz</a></li>
+                    <li style="--td: 100;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Ruby-Kyanite">Ruby Kyanite</a></li>
+                    <li style="--td: 101;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Ruby-Stone">Ruby Stone</a></li>
+                    <li style="--td: 102;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Ruby-Zoiste">Ruby Zoiste</a></li>
+                    <li style="--td: 103;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Rudraksh">Rudraksh</a></li>
+                    <li style="--td: 104;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Selenite">Selenite</a></li>
+
+                    <li style="--td: 105;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Serpentine">Serpentine</a></li>
+                    <li style="--td: 106;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Seven-Chakra">Seven Chakra</a></li>
+                    <li style="--td: 107;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Shungite">Shungite</a></li>
+                    <li style="--td: 108;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Snowflake-Obsidian">Snowflake Obsidian</a></li>
+                    <li style="--td: 109;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Smoky-Quartz">Smoky Quartz</a></li>
+
+                    <li style="--td: 110;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Sodalite">Sodalite</a></li>
+                    <li style="--td: 111;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Strawberry-Quartz">Strawberry Quartz</a></li>
+                    <li style="--td: 112;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Sulemani-Haqiq">Sulemani Haqiq</a></li>
+                    <li style="--td: 113;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Sunstone">Sunstone</a></li>
+
+                    <li style="--td: 114;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Super-7">Super 7</a></li>
+                    <li style="--td: 115;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Tiger-Eye">Tiger Eye</a></li>
+                    <li style="--td: 116;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Titanium-Quartz">Titanium Quartz</a></li>
+                    <li style="--td: 117;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Tree-Moss-Agate">Tree Moss Agate</a></li>
+                    <li style="--td: 118;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Tanzanite">Tanzanite</a></li>
+
+
+                    <li style="--td: 119;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Turquoise-Feroza">Turquoise Feroza</a></li>
+                    <li style="--td: 120;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Unakite">Unakite</a></li>
+                    <li style="--td: 121;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Watermelon-Tourmaline">Watermelon Tourmaline</a></li>
+                    <li style="--td: 122;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Yellow-Calcite">Yellow Calcite</a></li>
+
+                    <li style="--td: 123;"><a asp-page="/productlist" asp-route-catname="by-crystals" asp-route-subcatname="Zircon">Zircon</a></li>
+
+                </ul>
+            </li>
+            <li style="--td: 5;">
+                <a asp-page="/category" asp-route-Url="Silver-Products">Silver Products</a>
+                <ul class="mob-submenu-nav">
+
+                    <li style="--td: 1;"><a asp-page="/productlist" asp-route-catname="Silver-Products" asp-route-subcatname="Silver-Rings"> Silver Rings</a></li>
+                    <li style="--td: 2;"><a asp-page="/productlist" asp-route-catname="Silver-Products" asp-route-subcatname="Silver-Bracelets">Silver Bracelets</a></li>
+                    <li style="--td: 3;"><a asp-page="/productlist" asp-route-catname="Silver-Products" asp-route-subcatname="Silver-Anklets"> Silver Anklets</a></li>
+                    <li style="--td: 4;"><a asp-page="/productlist" asp-route-catname="Silver-Products" asp-route-subcatname="Silver-Necklace"> Silver Necklace</a></li>
+                    <li style="--td: 5;"><a asp-page="/productlist" asp-route-catname="Silver-Products" asp-route-subcatname="Silver-Earrings"> Silver Earrings</a></li>
+                    <li style="--td: 6;"><a asp-page="/productlist" asp-route-catname="Silver-Products" asp-route-subcatname="Silver-Charms"> Silver Charms</a></li>
+                    <li style="--td: 7;"><a asp-page="/productlist" asp-route-catname="Silver-Products" asp-route-subcatname="Silver-Pendants"> Silver Pendants</a></li>
+
+                </ul>
+            </li>
+            <li style="--td: 6;">
+                <a asp-page="/category" asp-route-Url="by-Chakras">By Chakras</a>
+                <ul class="mob-submenu-nav">
+
+                    <li style="--td: 1;"><a asp-page="/productlist" asp-route-catname="by-Chakras" asp-route-subcatname="Root-Chakra">Root Chakra</a></li>
+                    <li style="--td: 2;"><a asp-page="/productlist" asp-route-catname="by-Chakras" asp-route-subcatname="Sacral-chakra">Sacral chakra</a></li>
+                    <li style="--td: 3;"><a asp-page="/productlist" asp-route-catname="by-Chakras" asp-route-subcatname="Solar-Plexus">Solar Plexus</a></li>
+                    <li style="--td: 4;"><a asp-page="/productlist" asp-route-catname="by-Chakras" asp-route-subcatname="Heart-chakra">Heart chakra</a></li>
+                    <li style="--td: 5;"><a asp-page="/productlist" asp-route-catname="by-Chakras" asp-route-subcatname="Throat-chakra">Throat chakra</a></li>
+                    <li style="--td: 6;"><a asp-page="/productlist" asp-route-catname="by-Chakras" asp-route-subcatname="Third-eye-chakra">Third eye chakra</a></li>
+                    <li style="--td: 7;"><a asp-page="/productlist" asp-route-catname="by-Chakras" asp-route-subcatname="Crown-chakra">Crown chakra</a></li>
+
+                </ul>
+            </li>
+            <li style="--td: 7;"><a href="/contactus">Contact</a></li>
+        </ul>
+
+        <span class="off-canvas-socials">
+            <a href="https://www.instagram.com/crystalsbyriya?igsh=MThsYzk4aGJvdjY0OQ==">
+                <i class="lastudioicon lastudioicon-b-instagram"></i>
+            </a>
+            <a href="https://m.facebook.com/p/crystalsbyriya-100076325670695/">
+                <i class="lastudioicon lastudioicon-b-facebook"></i>
+            </a>
+            <a href="https://m.youtube.com/@@crystalsbyriya">
+                <i class="lastudioicon lastudioicon-b-youtube-play"></i>
+            </a>
+        </span>
+
+    </aside>
+    <!--== End Side Menu ==-->
+    <!--=======================Javascript============================-->
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/modernizr.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/jquery-main.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/swiper.min.js"></script>
+
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/mmenu.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/jquery-migrate.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/popper.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/bootstrap.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/jquery.appear.js"></script>
+
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/fancybox.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/aos.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/jquery.slicknav.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/jquery.countdown.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/tippy.all.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/isotope.pkgd.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/vivus.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/parallax.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/slick.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/wow.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/jquery-zoom.min.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/custom.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/search.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/searchresult.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/newsletter.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/cartcount.js"></script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/wishlist.js"></script>
+
+    <!-- Include the lazysizes script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" async></script>
+
+
+
+
+    @RenderSection("Scripts", false)
+
+
+
 </body>
+
+
 </html>

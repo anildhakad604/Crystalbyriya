@@ -1,47 +1,118 @@
 ﻿@page
-@model Astaberry.Areas.Admin.Pages.Products.DeleteModel
+@model CrystalByRiya.Areas.Admin.Pages.Products.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete Product</h1>
+<h1>Delete</h1>
 
-<h3>Are you sure you want to delete this Product?</h3>
+<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>TblProduct</h4>
+    <h4>Product</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TblProduct.Skucode)
+            @Html.DisplayNameFor(model => model.Product.SkuCode)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TblProduct.Skucode)
+            @Html.DisplayFor(model => model.Product.SkuCode)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TblProduct.QTY)
+            @Html.DisplayNameFor(model => model.Product.ProductName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TblProduct.QTY)
+            @Html.DisplayFor(model => model.Product.ProductName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TblProduct.Price)
+            @Html.DisplayNameFor(model => model.Product.Qty)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TblProduct.Price)
+            @Html.DisplayFor(model => model.Product.Qty)
         </dd>
-       
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TblProduct.ParentCode)
+            @Html.DisplayNameFor(model => model.Product.Price)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TblProduct.ParentCode)
+            @Html.DisplayFor(model => model.Product.Price)
         </dd>
-      
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Keywords)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Keywords)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.ProductDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.ProductDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.AltText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.AltText)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.ParentUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.ParentUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Thumbnail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Thumbnail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.ParentCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.ParentCode)
+        </dd>
+    
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.ShortDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.ShortDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Tags)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Tags)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.AddedOn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.AddedOn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.MetaTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.MetaTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.MetaTag)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.MetaTag)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.MetaDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.MetaDescription)
+        </dd>
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="TblProduct.Id" />
+        <input type="hidden" asp-for="Product.ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

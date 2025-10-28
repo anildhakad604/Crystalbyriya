@@ -1,0 +1,242 @@
+﻿@page
+@model CrystalByRiya.Pages.thankyouModel
+@{
+}
+@section Metatags {
+    <title> Crystal By Riya | Pre-Owned Excellence</title>
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Crystals By Riya | Home" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:title" content="Epitome Cars | Pre-Owned Excellence">
+    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
+    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+}
+
+<main class="main-content">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center pt-3 pt-md-5">
+                        <h2 class="title">Order is received</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Title Area ==-->
+    <!--== Start Product Area Wrapper ==-->
+    <section class="thank-you-area pt-3 pt-md-5 area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="thank-you-content-parent">
+                        <p> We are grateful for your order; thank you for shopping with us</p>
+                        <p>We will be processing your order very soon.</p>
+                        <p>Lets begin your healing journey, we make sure to pack with love.</p>
+                        <div class="order-summary-parent faq-area py-2">
+                            <div class="accordian-content">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading1">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">Order Summary</button>
+                                        </h2>
+        <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        <div class="row mt-3">
+            <div class="col-md-8">
+                <div class="order-summary-parent">
+                    <div class="order-review-details">
+                        <div class="table-responsive">
+                            <table id="cart" style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid #ddd;">
+                                        <th class="pro-name text-center" style="padding: 10px; text-align: left;">Product</th>
+                                        <th class="pro-quantity" style="padding: 10px; text-align: center;">Quantity</th>
+                                        <th class="pro-size" style="padding: 10px; text-align: center;">Size</th>
+                                        <th class="pro-material" style="padding: 10px; text-align: center;">Material</th>
+                                                                                <th class="pro-addon" style="padding: 10px; text-align: center;">AddOn</th>
+                                        <th class="pro-subtotal" style="padding: 10px; text-align: right;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cart-items">
+                                    @if (Model.Carts.Count>0)
+                                    {
+                                        foreach (var item in Model.Carts)
+                                        {
+                                            <tr style="border-bottom: 1px solid #eee;">
+                                                <td class="pro-thumbnail" style="padding: 15px;">
+                                                    <div class="product-sum d-flex gap-3 align-items-center">
+                                                        <div class="pro-img" style="width: 50px;">
+                                                            <a href="#">
+                                                                                                        <img src="@Url.Content("https://djelgxoby50a9.cloudfront.net/Images/"+@item.Image)" alt="@item.ProductName" class="img-fluid" style="width: 100%; height: auto; border-radius: 5px;">
+                                                            </a>
+                                                        </div>
+                                                        <div class="pro-name" style="font-weight: bold;">@item.ProductName</div>
+                                                    </div>
+                                                </td>
+                                                <td class="pro-quantity" style="text-align: center;">@item.Qty</td>
+                                                <td class="pro-size" style="text-align: center;">@item.Size</td>
+                                                <td class="pro-material" style="text-align: center;">@item.MaterialName</td>
+                                                                                        <td class="pro-addon" style="text-align: center;">@item.Addon</td>
+                                                <td class="pro-subtotal" style="text-align: right;">₹ @String.Format("{0:0.00}", item.Price * item.Qty)</td>
+                                            </tr>
+                                        }
+                                    }
+                                                                            else if(Model.childskuCodes.Count>0)
+                                    {
+                                                                                foreach (var item in Model.childskuCodes){
+                                                                                
+                                                                                    <tr style="border-bottom: 1px solid #eee;">
+                                                                                        <td class="pro-thumbnail" style="padding: 15px;">
+                                                                                            <div class="product-sum d-flex gap-3 align-items-center">
+                                                                                                <div class="pro-img" style="width: 50px;">
+                                                                                                    <a href="#">
+                                                                                                        <img src="@Url.Content("https://djelgxoby50a9.cloudfront.net/Images/"+item.Image)" alt="@item.Product" class="img-fluid" style="width: 100%; height: auto; border-radius: 5px;">
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                                <div class="pro-name" style="font-weight: bold;">@item.Product</div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    <td class="pro-quantity" style="text-align: center;">@item.Quantity</td>
+                                                                                    <td class="pro-size" style="text-align: center;">@item.Size</td>
+                                                                                    <td class="pro-material" style="text-align: center;">@item.Material</td>
+                                                                                    <td class="pro-addon" style="text-align: center;">@item.Addon</td>
+                                                                                    <td class="pro-subtotal" style="text-align: right;">₹ @String.Format("{0:0.00}", item.Price * item.Quantity)</td>
+                                                                                    </tr>
+                                                                                
+                                    }
+                                    }
+                                </tbody>
+                                <tfoot>
+                                     <tr class="cart-subtotal" style="border-top: 2px solid #ddd;">
+                                        <th colspan="4" style="padding: 10px; text-align: left;">Subtotal</th>
+                                        <td style="padding: 10px; text-align: right;">₹ @String.Format("{0:0.00}", Model.subtotal)</td>
+                                    </tr>
+                                    <tr class="cart-subtotal" style="border-top: 2px solid #ddd;">
+                                        <th colspan="4" style="padding: 10px; text-align: left;">AfterDiscount</th>
+                                        <td style="padding: 10px; text-align: right;">₹ @String.Format("{0:0.00}", Model.AfterDiscount)</td>
+                                    </tr>
+                                    <tr class="shipping">
+                                        <th colspan="4" style="padding: 10px; text-align: left;">Shipping Charges</th>
+                                        <td style="padding: 10px; text-align: right;">₹ @String.Format("{0:0.00}", Model.shipping)</td>
+                                    </tr>
+                                    <tr class="final-total" style="border-top: 2px solid #ddd;">
+                                        <th colspan="4" style="padding: 10px; text-align: left; font-weight: bold;">Total</th>
+                                        <td style="padding: 10px; text-align: right; font-weight: bold;">₹ @String.Format("{0:0.00}", Model.Total)</td>
+                                    </tr>
+                                      
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Responsive styling */
+    media (max-width: 768px) {
+        #cart thead {
+            display: none; /* Hide the headers on small screens */
+        }
+        #cart tbody tr {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        #cart tbody td {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        .pro-img {
+            width: 40px;
+        }
+        .pro-thumbnail, .pro-quantity, .pro-size, .pro-material, .pro-subtotal {
+            text-align: left;
+        }
+    }
+</style>
+
+
+                        <div class="img-parent mb-3 mt-3">
+                            <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/thank.png" alt="Thank You">
+                        </div>
+                        <p>Lets begin your healing journey, we make sure to pack with love.</p>
+                        <div class="order-details-parent">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="section-title mb-0 mb-md-3">
+                                        <h4 class="fw-semibold">Order Details</h4>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <p class="order-num">Order No. : <span>@Model.Detail.Orderid</span></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="order-date">Date : <span>@Model.date</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="cust-name">Customer Name : <span>@Model.Detail.FullName</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="cust-phone">Phone Number : <span>@Model.Detail.ContactNumber</span></p>
+                                </div>
+                                <div class="col-12">
+                                    <p class="shipping-address">Shipping Address : <span>@Model.ShippingDetail.Address</span></p>
+                                </div>
+                                <div class="col-12">
+                                    <p class="billing-address">Billing Address : <span>@Model.Detail.Address</span></p>
+                                </div>
+                                <div class="col-12">
+                                    <p class="payment-method">Payment Method : <span> @Model.paymentMethod</span></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="subtotal">Subtotal : <span>&#8377; @Model.subtotal</span></p>
+                                </div>
+                                                <div class="col-6">
+                                                    <p class="subtotal">AfterDiscount : <span>&#8377; @Model.AfterDiscount</span></p>
+                                                </div>
+                                <div class="col-6">
+                                    <p class="total">Total : <span>&#8377; @Model.Total</span></p>
+                                </div>
+                                                <div class="col-6">
+                                                    <p class="amount-paid">
+                                                        Amount Paid :
+                                                        <span>
+                                                            &#8377;
+                                                            @((Model.paymentMethod == "cod")
+                                                                ? "200.00"
+                                                                : String.Format("{0:0.00}", Model.Total))
+                                                        </span>
+                                                    </p>
+                                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="emailMe"><input type="checkbox" name="emailMe" id="emailMe" checked> Email me</label>
+                        </div>
+                        <p>Note : You’ll get order, shipping and delivery updates over the E-mail.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Product Area Wrapper ==-->
+</main>

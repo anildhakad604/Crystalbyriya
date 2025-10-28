@@ -1,10 +1,1056 @@
 ﻿@page
 @model IndexModel
+ @using Microsoft.AspNetCore.Http
+  @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@{
+    string userEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
+}
+ 
+@section Metatags {
+    <title> Crystal By Riya | Discover the path of crystals and healing</title>
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Crystals By Riya | Discover the path of crystals and healing" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:title" content="Crystal By Riya | Discover the path of crystals and healing">
+    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
+    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+    <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-PNKNFV3BKS"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-PNKNFV3BKS');</script>
+}
+<script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "Corporation",
+      "name": "Crystals By Riya",
+      "url": "https://crystalsbyriya.com/",
+      "logo": "https://djelgxoby50a9.cloudfront.net/assetsv2/img/logo.png",
+      "contactPoint": {
+        "@@type": "ContactPoint",
+        "telephone": "+91-8010085344",
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": "en"
+      },
+      "sameAs": [
+        "https://www.instagram.com/crystalsbyriya/?utm_source=ig_web_button_share_sheet",
+        "https://www.facebook.com/profile.php?id=100076325670695",
+        "https://www.youtube.com/@@crystalsbyriya",
+        "https://pin.it/67uNZ0yb7"
+      ]
+    }
+</script>
+
+
+
+    <main class="main-content">
+       
+    <!--== Start Hero Area Wrapper ==-->
+    <section class="home-slider-area slider-default">
+        <!-- Add Logout Button Here -->
+     
+        <div class="home-slider-content">
+            <div class="swiper-container home-slider-container">
+                <div class="swiper-wrapper">
+                    @if (Model.Banners != null && Model.Banners.Any())
+{
+                    @foreach (var item in Model.Banners)
+                    {
+                        if (item.Type == "Video")
+                        {
+                            <div class="swiper-slide">
+                                <!-- Start Slide Item -->
+                                <div class="home-slider-item">
+                                    <div class="video-thumb">
+                                        <video src="@item.DesktopImageName" autoplay muted loop class="position-absolute d-none d-md-block"></video>
+                                        <video src="@item.MobileImageName" autoplay muted loop class="position-absolute d-md-none"></video>
+                                    </div>
+                                    <div class="slider-content-area position-relative">
+                                        <div class="container">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-12 col-lg-10 m-auto">
+                                                    <div class="content">
+                                                        <div class="inner-content">
+                                                           @*  <h2>NEW IN</h2> *@
+                                                            <p>@item.Text</p>
+                                                            <a href="@item.TargetUrl" class="btn-theme btn-black mt-3">Shop Now</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Slide Item -->
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="swiper-slide">
+                                <!-- Start Slide Item -->
+                                <div class="home-slider-item">
+                                    <div class="bg-thumb bg-overlay bg-img d-none d-md-block" data-bg-img="@item.DesktopImageName"></div>
+                                    <div class="bg-thumb bg-overlay bg-img d-md-none" data-bg-img="@item.MobileImageName"></div>
+                                    <div class="slider-content-area">
+                                        <div class="container">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-12 col-lg-10 m-auto">
+                                                    <div class="content">
+                                                        <div class="inner-content">
+                                                          @*   <h2>NEW IN</h2> *@
+                                                            <p>@item.Text</p>
+                                                            <a href="@item.TargetUrl" class="btn-theme btn-black mt-3">Shop Now</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Slide Item -->
+                            </div>
+                        }
+                    }}
+                    else
+                    {
+                        <p>No banners available.</p>
+                    }
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+    <!--== End Hero Area Wrapper ==-->
+    <!--== Start Announcement Area Wrapper ==-->
+  
+        <section class="announcement-slider-area">
+            <div class="announcement-slider-content-parent">
+                <div class="swiper-container announcement-slider-content">
+                    <div class="swiper-wrapper">
+                    @if (Model.Announcements != null && Model.Announcements.Any()){
+                    @foreach (var item in Model.Announcements)
+                    {
+                        <div class="swiper-slide">@item.AnnouncementText <span class="mx-4">&#9733;</span></div>
+                    }
+                    }
+                    else
+                    {
+                        <div class="swiper-slide">No announcements available.</div>
+                    }
+                  
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+    <!--== End Announcement Area Wrapper ==-->
+    <!--== Start Highlights Area Wrapper ==-->
+    <section class="highlights-slider-area area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 m-auto">
+                    <div class="section-title text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                        <h2 class="title">By Crystals</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="highlights-slider-content-parent">
+            <div class="swiper-container highlights-slider-content">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Tiger-Eye" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/1.jpg" alt="Tigers Eye" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Tigers Eye</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Rainbow-Moonstone" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/2.jpg" alt="Rainbow MoonStone" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Rainbow<br> MoonStone</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Amethyst" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/3.jpg" alt="Amethyst" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Amethyst</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Black-Tourmaline" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/4.jpg" alt="Black Tourmaline" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Black <br /> Tourmaline</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Clear-Quartz" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/5.jpg" alt="Clear Quartz" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Clear Quartz</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Green-Aventurine" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/6.jpg" alt="Green Aventurine" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Green <br /> Aventurine</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Citrine" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/7.jpg" alt="Citrine" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Citrine</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Rose-Quartz" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/8.jpg" alt="Rose Quartz" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Rose Quartz</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Multi-Flourite" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/9.jpg" alt="Multi Flourite" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Multi <br> Flourite</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Carnelian" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/10.jpg" alt="Carnelian" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Carnelian</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Turquoise-Feroza" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/11.jpg" alt="Turquoise" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Turquoise</h6>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide highlights-thumb-parent">
+                        <a href="/productlist/by-Crystals/Pyrite" class="highlights-content">
+                            <div class="highlights-thumb">
+                                <img src="https://djelgxoby50a9.cloudfront.net/highlight/12.jpg" alt="Pyrite" class="img-fluid">
+                            </div>
+                            <div class="hightlights-thumb-title text-center mt-2">
+                                <h6>Pyrite</h6>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+    <!--== End Highlights Area Wrapper ==-->
+    <!--== Start Shop By Intentions Area Wrapper ==-->
+ <!--== Start Shop By Intentions Area Wrapper ==-->
+    <section class="shop-by-intentions-area area-padding">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-8 col-lg-6 m-auto">
+            <div class="section-title text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+              <h2 class="title">Shop By Intention</h2>
+              <!-- <h5 class="subtitle">COLLECTION</h5> -->
+            </div>
+          </div>
+        </div>
+        <div class="for-large-screen row justify-content-center gy-3 d-none d-md-flex aos-init aos-animate" data-aos="fade-up" data-aos-duration="1200">
+          <div class="col-3 col-md-3">
+                    <a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="MONEY-AND-ABUNDANCE" class="shop-by-intentions-parent text-center">
+
+              <div class="icon-parent mb-2">
+                            <img src="https://djelgxoby50a9.cloudfront.net/Icons/money%20(1).png" class="img-fluid icon" alt="">
+                            <img src="https://djelgxoby50a9.cloudfront.net/Icons/Crystalsbyriya(1).JPG" class="img-fluid overlay-img" alt="">
+              </div>
+              <div class="title">
+                <h6>Money</h6>
+              </div>
+            </a>
+          </div>
+          <div class="col-3 col-md-3">
+                    <a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="HEALTH-AND-WELLNESS" class="shop-by-intentions-parent text-center">
+
+              <div class="icon-parent mb-2">
+                            <img src="https://djelgxoby50a9.cloudfront.net/Icons/protection.png" class="img-fluid icon" alt="">
+                            <img src="https://djelgxoby50a9.cloudfront.net/Icons/Untitled%20design.jpg.JPG" class="img-fluid overlay-img" alt="">
+              </div>
+              <div class="title">
+                <h6>Health & Wellness</h6>
+              </div>
+            </a>
+          </div>
+          <div class="col-3 col-md-3">
+                    <a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Crystals-HAPPINESS,-POSITIVITY" class="shop-by-intentions-parent text-center">
+
+                        <div class="icon-parent mb-2">
+                            <img src="https://djelgxoby50a9.cloudfront.net/Icons/love%20(2).png" class="img-fluid icon" alt="">
+                            <img src="https://djelgxoby50a9.cloudfront.net/Icons/Untitled%20design.jpg(1).JPG" class="img-fluid overlay-img" alt="">
+                           
+              </div>
+              <div class="title">
+                <h6>Happiness & Peace</h6>
+              </div>
+            </a>
+          </div>
+          <div class="col-3 col-md-3">
+                    <a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Crystals-LOVE-And-Relationship" class="shop-by-intentions-parent text-center">
+
+         
+              <div class="icon-parent mb-2">
+                            <img src="https://djelgxoby50a9.cloudfront.net/Icons/hand%20(2).png" class="img-fluid icon" alt="">
+                            <img src="https://djelgxoby50a9.cloudfront.net/Icons/Crystalsbyriya.JPG" class="img-fluid overlay-img" alt="">
+              </div>
+              <div class="title">
+                <h6>Love</h6>
+              </div>
+            </a>
+          </div>
+         
+        
+        </div>
+        <div class="for-small-screen row justify-content-center d-md-none m-0 aos-init aos-animate" data-aos="fade-up" data-aos-duration="1200">
+          <div class="col-12 p-0">
+            <div class="swiper-container shop-by-intentions-slider-content px-3 py-3">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                                <a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="MONEY-AND-ABUNDANCE" class="shop-by-intentions-parent text-center">
+
+                                    <div class="icon-parent mb-2">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/Icons/money%20(1).png" class="img-fluid icon" alt="">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/Icons/Crystalsbyriya(1).JPG" class="img-fluid overlay-img" alt="">
+                                    </div>
+                                    <div class="title">
+                                        <h6>Money</h6>
+                                    </div>
+                  </a>
+                </div>
+                <div class="swiper-slide">
+                                <a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="HEALTH-AND-WELLNESS" class="shop-by-intentions-parent text-center">
+
+                                    <div class="icon-parent mb-2">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/Icons/protection.png" class="img-fluid icon" alt="">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/Icons/Untitled%20design.jpg.JPG" class="img-fluid overlay-img" alt="">
+                                    </div>
+                                    <div class="title">
+                                        <h6>Health & Wellness</h6>
+                                    </div>
+                  </a>
+                </div>
+                <div class="swiper-slide">
+                                <a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Crystals-HAPPINESS,-POSITIVITY" class="shop-by-intentions-parent text-center">
+
+                                    <div class="icon-parent mb-2">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/Icons/love%20(2).png" class="img-fluid icon" alt="">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/Icons/Untitled%20design.jpg(1).JPG" class="img-fluid overlay-img" alt="">
+                                    </div>
+                                    <div class="title">
+                                        <h6>Happiness & Peace</h6>
+                                    </div>
+                  </a>
+                </div>
+                <div class="swiper-slide">
+                                <a asp-page="/productlist" asp-route-catname="by-intention" asp-route-subcatname="Crystals-LOVE-And-Relationship" class="shop-by-intentions-parent text-center">
+
+                                    <div class="icon-parent mb-2">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/Icons/hand%20(2).png" class="img-fluid icon" alt="">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/Icons/Crystalsbyriya.JPG" class="img-fluid overlay-img" alt="">
+                                    </div>
+                                    <div class="title">
+                                        <h6>Love</h6>
+                                    </div>
+                  </a>
+                </div>
+              
+    
+              </div>
+              <!-- Add Arrows -->
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Shop By Intentions Area Wrapper ==-->
+    <!--== End Shop By Intentions Area Wrapper ==-->
+    <!--== Start Products Slider Area Wrapper ==-->
+    <section class="products-slider-area area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 m-auto">
+                    <div class="section-title text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                        <h2 class="title">Best Sellers (Shop By Look)</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="products-slider-content">
+                    <div class="swiper-container products-slider-container">
+                        <div class="swiper-wrapper">
+
+                            <div class="swiper-slide">
+                                <!-- Start Slide Item -->
+                                <div class="slider-item">
+                                    <div class="row gy-4">
+                                        <div class="col-lg-6">
+                                            <div class="thumb text-center text-lg-end">
+                                                <img src="https://ik.imagekit.io/rjqr7zeeq/Best%20Seller/05e661e4-4ee5-4021-b83e-d477fcf81084.jpg?updatedAt=1736241359379" alt="" class="img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="inner-product-slider-parent">
+                                                <div class="swiper-container inner-products-slider-container">
+                                                    <div class="swiper-wrapper mb-4">
+                                                        <div class="swiper-slide">
+                                                            <!-- Start Slide Item -->
+                                                            <div class="slider-item">
+                                                                <div class="product-item">
+                                                                    <div class="product-thumb">
+                                                                        <a href="/detail/LAC141/Love-attraction-Combination-">
+                                                                            <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/bestseller/11.jpg" alt="Shop">
+                                                                            <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/assetsv2/img/bestseller/11.jpg"></span>
+                                                                            <span class="thumb-overlay"></span>
+                                                                        </a>
+                                                                       
+                                                                    </div>
+                                                                    <div class="product-info">
+                                                                        <div class="content-inner text-center w-100">
+                                                                            <h4 class="title"><a href="/detail/LAC141/Love-attraction-Combination-">Love attraction Combination</a></h4>
+                                                                            <div class="prices text-center">
+                                                                                <span class="price">&#8377; 1250</span>
+                                                                            </div>
+                                                                            <div class="btn-parent">
+                                                                                <a href="/detail/LAC141/Love-attraction-Combination-" class="btn btn-view-product">View Product</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="swiper-slide">
+                                                            <!-- Start Slide Item -->
+                                                            <div class="slider-item">
+                                                                <div class="product-item">
+                                                                    <div class="product-thumb">
+                                                                        <a href="/detail/LAC141/Love-attraction-Combination-">
+                                                                            <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/bestseller/2.jpg" alt="Shop">
+                                                                            <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/assetsv2/img/bestseller/2.jpg"></span>
+                                                                            <span class="thumb-overlay"></span>
+                                                                        </a>
+                                                                        
+                                                                    </div>
+                                                                    <div class="product-info">
+                                                                        <div class="content-inner text-center w-100">
+                                                                            <h4 class="title"><a href="/detail/LAC141/Love-attraction-Combination-">Love attraction Combination</a></h4>
+                                                                            <div class="prices text-center">
+                                                                                <span class="price">&#8377; 1100</span>
+                                                                            </div>
+                                                                            <div class="btn-parent">
+                                                                                <a href="/detail/LAC141/Love-attraction-Combination-" class="btn btn-view-product">View Product</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Add Arrows -->
+                                                    <div class="swiper-button-prev-inner">
+                                                        <span class="--t: 0;"></span>
+                                                        <span class="--t: 1;"></span>
+                                                    </div>
+                                                    <div class="swiper-button-next-inner">
+                                                        <span class="--t: 0;"></span>
+                                                        <span class="--t: 1;"></span>
+                                                    </div>
+                                                    <!-- Add Pagination -->
+                                                    <div class="swiper-pagination"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Slide Item -->
+                            </div>
+
+                            <div class="swiper-slide">
+                                <!-- Start Slide Item -->
+                                <div class="slider-item">
+                                    <div class="row gy-3">
+                                        <div class="col-lg-6">
+                                            <div class="thumb text-center text-lg-end">
+                                                <img src="https://djelgxoby50a9.cloudfront.net/bestsellers/4by5+image+ishaan+(1).jpg" alt="" class="img-fluid">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="inner-product-slider-parent">
+                                                <div class="swiper-container inner-products-slider-container">
+                                                    <div class="swiper-wrapper mb-4">
+
+                                                        <div class="swiper-slide">
+                                                            <!-- Start Slide Item -->
+                                                            <div class="slider-item">
+                                                                <div class="product-item">
+                                                                    <div class="product-thumb">
+                                                                        <a href="/detail/EC139/Education-Combination-Bracelet">
+                                                                            <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/bestseller/1.jpg" alt="Shop">
+                                                                            <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/assetsv2/img/bestseller/1.jpg"></span>
+                                                                            <span class="thumb-overlay"></span>
+                                                                        </a>
+                                                                      
+                                                                    </div>
+                                                                    <div class="product-info">
+                                                                        <div class="content-inner text-center w-100">
+                                                                            <h4 class="title"><a href="/detail/EC139/Education-Combination-Bracelet">Education Combination Bracelet</a></h4>
+                                                                            <div class="prices text-center">
+                                                                                <span class="price">&#8377; 1250</span>
+                                                                            </div>
+                                                                            <div class="btn-parent">
+                                                                                <a href="/detail/EC139/Education-Combination-Bracelet" class="btn btn-view-product">View Product</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="swiper-slide">
+                                                            <!-- Start Slide Item -->
+                                                            <div class="slider-item">
+                                                                <div class="product-item">
+                                                                    <div class="product-thumb">
+                                                                        <a href="/detail/EC139/Education-Combination-Bracelet">
+                                                                            <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/bestseller/7.jpg" alt="Shop">
+                                                                            <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/assetsv2/img/bestseller/7.jpg"></span>
+                                                                            <span class="thumb-overlay"></span>
+                                                                        </a>
+                                                                     
+                                                                    </div>
+                                                                    <div class="product-info">
+                                                                        <div class="content-inner text-center w-100">
+                                                                            <h4 class="title"><a href="/detail/EC139/Education-Combination-Bracelet">Education Combination Bracelet</a></h4>
+                                                                            <div class="prices text-center">
+                                                                                <span class="price">&#8377; 1100</span>
+                                                                            </div>
+                                                                            <div class="btn-parent">
+                                                                                <a href="/detail/EC139/Education-Combination-Bracelet" class="btn btn-view-product">View Product</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- Add Arrows -->
+                                                    <div class="swiper-button-prev-inner">
+                                                        <span class="--t: 0;"></span>
+                                                        <span class="--t: 1;"></span>
+                                                    </div>
+                                                    <div class="swiper-button-next-inner">
+                                                        <span class="--t: 0;"></span>
+                                                        <span class="--t: 1;"></span>
+                                                    </div>
+                                                    <!-- Add Pagination -->
+                                                    <div class="swiper-pagination"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Slide Item -->
+                            </div>
+
+                           
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-prev swiper-button-prev-outer"></div>
+                        <div class="swiper-button-next swiper-button-next-outer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+                           
+    <!--== End Collection Slider Area Wrapper ==-->
+    <!--== Start By Category Area Wrapper ==-->
+   <section class="by-category-area product-area best-sellers-product-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-6 m-auto">
+                <div class="section-title text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                    <h2 class="title">By Category</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="for-large-screen row justify-content-center aos-init aos-animate d-none d-lg-flex" data-aos="fade-up" data-aos-duration="1000">
+
+            <!-- Static Product 1 -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <!-- Start Product Item -->
+                <div class="product-item">
+                    <div class="product-thumb">
+                            <a href="/productlist/by-Category/Crystals-BRACELETS">
+                                <img src="https://djelgxoby50a9.cloudfront.net/bycategory/15B6B981-5CD0-44BD-B3EF-AE5F0C5C59D4.jpeg?updatedAt=1724763543372" alt="Product Name 1" />
+                                <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/bycategory/15B6B981-5CD0-44BD-B3EF-AE5F0C5C59D4.jpeg?updatedAt=1724763543372"></span>
+                            <span class="thumb-overlay"></span>
+                        </a>
+                    </div>
+                    <div class="product-footer position-relative">
+                        <div class="product-info d-block">
+                            <div class="content-inner text-center">
+                                <h4 class="title">
+                                        <a href="#">Amethyst Bracelet</a>
+                                </h4>
+                                <div class="prices">
+                                    <span class="price">&#8377; 799-3000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Product Item -->
+            </div>
+
+            <!-- Static Product 2 -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <!-- Start Product Item -->
+                <div class="product-item">
+                    <div class="product-thumb">
+                            <a href="/productlist/by-Category/Crystals-TUMBLES">
+                                <img src="https://djelgxoby50a9.cloudfront.net/Images/CXR_1359.jpg?updatedAt=1727694919318" alt="Product Name 2" />
+                                <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/Images/CXR_1359.jpg?updatedAt=1727694919318"></span>
+                            <span class="thumb-overlay"></span>
+                        </a>
+                    </div>
+                    <div class="product-footer position-relative">
+                        <div class="product-info d-block">
+                            <div class="content-inner text-center">
+                                <h4 class="title">
+                                        <a href="#">Rose Quartz Tumble</a>
+                                </h4>
+                                <div class="prices">
+                                    <span class="price">&#8377; 350-700</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Product Item -->
+            </div>
+
+            <!-- Static Product 3 -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <!-- Start Product Item -->
+                <div class="product-item">
+                    <div class="product-thumb">
+                            <a href="/productlist/by-Category/Crystals-RINGS">
+                                <img src="https://ik.imagekit.io/rjqr7zeeq/d0c8dfee-eeb8-4ba9-b6b9-beae2773ebab.JPG?updatedAt=1733742919713" alt="Product Name 3" />
+                                <span class="bg-thumb" data-bg-img="https://ik.imagekit.io/rjqr7zeeq/d0c8dfee-eeb8-4ba9-b6b9-beae2773ebab.JPG?updatedAt=1733742919713"></span>
+                            <span class="thumb-overlay"></span>
+                        </a>
+                    </div>
+                    <div class="product-footer position-relative">
+                        <div class="product-info d-block">
+                            <div class="content-inner text-center">
+                                <h4 class="title">
+                                        <a href="#">Crystal Rings</a>
+                                </h4>
+                                <div class="prices">
+                                    <span class="price">&#8377; 1250-8000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Product Item -->
+            </div>
+
+            <!-- Static Product 4 -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <!-- Start Product Item -->
+                <div class="product-item">
+                    <div class="product-thumb">
+                            <a href="/productlist/by-Category/Crystals-PENDANTS">
+                                <img src="https://ik.imagekit.io/rjqr7zeeq/EA5C1554-DDA5-48E6-A2FD-6E96FACDDDAE.jpg?updatedAt=1733743053660" alt="Product Name 4" />
+                                <span class="bg-thumb" data-bg-img="https://ik.imagekit.io/rjqr7zeeq/EA5C1554-DDA5-48E6-A2FD-6E96FACDDDAE.jpg?updatedAt=1733743053660"></span>
+                            <span class="thumb-overlay"></span>
+                        </a>
+                    </div>
+                    <div class="product-footer position-relative">
+                        <div class="product-info d-block">
+                            <div class="content-inner text-center">
+                                <h4 class="title">
+                                    <a href="#">Amethyst Sliver Pendant</a>
+                                </h4>
+                                <div class="prices">
+                                    <span class="price">&#8377; 1500-8000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Product Item -->
+            </div>
+
+        </div>
+    </div>
+        <div class="for-small-screen row justify-content-center aos-init aos-animate m-0 d-lg-none" data-aos="fade-up" data-aos-duration="1000">
+            <div class="swiper-container shop-by-category-slider-content px-3 py-3">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <!-- Start Product Item -->
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a href="/productlist/by-Category/Crystals-BRACELETS">
+                                    <img src="https://djelgxoby50a9.cloudfront.net/Images/15B6B981-5CD0-44BD-B3EF-AE5F0C5C59D4.jpeg?updatedAt=1724763543372" alt="Product Name 1" />
+                                    <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/Images/15B6B981-5CD0-44BD-B3EF-AE5F0C5C59D4.jpeg?updatedAt=1724763543372"></span>
+                                    <span class="thumb-overlay"></span>
+                                </a>
+                            </div>
+                            <div class="product-footer position-relative">
+                                <div class="product-info d-block">
+                                    <div class="content-inner text-center">
+                                        <h4 class="title">
+                                            <a href="#">Amethyst Bracelet</a>
+                                        </h4>
+                                        <div class="prices">
+                                            <span class="price">&#8377; 799-3000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Product Item -->
+                    </div>
+
+                    <div class="swiper-slide">
+                        <!-- Start Product Item -->
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a href="/productlist/by-Category/Crystals-TUMBLES">
+                                    <img src="https://djelgxoby50a9.cloudfront.net/Images/CXR_1359.jpg?updatedAt=1727694919318" alt="Product Name 2" />
+                                    <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/Images/CXR_1359.jpg?updatedAt=1727694919318"></span>
+                                    <span class="thumb-overlay"></span>
+                                </a>
+                            </div>
+                            <div class="product-footer position-relative">
+                                <div class="product-info d-block">
+                                    <div class="content-inner text-center">
+                                        <h4 class="title">
+                                            <a href="#">Rose Quartz Tumble</a>
+                                        </h4>
+                                        <div class="prices">
+                                            <span class="price">&#8377; 350-700</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Product Item -->
+                    </div>
+
+                    <div class="swiper-slide">
+                        <!-- Start Product Item -->
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a href="/productlist/by-Category/Crystals-RINGS">
+                                    <img src="https://djelgxoby50a9.cloudfront.net/bycategory/d0c8dfee-eeb8-4ba9-b6b9-beae2773ebab.jpg" alt="Product Name 3" />
+                                    <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/bycategory/d0c8dfee-eeb8-4ba9-b6b9-beae2773ebab.jpg"></span>
+                                    <span class="thumb-overlay"></span>
+                                </a>
+                            </div>
+                            <div class="product-footer position-relative">
+                                <div class="product-info d-block">
+                                    <div class="content-inner text-center">
+                                        <h4 class="title">
+                                            <a href="#">Crystal Rings</a>
+                                        </h4>
+                                        <div class="prices">
+                                            <span class="price">&#8377; 1250-8000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Product Item -->
+                    </div>
+
+                    <div class="swiper-slide">
+                        <!-- Start Product Item -->
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a href="/productlist/by-Category/Crystals-PENDANTS">
+                                    <img src="https://djelgxoby50a9.cloudfront.net/bycategory/EA5C1554-DDA5-48E6-A2FD-6E96FACDDDAE.jpg?updatedAt=1733743053660" alt="Product Name 4" />
+                                    <span class="bg-thumb" data-bg-img="https://djelgxoby50a9.cloudfront.net/bycategory/EA5C1554-DDA5-48E6-A2FD-6E96FACDDDAE.jpg?updatedAt=1733743053660"></span>
+                                    <span class="thumb-overlay"></span>
+                                </a>
+                            </div>d0c8dfee-eeb8-4ba9-b6b9-beae2773ebab.JPG
+                            <div class="product-footer position-relative">
+                                <div class="product-info d-block">
+                                    <div class="content-inner text-center">
+                                        <h4 class="title">
+                                            <a href="#">Pyrite Silver Pendant</a>
+                                        </h4>
+                                        <div class="prices">
+                                            <span class="price">&#8377; 1500-8000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Product Item -->
+                    </div>
+
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <!--== End By Category Area Wrapper ==-->
+    <!--== Start Blogs Area Wrapper ==-->
+    <section class="Blogs-area area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 m-auto">
+                    <div class="section-title text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                        <h2 class="title">Blogs</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row gy-3 aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                @if(Model.Blogs!=null && Model.Blogs.Any()){
+                @foreach (var item in Model.Blogs)
+                {
+                    <div class="col-md-4">
+                        <div class="blog-item-parent">
+                            <div class="blog-item-thumb position-relative mb-1">
+                                <div class="img-parent" data-date="@item.PublishedDate.ToString("dd MMM yyyy")">
+                                    <img src="@item.ThumbnailImage" alt="">
+                                </div>
+                                <div class="blog-action" data-bs-toggle="modal" data-bs-target="#blogModal">
+                                        <a class="action-quick-view ht-tooltip blogquickview" data-tippy-content="Quick View" id="@item.Blogid" href="javascript:void(0);">
+                                        <i class="lastudioicon-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="blog-item-content">
+                                <div class="meta">
+                                    <a href="#">@item.Category</a>
+                                    
+                                </div>
+                                <div class="inner-content">
+                                    <h5 class="title">
+                                        <a asp-route-blogid="@item.Blogid" asp-route-url="@item.CustomUrl" asp-page="blogdetail">@item.BlogTitle</a>
+                                    </h5>
+                                    <p>@item.ShortDescription</p>
+                                </div>
+                                <a asp-route-blogid="@item.Blogid" asp-route-url="@item.CustomUrl" asp-page="blogdetail" class="btn btn-read-more mt-2">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+                else
+                {
+                    <p> Nothing Here</p>
+                }
+
+                <div class="col-12">
+                    <div class="btn-parent text-center mt-3 mt-md-5">
+                        <a asp-page="/blog" class="btn btn-theme">VIEW ALL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Blogs Area Wrapper ==-->
+    <!--== Start Follow Us On Area Wrapper ==-->
+    <section class="follow-us-on-area area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 m-auto">
+                    <div class="section-title text-center aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                        <h2 class="title">Follow Us On</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                @if (Model.Instagrams != null && Model.Instagrams.Any())
+                {
+                    int count = 0;
+                    foreach (var item in Model.Instagrams)
+                    {
+                        if (count >= 3)
+                        {
+                            break;
+                        }
+                        <div class="col-md-4">
+                            <a href="https://instagram.com/crystalsbyriya" target="_blank" class="follow-video-parent">
+                                <div class="video-parent">
+                                    @Html.Raw(item.InstagramUrl)
+                                </div>
+                            </a>
+                        </div>
+                        count++;
+                    }
+                }
+                else
+                {
+                    <p>Nothing Here</p>
+                }
+            </div>
+
+        </div>
+    </section>
+    <!-- Auto PopUp -->
+     <div id="popup" class="popup">
+        <div class="popup-content position-relative">
+            <span class="auto-popup-close-btn close-btn"><i class="lastudioicon-e-remove"></i></span>
+            <div class="row m-0">
+                <div class="col-lg-6 p-0">
+                    <div class="img-parent h-100">
+                        <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/discount.jpg" class="img-fluid d-none d-lg-block" alt="">
+                        <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/discount-mob.jpg" class="img-fluid d-lg-none" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 p-0">
+                    <div class="pop-right-content p-4">
+                        <h3 class="title fw-bold">Welcome to CrystalsbyRiya! </h3>
+                        <p>Explore our stunning collection of crystal and sterling silver jewelry, where each piece is designed to enhance your spiritual, mental, and material well-being. To make your journey even more special </p>
+                        <p>Shop now and embrace the power of crystals</p>
+
+                        <div class="popup-form">
+                      
+                            <form  method="post" asp-page-handler="Register" class="row m-0 gy-3">
+                                <div class="col-12 ps-0">
+                                    <input type="text" class="form-control rounded-0" placeholder="Full Name" aria-label="Full name" asp-for="@Model.register.Name" required>
+                                </div>
+                                <div class="col-12 ps-0">
+                                    <input type="number" class="form-control rounded-0" name= "phone" placeholder="Phone Number" aria-label="Phone Number" asp-for="@Model.register.PhoneNumber" required> 
+                                </div>
+                                <div class="col-12 ps-0">
+                                    <input type="email" class="form-control rounded-0"  name= "Email" placeholder="Email Number" aria-label="Email" asp-for="@Model.register.Email" required>
+                                </div>
+                                <div class="col-12 ps-0">
+                                    <input type="password" class="form-control rounded-0" placeholder="Password" aria-label="Password" asp-for="@Model.register.Password" required>
+                                </div>
+                                <div class="col-12 ps-0">
+                                    <button type="submit" class="btn btn-read-more">Signup</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!--== End Follow Us On Area Wrapper ==-->
+    <div class="modal fade" id="blogModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="blogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content position-relative">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="row m-0">
+                        <div class="col-md-6 p-0">
+                            <div class="blog-featured-img h-100">
+                                <img id="blogImage" class="img-fluid" alt="Blog Image">
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <div class="blog-content-area p-2">
+                                <div class="meta" id="blogMeta"></div>
+                                <div class="inner-content">
+                                    <h5 class="title fw-bold" id="blogTitle"></h5>
+                                    <p id="blogDescription"></p>
+                                    <div class="related-products-area">
+                                        <div class="title">
+                                            <h6 class="fw-bold">Related Products</h6>
+                                        </div>
+                                        <div class="row m-0 p-0" id="relatedProducts"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/blogquickview.js"></script>
+
+</main>
+

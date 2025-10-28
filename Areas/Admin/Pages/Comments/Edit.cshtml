@@ -1,0 +1,66 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Comments.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CommentReply</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CommentReply.Id" />
+            <div class="form-group">
+                
+                <label asp-for="CommentReply.BlogId" class="control-label"></label>
+                <input asp-for="CommentReply.BlogId" class="form-control" />
+                <span asp-validation-for="CommentReply.BlogId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CommentReply.Name" class="control-label"></label>
+                <input asp-for="CommentReply.Name" class="form-control" />
+                <span asp-validation-for="CommentReply.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CommentReply.Email" class="control-label"></label>
+                <input asp-for="CommentReply.Email" class="form-control" />
+                <span asp-validation-for="CommentReply.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CommentReply.Comment" class="control-label"></label>
+                <input asp-for="CommentReply.Comment" class="form-control" />
+                <span asp-validation-for="CommentReply.Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="CommentReply.IsApproved" /> @Html.DisplayNameFor(model => model.CommentReply.IsApproved)
+                </label>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="CommentReply.Date" class="control-label"></label>
+                <input asp-for="CommentReply.Date" class="form-control" />
+                <span asp-validation-for="CommentReply.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

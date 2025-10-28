@@ -1,0 +1,811 @@
+﻿@page "{catname?}/{subcatname?}"
+<script>
+    const catname = "@(Request.RouteValues["catname"] ?? "")";
+    const subcatname = "@(Request.RouteValues["subcatname"] ?? "")";
+</script>
+
+@model CrystalByRiya.Pages.productlistModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@using Microsoft.AspNetCore.Http
+  @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    string userEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
+    var productlist = Model.PagedProducts;
+    var bestsellers = Model.SpBestseller;
+}
+
+
+
+
+
+
+
+@section Metatags {
+    <title> Crystal By Riya | @Model.Subcategorytitle </title>
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Crystals By Riya | @Model.Subcategorytitle" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:title" content="Crystals By Riya | @Model.Subcategorytitle">
+    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
+    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+}
+
+
+<main class="main-content">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            @if (Model.Subcategory != null)
+            {
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="page-title-content content-style-2">
+                            <div class="bread-crumbs"><a href="/Index">HOME<span class="breadcrumb-sep">&gt;</span></a><a href="/category/@Model.Category.Url">@Model.Category.MenuList<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">@Model.Subcategory.SubCategoryname</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="page-title-content content-style-2">
+                            <div class="bread-crumbs"><a href="/Index">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Product List</a></div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center mb-2">
+                        @if (Model.Subcategory != null)
+                        {
+                            <h2 class="title">@Model.Subcategory.SubCategoryname</h2>
+                        }
+                        else
+                        {
+                            <h2></h2>
+                        }
+                    </div>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="product-category-desc text-center">
+                        @if (Model.Subcategory != null)
+                        {
+                            <p>@Model.Subcategory.CategoryDescription</p>
+                        }
+                        else
+                        {
+                            <p></p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--== End Page Title Area ==-->
+    <!--== Start Product Area Wrapper ==-->
+    <section class="product-list-area pt-3 pt-md-5 area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-left-padding">
+                        <div class="shop-toolbar-wrap">
+                            <div class="small-screen-filter-wrap d-lg-none">
+                                <div class="filter-menu-parent" id="productFilterMenuBtn">
+                                    <a href="javascript:void(0)">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/filter.png" alt="icon" width="22px" style="vertical-align: middle;">
+                                        Filters
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="shop-toolbar-left d-none d-lg-flex justify-space-between">
+                                <div class="product-sorting-menu product-category-sorting">
+                                    <span class="current ps-0"> Category <i class="lastudioicon-down-arrow"></i></span>
+                                    <ul>
+                                        <li class="active"><a asp-page="/category" asp-route-Url="by-Category" class="active">By Category</a></li>
+                                        <li><a asp-page="/category" asp-route-Url="by-Intention">By Intention</a></li>
+                                        <li><a asp-page="/category" asp-route-Url="by-Chakras">By Chakras</a></li>
+                                        <li><a asp-page="/category" asp-route-Url="by-Crystals">By Crystals</a></li>
+                                        <li><a asp-page="/category" asp-route-Url="Silver-Products">Silver Products</a></li>
+
+                                    </ul>
+                                </div>
+                                <div class="product-sorting-menu product-view-count">
+                                    <span class="current">Price <i class="lastudioicon-down-arrow"></i></span>
+                                    <ul>
+                                        <li>
+                                            <div class="price-filter-parent">
+                                                <div class="slider" id="priceSlider">
+                                                    <div class="progress"></div>
+                                                </div>
+                                                <div class="range-input">
+                                                    <input type="range" id="rangeMin" class="range-min" min="0" max="10000" value="0" step="100">
+                                                    <input type="range" id="rangeMax" class="range-max" min="100" max="10000" value="10000" step="100">
+                                                </div>
+                                                <div class="price-input">
+                                                    <div class="field">
+                                                        <span>Min</span>
+                                                        <input type="number" id="minPriceInput" class="input-min" min="0" max="10000" value="0">
+                                                    </div>
+                                                    <div class="separator">-</div>
+                                                    <div class="field">
+                                                        <span>Max</span>
+                                                        <input type="number" id="maxPriceInput" class="input-max" min="100" max="10000" value="10000">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <form id="sortForm" method="post" asp-page-handler="Filter" style="display: none;">
+                                    @Html.AntiForgeryToken() <!-- Include anti-forgery token for security -->
+                                    <input type="hidden" name="popularity" id="isSortByPopularity1" value="false">
+                                    <input type="hidden" name="bydefault" id="isbydefault1" value="false">
+                                    <input type="hidden" name="rating" id="isbyrating1" value="false">
+                                    <input type="hidden" name="latest" id="isbylatest1" value="false">
+                                    <input type="hidden" name="ascedingprice" id="isbypriceasc1" value="false">
+                                    <input type="hidden" name="descendingprice" id="isbypricedesc1" value="false">
+                                </form>
+
+                                <div class="product-sorting-menu product-sorting">
+                                    <span class="current pe-0">Sort by Default <i class="lastudioicon-down-arrow"></i></span>
+                                    <ul>
+                                        <li class="active"><a id="sortbydefault" href="javascript:void(0)" class="active">Sort by Default</a></li>
+                                        <li><a id="sortByPopularity" href="javascript:void(0)">Sort by Popularity</a></li>
+
+                                        <li><a id="sortbyrating" href="javascript:void(0)">Sort by Rating</a></li>
+                                        <li><a id="sortbylatest" href="javascript:void(0)">Sort by Latest</a></li>
+                                        <li><a id="sortbypriceasc" href="javascript:void(0)">Sort by Price: <i class="lastudioicon-arrow-up"></i></a></li>
+                                        <li><a id="sortbypricedesc" href="javascript:void(0)">Sort by Price: <i class="lastudioicon-arrow-down"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="shop-toolbar-right">
+                                <div class="product-showing-status">
+                                    <p class="count-result" style="margin-bottom: 20px;">Showing Results</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-list-item-parent">
+                            <div class="row" id="productListContainer">
+                                @if (productlist != null && productlist.Any())
+                                {
+                                    @foreach (var item in productlist)
+                                    {
+                                        <div class="col-6 col-md-4 col-lg-3">
+                                            <!-- Start Product Item -->
+                                            <div class="product-item">
+                                                <div class="product-thumb">
+                                                    <a asp-page="detail" asp-route-skucode="@item.Skucode" asp-route-productname="@item.ProductName.Replace(' ','-')">
+                                                        <img data-src="@Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @item.Thumbnail)" alt="Shop" class="lazyload">
+
+                                                        <span class="bg-thumb" data-bg-img="@item.Thumbnail" style="background-image: url(@item.Thumbnail);"></span>
+                                                        <span class="thumb-overlay"></span>
+                                                    </a>
+
+                                                    <div class="product-action">
+                                                        <!-- Quick View Button -->
+                                                        <a href="javascript:void(0);" id="@item.Skucode" class="action-quick-view ht-tooltip quview" data-tippy-content="Quick View">
+                                                            <i class="lastudioicon-eye"></i>
+                                                        </a>
+
+
+
+
+                                                        <!-- Add to Wishlist Button -->
+                                                        <a class="action-wishlist ht-tooltip" data-tippy-content="Add to wishlist" href="javascript:void(0);" onclick="HandleAddToWishlist2('@item.Skucode', '@item.ProductName')">
+                                                            <i class="lastudioicon-heart-2"></i>
+                                                        </a>
+
+                                                        <!-- Hidden Form for Wishlist Submission -->
+                                                        <form id="wishlistForm" method="post" asp-page-handler="AddToWishlist" style="display:none;">
+                                                            @Html.AntiForgeryToken() <!-- Protect against CSRF attacks -->
+                                                            <input type="hidden" id="SkuCode" name="SkuCode" />
+                                                            <input type="hidden" id="ProductName" name="ProductName" />
+                                                            <input type="hidden" id="buynow" name="buynow" value="false" />
+                                                        </form>
+                                                    </div>
+
+                                                    <script>
+                                                        function HandleAddToWishlist2(skuCode, productName) {
+                                                        // Prevent the default action
+                                                        event.preventDefault();
+
+                                                        // Set the product-specific values in the hidden form fields
+                                                        document.getElementById('SkuCode').value = skuCode;
+                                                        document.getElementById('ProductName').value = productName;
+
+                                                        // Set buynow to false for normal wishlist action
+                                                        document.getElementById('buynow').value = 'true';
+
+                                                        // Submit the form programmatically
+                                                        document.getElementById('wishlistForm').submit();
+                                                        }
+                                                    </script>
+
+                                                </div>
+                                                <div class="product-footer position-relative">
+                                                    <div class="product-info d-block">
+                                                        <div class="content-inner text-center">
+                                                            <h4 class="title"><a asp-page="detail" asp-route-skucode="@item.Skucode" asp-route-productname="@item.ProductName.Replace(' ','-')">@item.ProductName</a></h4>
+                                                            <div class="prices">
+                                                                <span class="price">₹ @item.Price</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-action-button-parent">
+                                                        <a href="javascript:void(0);" id="@item.Skucode" class="btn product-action-button quview"><i class="lastudioicon-bag-3 me-1"></i> ADD TO CART</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- End Product Item -->
+                                        </div>
+                                    }
+                                }
+
+
+                            </div>
+                        </div>
+                        @if (Model.SPSubCategoryWiseProduct == null)
+                        {
+                            <!-- Pagination Controls -->
+                            <div class="pagination text-center mt-4 d-flex justify-content-center">
+                                @if (Model.CurrentPage > 1)
+                                {
+                                    <a asp-page-handler="OnGet" asp-route-currentPage="@(Model.CurrentPage - 1)" class="btn pagination-btn-prev">Previous</a>
+                                }
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    <a asp-page-handler="OnGet" asp-route-currentPage="@i" class="@(i == Model.CurrentPage ? "btn pagination-btn-active" : "btn pagination-btn")">@i</a>
+                                }
+                                @if (Model.CurrentPage < Model.TotalPages)
+                                {
+                                    <a asp-page-handler="OnGet" asp-route-currentPage="@(Model.CurrentPage + 1)" class="btn pagination-btn-next">Next</a>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="pagination text-center mt-4 d-flex justify-content-center">
+                                @if (Model.CurrentPage > 1)
+                                {
+                                    <a asp-page-handler="OnPostFilter" asp-route-currentPage="@(Model.CurrentPage - 1)" class="btn pagination-btn-prev">Previous</a>
+                                }
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    <a asp-page-handler="OnGet" asp-route-currentPage="@i" class="@(i == Model.CurrentPage ? "btn pagination-btn-active" : "btn pagination-btn")">@i</a>
+                                }
+                                @if (Model.CurrentPage < Model.TotalPages)
+                                {
+                                    <a asp-page-handler="OnGet" asp-route-currentPage="@(Model.CurrentPage + 1)" class="btn pagination-btn-next">Next</a>
+                                }
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <style>
+                .pagination .pagination-btn,
+                .pagination .pagination-btn-prev,
+                .pagination .pagination-btn-next {
+                    background-color: #b56576; /* Matching pink color */
+                    color: white;
+                    margin: 0 5px;
+                    border-radius: 5px;
+                }
+
+                .pagination .pagination-btn-active {
+                    background-color: #9e4d5f; /* Slightly darker pink for active state */
+                    color: white;
+                    margin: 0 5px;
+                    border-radius: 5px;
+                    pointer-events: none; /* Disable click on active button */
+                }
+
+                .pagination .pagination-btn:hover,
+                .pagination .pagination-btn-prev:hover,
+                .pagination .pagination-btn-next:hover {
+                    background-color: #a85565; /* Hover effect with darker pink */
+                    color: white;
+                }
+
+            </style>
+
+
+    </section>
+    <!--== Start Side Menu ==-->
+    <!--== End Side Menu ==-->
+    <!-- productFilterMenu -->
+
+    <aside id="productFilterMenu">
+        <div class="off-canvas-inner">
+
+            <span class="productFilterMenu-header d-flex justify-content-between align-items-center position-relative">
+                <div class="header-content-parent">
+                    <p class="fw-semibold mb-0">Filter & Sort</p>
+                </div>
+                <a href="javascript:void(0)" id="productFilterMenuClose">
+                    <i class="lastudioicon-e-remove"></i>
+                </a>
+            </span>
+
+            <ul class="filter-menu-main-nav">
+                <li class="filter-menu-has-submenu">
+                    <a href="javascript:void(0)">By Category</a>
+                    <ul class="filter-menu-submenu-nav product-category-sorting">
+                        <li class="productGoBack"><a href="javascript:void(0)"><i class="lni lni-arrow-left"></i> Go Back</a></li>
+                        <li class="active"><a asp-page="/category" asp-route-Url="by-Category" class="active">By Category</a></li>
+                        <li><a asp-page="/category" asp-route-Url="by-Intention">By Intention</a></li>
+                        <li><a asp-page="/category" asp-route-Url="by-Chakras">By Chakras</a></li>
+                        <li><a asp-page="/category" asp-route-Url="by-Crystals">By Crystals</a></li>
+                        <li><a asp-page="/category" asp-route-Url="Silver-Products">Silver Products</a></li>
+
+                    </ul>
+                </li>
+              
+                <li class="filter-menu-has-submenu">
+                    <a href="javascript:void(0)">Sort by Default</a>
+                    <ul class="filter-menu-submenu-nav">
+                        <li class="productGoBack"><a href="javascript:void(0)"><i class="lni lni-arrow-left"></i> Go Back</a></li>
+                        <li class="active"><a id="sortbydefaultmob" href="javascript:void(0)" class="active">Sort by Default</a></li>
+                        <li><a id="sortByPopularitymob" href="javascript:void(0)">Sort by Popularity</a></li>
+
+                        <li><a id="sortbyratingmob" href="javascript:void(0)">Sort by Rating</a></li>
+                        <li><a id="sortbylatestmob" href="javascript:void(0)">Sort by Latest</a></li>
+                        <li><a id="sortbypriceascmob" href="javascript:void(0)">Sort by Price: <i class="lastudioicon-arrow-up"></i></a></li>
+                        <li><a id="sortbypricedescmob" href="javascript:void(0)">Sort by Price: <i class="lastudioicon-arrow-down"></i></a></li>
+                    </ul>
+                </li>
+            </ul>
+
+         
+
+
+        </div>
+    </aside>
+    <aside class="product-quick-view-modal">
+        <div class="product-quick-view-inner">
+            <div class="product-quick-view-content">
+                <button type="button" class="btn-close">
+                    <span class="close-icon"><i class="lastudioicon-e-remove"></i></span>
+                </button>
+                <div class="row row-gutter-0">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="thumb">
+                            <div class="swiper-container quick-view-slider-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/by-category/quick-view/1.jpg" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/by-category/quick-view/2.jpg" alt="">
+                                    </div>
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="single-product-info">
+                            <h4 class="title">Title</h4>
+                            <div class="product-rating">
+                                <div class="review">
+                                    <p><span></span>99 in stock</p>
+                                </div>
+                            </div>
+                            <div class="prices">
+                                <span class="price">&#8377; 111100</span>
+                            </div>
+                            <p class="product-desc mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fringilla quis ipsum enim viverra. Enim in morbi tincidunt ante luctus tincidunt integer. Sed adipiscing vehicula.</p>
+                            <div class="sizes mb-4">
+                                <h6 class="title" id="title">Sizes</h6>
+                                <button type="button" class="btn btn-sizes">50mm</button>
+                                <button type="button" class="btn btn-sizes">4mm</button>
+                                <button type="button" class="btn btn-sizes">6mm</button>
+                                <button type="button" class="btn btn-sizes">8mm</button>
+                            </div>
+                            <div class="material mb-4">
+                                <h6 class="title" id="title">Material</h6>
+                                <button type="button" class="btn btn-sizes">Gold</button>
+                                <button type="button" class="btn btn-sizes">Silver</button>
+                                <button type="button" class="btn btn-sizes">Bronze</button>
+                            </div>
+
+                            <div class="quick-product-action">
+                                <div class="action-top">
+                                    <div class="pro-qty-area">
+                                        <div class="pro-qty">
+                                            <input type="text" id="quantity1" title="Quantity" value="1" name="Qty" min="1" max="10">
+                                            <a class="inc qty-btn">+</a><a class="dec qty-btn">-</a>
+                                        </div>
+                                    </div>
+                                    <a class="btn-theme btn-black" onclick="HandleAddToCart3()">Add to cart</a>
+                                </div>
+                                <form id="addtocartForms" method="post" asp-page-handler="AddToCart" style="display:none;">
+                                    @Html.AntiForgeryToken() <!-- Protect against CSRF attacks -->
+                                    <input type="hidden" id="Skucode" name="SkuCode" />
+                                    <input type="hidden" id="Productname" name="ProductName" />
+                                    <input type="hidden" id="totalPrice" name="Price" />
+                                    <input type="hidden" id="selectedSize" name="Size" />
+                                    <input type="hidden" id="selectedMaterial" name="MaterialName" />
+                                    <input type="hidden" id="quantity" name="Qty" />
+                                </form>
+                                <div class="action-bottom">
+                                    <a class="btn-wishlist"><i class="labtn-icon labtn-icon-wishlist" onclick="HandleAddToWishlist3()"></i>Add to wishlist</a>
+                                </div>
+                                <form id="wishlistForms" method="post" asp-page-handler="AddToWishlist" style="display:none;">
+                                    @Html.AntiForgeryToken() <!-- Protect against CSRF attacks -->
+                                    <input type="hidden" id="Skucode1" name="SkuCode" />
+                                    <input type="hidden" id="Productname1" name="ProductName" />
+                                    <input type="hidden" id="Buynow" name="buynow" value="false" />
+                                </form>
+                            </div>
+                            <div class="product-ratting">
+                                <div class="product-sku">
+                                    SKU: <span>N/A</span>
+                                </div>
+                            </div>
+
+                            <div class="widget">
+                                <h3 class="title">Tags:</h3>
+                                <div class="widget-tags">
+                                    <ul>
+                                        <li><a href="#">lorem,</a></li>
+                                        <li><a href="#">lorem,</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="canvas-overlay"></div>
+    </aside>
+
+    <!--== End Product Area Wrapper ==-->
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/ProductListPageNew.js"></script>
+
+    <script>
+                  document.querySelectorAll('.quview').forEach(button => {
+                button.addEventListener('click', async function () {
+                  const skuCode = this.getAttribute('id'); // SKU Code from the button
+                    const url = `/api/QuickView/GetQuickView`; // API endpoint
+
+                    try {
+                        // Show loading spinner or placeholder content in the modal
+                        document.querySelector('.product-quick-view-modal').classList.add('active');
+                        document.querySelector('.product-quick-view-modal .title').textContent = "Loading...";
+                        document.querySelector('.product-quick-view-modal .price').textContent = "";
+                        document.querySelector('.product-quick-view-modal .product-desc').textContent = "Fetching product details...";
+                          document.querySelector('.product-quick-view-modal .product-sku').textContent = "N/A";
+                    document.querySelector('.product-quick-view-modal .widget-tags').textContent  = "";
+
+                 const sizesContainer = document.querySelector('.product-quick-view-modal .sizes');
+                    const sizesTitle = sizesContainer.querySelector('h6'); // Title element for sizes
+                    const materialsContainer = document.querySelector('.product-quick-view-modal .material');
+                    const materialsTitle = materialsContainer.querySelector('h6');
+
+                      const swiperWrapper = document.querySelector('.product-quick-view-modal .swiper-wrapper');
+                    swiperWrapper.innerHTML = "";
+
+                      sizesContainer.querySelectorAll('.btn').forEach(btn => btn.remove());
+                    materialsContainer.querySelectorAll('.btn').forEach(btn => btn.remove());
+
+                    // Hide titles initially
+                    sizesTitle.style.display = "none";
+                    materialsTitle.style.display = "none";
+
+
+
+
+
+
+                        // Fetch product details from the API
+                        const response = await fetch(`${url}?skucode=${skuCode}`);
+                        const data = await response.json();
+                        console.log(data);
+
+                        if (response.ok && data.success) {
+                            const product = data.data;
+
+                            // Populate the modal with the fetched product data
+                                    document.querySelector('.product-quick-view-modal .title').textContent = product.productName;
+
+                            document.querySelector('.product-quick-view-modal .price').textContent = `₹ ${product.price}`;
+                            document.querySelector('.product-quick-view-modal .product-desc').innerHTML= product.description;
+                              document.querySelector('.product-quick-view-modal .product-sku').textContent = product.productId;
+                    document.querySelector('.product-quick-view-modal .widget-tags').textContent = product.tags;
+                     document.getElementById('Skucode').value = product.productId;
+                        document.getElementById('Productname').value = product.productName;
+                        document.getElementById('Skucode1').value = product.productId;
+                        document.getElementById('Productname1').value = product.productName;
+                            document.getElementById('Buynow').value = 'true';
+
+                                // Dynamic Images
+            if (product.image && product.image.length > 0) {
+                product.image.forEach(imageName => {
+                    const slide = document.createElement('div');
+                    slide.className = 'swiper-slide';
+                    slide.innerHTML = `
+                        <img data-src="https://djelgxoby50a9.cloudfront.net/Images/${imageName}" alt="Product Image" class="lazy-load">
+                    `;
+                    swiperWrapper.appendChild(slide);
+                });
+
+                // Reinitialize Swiper for new slides
+                const swiperInstance = new Swiper('.quick-view-slider-container', {
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    loop: true,
+                });
+
+                // Trigger lazy loading
+                document.querySelectorAll('.lazy-load').forEach(img => {
+                    img.setAttribute('src', img.getAttribute('data-src'));
+                    img.removeAttribute('data-src');
+                });
+            } else {
+                swiperWrapper.innerHTML = `<div class="swiper-slide">No images available</div>`;
+            }
+
+            /// Hidden field to store the total price
+            const totalPriceField = document.getElementById('totalPrice'); // Ensure this hidden field exists in your HTML
+            let selectedSizePrice = 0;
+            let selectedMaterialPrice = 0;
+
+            // Populate Sizes
+                if (product.size && product.size.length > 0) {
+                            sizesTitle.style.display = ""; // Show title if sizes exist
+
+            product.size.forEach(sizeString => {
+                const [sizeName, sizePrice, sizeImage] = sizeString.split(":");
+
+                const sizeButton = document.createElement('button');
+                sizeButton.className = 'btn btn-sizes';
+                sizeButton.textContent = sizeName.trim();
+                sizeButton.setAttribute('data-price', sizePrice.trim()); // Add price as a data attribute
+                sizeButton.setAttribute('data-image', sizeImage.trim()); // Add image attribute
+
+                // Add click event for size selection
+                sizeButton.addEventListener('click', function () {
+                    // Remove 'active' class from all size buttons
+                    document.querySelectorAll('.product-quick-view-modal .sizes .btn-sizes').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    // Add 'active' class to the clicked button
+                    this.classList.add('active');
+
+                    // Update selected size price
+                    selectedSizePrice = parseFloat(sizePrice.trim());
+
+                    // Update total price
+                    const totalPrice = selectedSizePrice + selectedMaterialPrice;
+                    document.querySelector('.product-quick-view-modal .price').textContent = `₹ ${totalPrice}`;
+                    totalPriceField.value = totalPrice;
+
+                    // Update Swiper with the size-specific image
+                    swiperWrapper.innerHTML = `
+                        <div class="swiper-slide">
+                            <img data-src="https://djelgxoby50a9.cloudfront.net/Images/${sizeImage.trim()}" alt="Size Image" class="lazy-load">
+                        </div>
+                    `;
+
+                    // Reinitialize Swiper for new slides
+                    const swiperInstance = new Swiper('.quick-view-slider-container', {
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        loop: true,
+                    });
+
+                    // Trigger lazy loading for the new image
+                    document.querySelectorAll('.lazy-load').forEach(img => {
+                        img.setAttribute('src', img.getAttribute('data-src'));
+                        img.removeAttribute('data-src');
+                    });
+                });
+
+                sizesContainer.appendChild(sizeButton);
+            });
+            }
+
+                 if (product.materialName && product.materialName.length > 0) {
+                            materialsTitle.style.display = "";
+            product.materialName.forEach(materialString => {
+                const [materialName, materialPrice, materialImage] = materialString.split(":");
+
+                const materialButton = document.createElement('button');
+                materialButton.className = 'btn btn-sizes';
+                materialButton.textContent = materialName.trim();
+                materialButton.setAttribute('data-price', materialPrice.trim()); // Add price as a data attribute
+                materialButton.setAttribute('data-image', materialImage.trim()); // Add image attribute
+
+                // Add click event for material selection
+                materialButton.addEventListener('click', function () {
+                    // Remove 'active' class from all material buttons
+                    document.querySelectorAll('.product-quick-view-modal .material .btn-sizes').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    // Add 'active' class to the clicked button
+                    this.classList.add('active');
+
+                    // Update selected material price
+                    selectedMaterialPrice = parseFloat(materialPrice.trim());
+
+                    // Update total price
+                    const totalPrice = selectedSizePrice + selectedMaterialPrice;
+                    document.querySelector('.product-quick-view-modal .price').textContent = `₹ ${totalPrice}`;
+                    totalPriceField.value = totalPrice; // Set the total price in the hidden field
+
+
+                    // Update Swiper with the material-specific image
+                    swiperWrapper.innerHTML = `
+                        <div class="swiper-slide">
+                            <img data-src="https://djelgxoby50a9.cloudfront.net/Images/${materialImage.trim()}" alt="Material Image" class="lazy-load">
+                        </div>
+                    `;
+
+                    // Reinitialize Swiper for new slides
+                    const swiperInstance = new Swiper('.quick-view-slider-container', {
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                            clickable: true,
+                        },
+                        loop: true,
+                    });
+
+                    // Trigger lazy loading for the new image
+                    document.querySelectorAll('.lazy-load').forEach(img => {
+                        img.setAttribute('src', img.getAttribute('data-src'));
+                        img.removeAttribute('data-src');
+                    });
+                });
+
+                materialsContainer.appendChild(materialButton);
+            });
+            }
+
+
+                    }       else {
+                            // Handle API error
+                            document.querySelector('.product-quick-view-modal .title').textContent = "Error";
+                            document.querySelector('.product-quick-view-modal .product-desc').textContent = data.message || "Failed to load product details.";
+                        }
+                    } catch (error) {
+                        console.error('Error fetching Quick View data:', error);
+                        document.querySelector('.product-quick-view-modal .title').textContent = "Error";
+                        document.querySelector('.product-quick-view-modal .product-desc').textContent = "An unexpected error occurred.";
+                    }
+                });
+            });
+
+            // Close modal when the close button is clicked
+            document.querySelector('.product-quick-view-modal .btn-close').addEventListener('click', function () {
+                document.querySelector('.product-quick-view-modal').classList.remove('active');
+            });
+                   function HandleAddToWishlist3() {
+            event.preventDefault();
+            document.getElementById('wishlistForms').submit();
+        }
+                 function HandleAddToCart3() {
+            event.preventDefault(); // Prevent default form submission behavior
+
+            let sizeSelected = false;
+            let materialSelected = false;
+            let hasSizes=false;
+            let hasMaterials=false;
+
+            const availableSizes = document.querySelectorAll('.product-quick-view-modal .sizes .btn-sizes');
+            const availableMaterials = document.querySelectorAll('.product-quick-view-modal .material .btn-sizes');
+
+
+            if(availableSizes.length > 0){
+                hasSizes=true;
+            }
+            if(availableMaterials.length>0){
+                hasMaterials=true;
+            }
+
+            // Check for selected size
+            const selectedSize = document.querySelector('.product-quick-view-modal .sizes .btn-sizes.active');
+            if (selectedSize) sizeSelected = true;
+
+            // Check for selected material
+            const selectedMaterial = document.querySelector('.product-quick-view-modal .material .btn-sizes.active');
+            if (selectedMaterial) materialSelected = true;
+
+            // If no sizes or materials are available, proceed without alert
+            if (!hasSizes && !hasMaterials) {
+                const basePrice = parseFloat(document.querySelector('.product-quick-view-modal .price').textContent.replace('₹', '').trim());
+                document.getElementById('totalPrice').value = basePrice;
+                const quantityInputs = document.getElementById('quantity1');
+                document.getElementById('quantity').value = quantityInputs.value;
+
+            // Submit the form
+            document.getElementById('addtocartForms').submit();
+                return;
+            }
+
+            // Validate size and material selection
+                   if ((hasSizes && !sizeSelected) ) {
+            alert("Please select a size or material before adding to cart.");
+            return;
+
+        }
+           if ( (hasMaterials && !materialSelected)) {
+            alert("Please select a size or material before adding to cart.");
+            return;
+
+           }
+
+
+            // Set selected size and material in the form
+            if (selectedSize) document.getElementById('selectedSize').value = selectedSize.textContent.trim();
+            if (selectedMaterial) document.getElementById('selectedMaterial').value = selectedMaterial.textContent.trim();
+
+            // Set quantity
+            const quantityInput = document.getElementById('quantity1');
+            if (!quantityInput || !quantityInput.value) {
+                alert("Please specify a quantity before adding to cart.");
+                return;
+            }
+            document.getElementById('quantity').value = quantityInput.value;
+
+            // Submit the form
+            document.getElementById('addtocartForms').submit();
+        }
+
+
+
+    </script>
+
+
+
+
+
+</main>
+
+

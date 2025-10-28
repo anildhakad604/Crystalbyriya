@@ -1,0 +1,64 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Review.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>TblReviews</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TblReviews.Productid" class="control-label"></label>
+                <input asp-for="TblReviews.Productid" class="form-control" />
+                <span asp-validation-for="TblReviews.Productid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReviews.Reviews" class="control-label"></label>
+                <input asp-for="TblReviews.Reviews" class="form-control" />
+                <span asp-validation-for="TblReviews.Reviews" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TblReviews.IsApproved" /> @Html.DisplayNameFor(model => model.TblReviews.IsApproved)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReviews.Rating" class="control-label"></label>
+                <input asp-for="TblReviews.Rating" class="form-control" />
+                <span asp-validation-for="TblReviews.Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReviews.Emailid" class="control-label"></label>
+                <input asp-for="TblReviews.Emailid" class="form-control" />
+                <span asp-validation-for="TblReviews.Emailid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReviews.Name" class="control-label"></label>
+                <input asp-for="TblReviews.Name" class="form-control" />
+                <span asp-validation-for="TblReviews.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReviews.ReviewDate" class="control-label"></label>
+                <input asp-for="TblReviews.ReviewDate" class="form-control" />
+                <span asp-validation-for="TblReviews.ReviewDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

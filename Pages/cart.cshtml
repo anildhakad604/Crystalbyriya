@@ -1,0 +1,220 @@
+﻿@page
+@model CrystalByRiya.Pages.CartModel
+ @using Microsoft.AspNetCore.Http
+  @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    string userEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
+    double totalamount = 0;
+    double SubTotal = 0;
+    double GrandTotal = 0;
+}
+@if (TempData["CouponMessage"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @TempData["CouponMessage"]
+    </div>
+}
+@section Metatags {
+    <title> Crystal By Riya | Cart</title>
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Crystals By Riya | Cart" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:title" content="Crystal By Riya | Cart">
+    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
+    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+}
+
+<script>
+    function handleAddToCart3() {
+        var useremail = '@userEmail';
+        if (useremail) {
+            window.location.href = '/checkout';
+
+        }
+        else{
+            var redirectUrl = encodeURIComponent('/checkout');
+            window.location.href = '/checkout?redirectUrl=' + redirectUrl;
+        }
+    }
+</script>
+
+<main class="main-content site-wrapper-reveal">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title-content content-style-2">
+                        <div class="bread-crumbs"><a href="/index">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Cart</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center mb-2">
+                        <h2 class="title">Cart</h2>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--== Start Cart Area Wrapper ==-->
+    <section class="product-area cart-page-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shipping-info">
+                        <div class="loading-bar">
+                            <div class="load-percent"></div>
+                            <div class="label-free-shipping">
+                                <div class="free-shipping svg-icon-style">
+                                    <span class="svg-icon" id="svg-icon-shipping2" data-svg-icon="../assetsv2/img/icons/shop1.svg"></span>
+                                </div>
+                               @*  <p>Purchase Above &#8377;3000 to get Free Shipping</p> *@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart-table-wrap">
+                        <div class="cart-table table-responsive">
+                            <table id="orders">
+                                <thead>
+                                    <tr>
+                                        <th class="pro-remove"> </th>
+                                      @*   <th class="pro-sku">Skucode</th>
+                                        <th class="pro-childsku">ChildSkucode</th> *@
+
+                                     
+                                        <th class="pro-size">Size</th>
+                                        <th class="pro-material">Material</th>
+                                        <th class="pro-material">AddOn</th>
+
+                                        <th class="pro-name text-center">Product</th>
+                                        <th class="pro-price">Price</th>
+                                        <th class="pro-quantity">Quantity</th>
+                                        
+                                        <th class="pro-subtotal">Subtotal</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="orders">
+                                    @if (Model.Carts.Count>0 )
+                                    {
+                                        
+                                        @foreach (var item in Model.Carts)
+                                        {
+                                            int Qty = item.Qty;
+                                            double Price = item.Price;
+                                            double QtyandPrice = Qty * Price;
+                                            SubTotal += QtyandPrice;
+                                            totalamount += QtyandPrice;
+                                            <tr>
+                                                <td class="pro-remove">
+                                                    <a asp-route-id="@item.ProductId" asp-route-size="@item.Size" asp-route-material="@item.MaterialName" asp-route-addon="@item.Addon" asp-page-handler="Delete"><i class="lastudioicon-e-remove"></i></a>
+                                                </td>
+
+                                              
+
+                                             
+                                                <!-- Size -->
+                                                <td class="pro-size">
+                                                    <span>@item.Size</span>
+                                                </td>
+
+                                                <!-- Material -->
+                                                <td class="pro-material">
+                                                    <span>@item.MaterialName</span>
+                                                </td>
+                                                <td class="pro-material">
+                                                    <span>@item.Addon</span>
+                                                </td>
+                                                <td class="pro-thumbnail">
+                                                    <div class="pro-info text-center">
+                                                        <div class="pro-img">
+                                                            <a href="#"><img src=" @Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @item.Image)" alt="@item.ProductName"></a>
+                                                        </div>
+                                                        <div class="pro-name"><span>@item.ProductName</span></div>
+                                                    </div>
+                                                </td>
+                                                <td class="pro-price">
+                                                    <span class="Price" data-price="@item.Price">&#8377; @item.Price</span>
+                                                </td>
+                                                <td class="pro-quantity">
+                                                    <form method="post" asp-page-handler="UpdateQuantity" class="quantity-form">
+                                                        <input type="hidden" name="productID" value="@item.ProductId" />
+                                                        <input type="hidden" name="size" value="@item.Size" />
+                                                        <select name="quantity" id="quantity_@item.ProductId" title="Quantity" class="Quantity" onchange="this.form.submit()">
+                                                            @for (int i = 1; i <= 10; i++)
+                                                            {
+                                                                if (i == item.Qty)
+                                                                {
+                                                                    <option value="@i" selected>@i</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@i">@i</option>
+                                                                }
+                                                            }
+
+                                                        </select>
+                                                    </form>
+                                                </td>
+
+                                                <td class="pro-subtotal">
+                                                    <span class="Subtotal">&#8377; @QtyandPrice.00</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr><td colspan="6">No Item in Your Cart</td></tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="coupon-action">
+                        <div class="coupon">
+                            <form method="post" asp-page-handler="CouponCode">
+                            <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code">
+                            <button type="submit" class="button" name="apply_coupon" value="Apply coupon">Apply coupon</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart-payment">
+                       
+                        <button class="btn-theme" onclick="handleAddToCart3()">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</main>
+
+@section Scripts {
+
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/CartPage.js">
+       
+    </script>
+
+
+    
+
+
+}

@@ -1,0 +1,28 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Announcements.DetailsModel
+@{
+    ViewData["Title"] = "Announcement Details";
+}
+
+<h2>Announcement Details</h2>
+
+<div>
+    <h4>Announcement</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Announcement.Id
+        </dd>
+        <dt class="col-sm-2">
+            Announcement Text
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Announcement.AnnouncementText
+        </dd>
+    </dl>
+
+    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+</div>

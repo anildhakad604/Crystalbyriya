@@ -6,72 +6,58 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Astaberry.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CrystalByRiya.Models;
+using CrystalByRiya.Classes;
 
-namespace Astaberry.Areas.Admin.Pages.Blog
+namespace CrystalByRiya.Areas.Admin.Pages.Blog
 {
     public class EditModel : PageModel
     {
-        private readonly Astaberry.Models.ApplicationDbContext _context;
-        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
 
-        public EditModel(Astaberry.Models.ApplicationDbContext context, IWebHostEnvironment _webHostEnvironment)
+        private readonly AmazonS3 _amazonS3;
+        private readonly AwsCredentials awsCredentials;
+
+        public EditModel(CrystalByRiya.Models.ApplicationDbContext context, AwsCredentials awsCredentials, AmazonS3 amazonS3)
         {
             _context = context;
-            webHostEnvironment = _webHostEnvironment;
+            this.awsCredentials = awsCredentials;
+            _amazonS3 = amazonS3;
         }
-
         [BindProperty]
-        public TblBlog TblBlog { get; set; }
+        public string hdnimage { get; set; }
+        [BindProperty]
+        public string hdnthumbnailimage { get; set; }
+        [BindProperty]
+        public Blogs Blogs { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            string logedin = HttpContext.Session.GetString("Login");
-            if (string.IsNullOrEmpty(logedin))
+            if (id == null)
             {
-                return RedirectToPage("../Login");
-
+                return NotFound();
             }
-            else
+
+            var blogs =  await _context.TblBlogs.FirstOrDefaultAsync(m => m.Blogid == id);
+            if (blogs == null)
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                TblBlog = await _context.TblBlogs.FirstOrDefaultAsync(m => m.Blogid == id);
-
-                if (TblBlog == null)
-                {
-                    return NotFound();
-                }
-                return Page();
+                return NotFound();
             }
+            Blogs = blogs;
+            hdnimage = Blogs.Image;
+            hdnthumbnailimage = Blogs.ThumbnailImage;
+            return Page();
         }
 
-        public IFormFile Image { get; set; }
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int id,string Image,string BlogTitle, string Blogdescription, int Date, string Author, string Category, string Month, int Year)
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more information, see https://aka.ms/RazorPagesCRUD.
+        public async Task<IActionResult> OnPostAsync(string title, IFormFile Image,IFormFile ThumbnailImage)
         {
-            var file = Path.Combine(webHostEnvironment.WebRootPath, "img/blog", Image);
-            //using (var fileStream = new FileStream(file, FileMode.Create))
-            //{
-            //    await Image.CopyToAsync(fileStream);
-            //}
-            TblBlog = await _context.TblBlogs.FindAsync(id);
-            TblBlog.Author = Author;
-            TblBlog.Blogdescription = Blogdescription;
-            TblBlog.BlogTitle = BlogTitle;
-            TblBlog.Category = Category;
-            TblBlog.Date = Date;
-            TblBlog.Image = Image;
-            
 
-            
+            Blogs.MetaTitle = title;
+            Blogs.Image = Image!=null? await _amazonS3.UploadFileToS3(Image, awsCredentials.BlogFoldername):hdnimage;
+            Blogs.ThumbnailImage =ThumbnailImage!=null? await _amazonS3.UploadFileToS3(ThumbnailImage, awsCredentials.BlogFoldername):hdnthumbnailimage;
+            _context.Attach(Blogs).State = EntityState.Modified;
 
             try
             {
@@ -79,7 +65,7 @@ namespace Astaberry.Areas.Admin.Pages.Blog
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TblBlogExists(TblBlog.Blogid))
+                if (!BlogsExists(Blogs.Blogid))
                 {
                     return NotFound();
                 }
@@ -92,7 +78,7 @@ namespace Astaberry.Areas.Admin.Pages.Blog
             return RedirectToPage("./Index");
         }
 
-        private bool TblBlogExists(int id)
+        private bool BlogsExists(int id)
         {
             return _context.TblBlogs.Any(e => e.Blogid == id);
         }

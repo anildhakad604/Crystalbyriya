@@ -1,0 +1,92 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Productsizes.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ProductSizes</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProductSizes.ProductID" class="control-label"></label>
+                <input asp-for="ProductSizes.ProductID" class="form-control" required/>
+                <span asp-validation-for="ProductSizes.ProductID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSizes.Size" class="control-label"></label>
+                <input asp-for="ProductSizes.Size" class="form-control" required/>
+                <span asp-validation-for="ProductSizes.Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSizes.SKUCode" class="control-label"></label>
+                <input asp-for="ProductSizes.SKUCode" class="form-control" required/>
+                <span asp-validation-for="ProductSizes.SKUCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSizes.ImageURL" class="control-label"></label>
+                <input asp-for="ProductSizes.ImageURL" class="form-control" type="file" name="ImageUrl" id="imageUpload" accept="image/*" required/>
+                <span asp-validation-for="ProductSizes.ImageURL" class="text-danger"></span>
+                <div>
+                    <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #ddd; padding: 5px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSizes.StockQuantity" class="control-label"></label>
+                <input asp-for="ProductSizes.StockQuantity" class="form-control" required/>
+                <span asp-validation-for="ProductSizes.StockQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSizes.Price" class="control-label"></label>
+                <input asp-for="ProductSizes.Price" class="form-control" required/>
+                <span asp-validation-for="ProductSizes.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSizes.AltText" class="control-label"></label>
+                <input asp-for="ProductSizes.AltText" class="form-control" required/>
+                <span asp-validation-for="ProductSizes.AltText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <!-- Include Validation Scripts -->
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <!-- JavaScript for Image Preview -->
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const imagePreview = document.getElementById('imagePreview');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block'; // Show the preview image
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '#';
+                imagePreview.style.display = 'none'; // Hide the preview image if no file selected
+            }
+        });
+    </script>
+}

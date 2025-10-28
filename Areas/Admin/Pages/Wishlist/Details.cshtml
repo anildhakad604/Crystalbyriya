@@ -1,0 +1,67 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Wishlist.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>AddingWishlist</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingWishlist.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddingWishlist.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingWishlist.UserEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddingWishlist.UserEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingWishlist.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddingWishlist.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingWishlist.ProductName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddingWishlist.ProductName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingWishlist.Image)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddingWishlist.Image)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingWishlist.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddingWishlist.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingWishlist.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddingWishlist.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingWishlist.Marketing)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddingWishlist.Marketing)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.AddingWishlist.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

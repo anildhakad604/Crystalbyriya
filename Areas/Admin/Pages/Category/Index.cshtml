@@ -1,0 +1,48 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Category.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-danger">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TblCategory[0].MenuList)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblCategory[0].Url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TblCategory[0].Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TblCategory) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MenuList)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

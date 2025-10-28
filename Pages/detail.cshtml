@@ -1,0 +1,946 @@
+﻿@page "{skucode}/{productname}"
+@model CrystalByRiya.Pages.detailModel
+@using Microsoft.AspNetCore.Http
+  @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int j = 0;
+    int k = 0;
+    int a = 0;
+
+    string UserEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
+    string UserName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+
+}
+@section Metatags {
+    <title> Crystal By Riya | @Model.Products.ProductName</title>
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl1" />
+    <meta property="og:title" content="Crystals By Riya | @Model.Products.ProductName" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+    <meta property="og:description" content="@Model.Products.ShortDescription" />
+
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:title" content="Crystals By Riya | @Model.Products.ProductName">
+    <meta name="twitter:description" content="@Model.Products.ShortDescription" />
+    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+
+}
+
+<style>
+    .star-rating {
+        font-size: 25px; /* Increased from 30px to 35px */
+        display: inline-flex;
+        cursor: pointer;
+    }
+
+    .star {
+        color: #ddd; /* Default color for unselected stars */
+        transition: color 0.3s ease-in-out;
+    }
+
+        .star:hover {
+            color: #ffc107; /* Color on hover */
+        }
+</style>
+
+
+
+<main class="main-content site-wrapper-reveal">
+
+    <!--== Start Shop Area ==-->
+    <section class="product-area shop-single-product pt-2 pt-sm-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="single-product-slider">
+                        <div class="product-dec-slider-right">
+                            <div class="single-product-thumb">
+                                <div class="single-product-thumb-slider">
+                                    @if (Model.ImageGallery != null || Model.ImageGallery.Any())
+                                    {
+                                        @foreach (var item in Model.ImageGallery)
+                                        {
+                                            <div class="zoom zoom-hover">
+                                                <div class="thumb-item">
+                                                    <a class="lightbox-image zmhvr" data-fancybox="gallery" href="@item.Url">
+                                                        <img src="@Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @item.Url)" alt="@Model.Products.ProductName" class="gallery-image" id="product-image" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                                <div class="product-wishlist-button">
+                                    <div>
+                                        <!-- Wishlist button -->
+                                        <!-- Add to Wishlist Button -->
+                                        <a href="javascript:void(0);" class="action-wishlist ht-tooltip" data-tippy-content="Add to wishlist" onclick="HandleAddToWishlist2('@Model.Products.SkuCode', '@Model.Products.ProductName')">
+                                            <i class="lastudioicon-heart-2"></i>
+                                        </a>
+
+                                        <!-- Hidden Form for Wishlist Submission -->
+                                        <form id="wishlistForm" method="post" asp-page-handler="AddToWishlist" style="display:none;">
+                                            @Html.AntiForgeryToken() <!-- Protect against CSRF attacks -->
+                                            <input type="hidden" id="SkuCode" name="SkuCode" />
+                                            <input type="hidden" id="ProductName" name="ProductName" />
+                                            <input type="hidden" id="buynow" name="buynow" value="false" />
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="product-dec-slider-left">
+                            <div class="single-product-nav">
+                                <div class="single-product-nav-slider">
+                                    @foreach (var item in Model.ImageGallery)
+                                    {
+                                        <div class="nav-item">
+                                            <img src="@Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @item.Url)" alt="@Model.Products.ProductName" id="product-image" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="single-product-info">
+                        <h4 class="title">@Model.Products.ProductName</h4>
+                        <div class="product-rating" data-skucode="your-product-sku-code">
+                            <div class="ratting-icons">
+                            </div>
+                            <div class="review">
+                                <a href="#/">(<span class="review-count">0</span> customer reviews)</a>
+                            </div>
+                            <input type="hidden" id="skuCode" value="@Model.Products.SkuCode" />
+                        </div>
+
+                      
+
+
+
+
+
+
+                        <div class="prices">
+                            <span>&#8377;<span class="amount">@Model.Products.Price</span></span>
+                             
+
+                        </div>
+
+                        <form asp-page-handler="AddToCart" id="productForm">
+                            <input type="hidden" value="@Model.Products.SkuCode" name="SkuCode" />
+                            <input type="hidden" id="selectedPrice" name="Price" />
+                            <input type="hidden" id="buynow1" name="buynow" value="false" />
+
+                            @if (Model.ProductSizes.Count > 0)
+                            {
+                                <div class="product-action-size">
+                                    <span class="title">Size :</span>
+                                    <ul>
+                                        @foreach (var item in Model.ProductSizes)
+                                        {
+                                            <input type="hidden" id="selectedSize" name="Size" />
+                                            <input type="hidden" name="Childsku" value="@item.SKUCode" />
+                                            var size = item.Size;
+                                            var imageUrl = Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + item.ImageURL); // Assuming each size has a corresponding image
+                                            <li class="@(j == 0 ? "" : "")">
+                                                <a class="action-cart" href="javascript:void(0);" data-image-url="@imageUrl" data-price="@item.Price" data-stock="@item.StockQuantity" data-size="@item.Size">@size</a>
+                                            </li>
+                                            j++;
+                                        }
+
+                                    </ul>
+                                </div>
+                            }
+
+                            <!-- Material Selection -->
+                            @if (Model.Materialname.Count > 0)
+                            {
+                                <div class="product-action-material-type">
+                                    <span class="title">Material :</span>
+                                    <ul>
+                                        @foreach (var material in Model.Materialname)
+                                        {
+                                            <input type="hidden" id="selectedMaterial" name="MaterialName" />
+
+                                            var materialName = material.MaterialName;
+                                            var imageUrl1 = Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + material.Image);
+
+                                            <li class="@(k == 0 ? "" : "")">
+                                                <a class="action-cart" href="javascript:void(0);"
+                                                   data-image-url="@imageUrl1" data-price="@material.Price" data-material="@materialName">
+                                                    @materialName
+                                                </a>
+                                            </li>
+                                            k++;
+                                        }
+                                    </ul>
+                                </div>
+
+                            }
+                            <!-- Material Selection -->
+                            @if (Model.AddOns.Count > 0)
+                            {
+
+                                <div class="product-action-addon-type">
+                                    <span class="title">AddOns :</span>
+                                    <ul>
+                                        @foreach (var addon in Model.AddOns)
+                                        {
+                                            <input type="hidden" id="selectedaddon" name="AddOn" />
+
+                                            var AddOnName = addon.AddOnName;
+
+                                            <li class="@(a == 0 ? "" : "")">
+                                                <a class="action-cart" href="javascript:void(0);"
+                                                   data-price="@addon.Price" data-addon="@AddOnName">
+                                                    @AddOnName
+                                                </a>
+                                            </li>
+                                            a++;
+                                        }
+                                    </ul>
+                                </div>
+
+                            }
+
+                            <p class="product-desc-small">@Model.Products.ShortDescription</p>
+
+
+                            <div class="quick-product-action">
+                                <div class="action-top d-flex gap-1 gap-sm-2">
+                                    <div class="pro-qty-area">
+                                        <div class="pro-qty">
+                                            <input type="number" id="quantity1" title="Quantity" value="1" name="Qty" min="1" max="10" />
+                                        </div>
+                                    </div>
+
+                                    <button id="buynowandaddtocart1" class="btn-theme btn-black w-100 text-center" type="submit"><i class="lastudioicon-shopping-cart-2"></i> Add to cart</button>
+                                </div>
+                                <div class="action-bottom-product">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button id="buynowandaddtocart2" class="btn-buy-now w-100" onclick="HandleBuyNow()"><i class="lastudioicon-bag-2"></i> Buy Now</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <hr class="space-between">
+
+                        <div class="product-usp-parent">
+                            <table class="usp-table">
+                                <tr>
+                                    <td>
+                                        <div class="usp-content-parent d-flex align-items-center">
+                                            <span class="usp-icon"><img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/usp-icon/1.png" alt=""></span>
+                                            <span class="usp-text-content">Ethically Sourced</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="usp-content-parent d-flex align-items-center">
+                                            <span class="usp-icon"><img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/usp-icon/2.png" alt=""></span>
+                                            <span class="usp-text-content">Authentic Crystals</span>
+                                        </div>
+                                        <div class="usp-content-parent d-none align-items-center">
+                                            <span class="usp-icon"><img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/usp-icon/5.png" alt=""></span>
+                                            <span class="usp-text-content">Sterling Silver Jewellery</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="usp-content-parent d-flex align-items-center">
+                                            <span class="usp-icon"><img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/usp-icon/3.png" alt=""></span>
+                                            <span class="usp-text-content">Premium Quality</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="usp-content-parent d-flex align-items-center">
+                                            <span class="usp-icon"><img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/usp-icon/4.png" alt=""></span>
+                                            <span class="usp-text-content">Customisation Available</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <hr class="space-between">
+
+                        <div class="persuasive-text-parent">
+                            <p class="fw-semibold">Get yours now or limited stock available or offer available for limited period.</p>
+                        </div>
+
+                        <div class="shipping-details-parent">
+                            <p><span class="icon-parent"><img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/icons/delivery-truck.png" alt="icon"></span><span class="shipping-text">COD available on all orders above &#8377; 1000/- only in India</span></p>
+                        </div>
+
+                        <hr class="space-between">
+
+                        <div class="product-tags">
+                            <span class="title">Tags : </span> @Model.Products.Tags
+                        </div>
+
+                        <hr class="space-between d-lg-none mb-2">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+    <!--== End Shop Area ==-->
+    <!--== Start Description Area ==-->
+    <section class="product-description-area area-padding pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center">
+                        <h3 class="title">Description</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    @Html.Raw(Model.Products.ProductDescription)
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Description Area ==-->
+    <!--== Start FAQ Area ==-->
+    @if (Model.ProductFaqs.Count > 0)
+    {
+
+        <section class="faq-area area-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 m-auto">
+                        <div class="section-title text-center">
+
+                            <h2 class="title">Frequently Asked Questions</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="accordian-content">
+                            <div class="accordion" id="accordionExample">
+
+
+                                @for (var i = 0; i < Model.ProductFaqs.Count; i++)
+                                {
+                                    var item = Model.ProductFaqs[i];
+                                    var headingId = $"heading{i}";
+                                    var collapseId = $"collapse{i}";
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="@headingId">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId" aria-expanded="@(i == 0)" aria-controls="@collapseId">
+                                                @item.Question
+                                            </button>
+                                        </h2>
+                                        <div id="@collapseId" class="accordion-collapse collapse @(i == 0 ? "show" : "")" aria-labelledby="@headingId" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <p>@item.Answer</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    <!--== End FAQ Area ==-->
+    <!--== Recent Products Area Wrapper ==-->
+    <section class="product-area recent-products-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center">
+                        <h3 class="title">Recently Viewed Products</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="swiper-container product4-slider-container">
+                        <div class="swiper-wrapper">
+                            @foreach (var item in Model.RecentlyViewedProducts)
+                            {
+                                <div class="swiper-slide">
+                                    <!-- Start Product Item -->
+                                    <div class="product-item">
+                                        <div class="product-thumb">
+                                            <a asp-page="detail" asp-route-skucode="@item.SkuCode" asp-route-productname="@item.ProductName.Replace(' ','-')">
+                                                <img data-src="@Url.Content("https://www.crystalsbyriya.com/images/" + @item.Thumbnail)" alt="Shop" class="lazyload">
+                                                <span class="bg-thumb" data-bg-img="@item.Thumbnail" style="background-image: url(@item.Thumbnail);"></span>
+                                                <span class="thumb-overlay"></span>
+                                            </a>
+                                            <div class="product-action">
+                                               @*  <a href="javascript:void(0);" id="@item.SkuCode" class="action-quick-view ht-tooltip quview" data-tippy-content="Quick View">
+                                                    <i class="lastudioicon-eye"></i>
+                                                </a> *@
+                                                <a class="action-wishlist ht-tooltip" data-tippy-content="Add to wishlist" href="javascript:void(0);" onclick="HandleAddToWishlist2('@item.SkuCode', '@item.ProductName')">
+                                                    <i class="lastudioicon-heart-2"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="product-footer position-relative">
+                                            <div class="product-info d-block">
+                                                <div class="content-inner text-center">
+                                                    <h4 class="title"><a asp-page="detail" asp-route-skucode="@item.SkuCode" asp-route-productname="@item.ProductName.Replace(' ','-')">@item.ProductName</a></h4>
+                                                    <div class="prices">
+                                                        <span class="price">₹ @item.Price</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="product-action-button-parent">
+                                                <a href="javascript:void(0);" id="@item.SkuCode" class="btn product-action-button quview"><i class="lastudioicon-bag-3 me-1"></i> ADD TO CART</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Product Item -->
+                                </div>
+                            }
+
+
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--== End Recent Area Wrapper ==-->
+    <!--== End Recent Area Wrapper ==-->
+    <!--== Start Product Review Area ==-->
+    <section class="product-area product-description-review-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 m-auto">
+                    <div class="section-title text-center">
+                        <h3 class="title">Customer Reviews</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" enctype="multipart/form-data" asp-page-handler="Review">
+                        <div class="row gy-3">
+                            <div class="col-12">
+                                <div class="product-review">
+                                    <div class="product-review-form">
+                                        <h3 class="title fw-semibold mb-2">Write a review</h3>
+
+                                        <!-- Hidden field for ProductId -->
+                                        <input type="hidden" name="ProductId" value="@Model.Products.SkuCode" />
+
+                                        <!-- Rating Section -->
+                                        <div class="rating mb-2">
+                                            <p class="rating-title mb-1 fw-medium">Your rating</p>
+                                            <div class="star-rating">
+                                                <span class="star" data-value="1">&#9733;</span>
+                                                <span class="star" data-value="2">&#9733;</span>
+                                                <span class="star" data-value="3">&#9733;</span>
+                                                <span class="star" data-value="4">&#9733;</span>
+                                                <span class="star" data-value="5">&#9733;</span>
+                                            </div>
+                                            <input type="hidden" id="rating-value" name="Rating" value="0">
+                                        </div>
+
+                                        <!-- Image Upload Section -->
+                                        <div class="review-form-content">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="img-upload-parent mb-2">
+                                                        <input type="file" name="Images" id="file-input" accept="image/png, image/jpeg" onchange="preview()" multiple>
+                                                        <label for="file-input" class="mb-2">
+                                                            <p class="mb-2">Upload Photo</p>
+                                                            <span class="icon-parent"><i class="lni lni-upload"></i></span>
+                                                            <span id="num-of-files">No Files Chosen</span>
+
+                                                        </label>
+                                                        <div id="review-images-parent"></div>
+                                                    </div>
+                                                </div>
+                                                <!-- Review Text Input -->
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="reviewFormTextarea" class="fw-medium mb-2">Your review</label>
+                                                        <textarea class="form-control" id="reviewFormTextarea" name="ReviewText" rows="5" required></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Submit Button -->
+                                                @if (string.IsNullOrEmpty(UserEmail))
+                                                {
+                                                    <!-- Display login message if the user is not logged in -->
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="alert alert-warning text-center">
+                                                                <p>Please <a href="/myaccount">login</a> to submit a review.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-12 mt-3">
+                                                        <div class="form-group">
+                                                            <button class="btn btn-theme btn-black" id="submitbtn" type="submit">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="product-review-comments-parent">
+                        @if (Model.CombinedReviews != null)
+                        {
+                            @foreach (var review in Model.CombinedReviews.Where(r => r.IsApprovedReview == true))
+                            {
+                                <div class="product-review-comment">
+                                    <div class="comment-item">
+                                        <!-- Header: Reviewer Info -->
+                                        <div class="comment-header-parent d-flex align-items-center mb-2">
+                                            <div class="thumb me-3">
+                                                <img src="https://ik.imagekit.io/rjqr7zeeq/Icons/Screenshot%202024-12-15%20195804.png?updatedAt=1734272946687" alt="@review.ReviewerName" />
+                                            </div>
+                                            <div class="comment-title">
+                                                <h5 class="comment-by fw-semibold mb-2">@review.ReviewerName</h5>
+                                                <p class="date">@review.ReviewDate?.ToString("dd MMM yyyy")</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Content: Review Text and Rating -->
+                                        <div class="content mb-2">
+                                            <div class="rating">
+                                                @for (int i = 0; i < review.Rating; i++) // Display filled stars based on rating
+                                                {
+                                                    <span class="lastudioicon-star-rate-1" style="color: gold;"></span>
+                                                }
+
+                                                @for (int i = 0; i < (5 - review.Rating); i++) // Display remaining empty stars
+                                                {
+                                                    <span class="lastudioicon-star-rate-2" style="color: lightgray;"></span>
+                                                }
+                                            </div>
+                                            <span class="review">@review.ReviewText</span>
+                                        </div>
+
+                                        <!-- Images: Review Gallery -->
+                                        @if (!string.IsNullOrEmpty(review.ImageName) && review.IsApprovedGallery == true)
+                                        {
+                                            <div class="review-img-parent">
+                                                <a class="review-img" data-fancybox="gallery2" href="@Url.Content("https://www.crystalsbyriya.com/images/" + @review.ImageName)">
+                                                    <img src="@Url.Content("https://www.crystalsbyriya.com/images/" + @review.ImageName)" alt="review-img" />
+                                                </a>
+
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <!-- Display if no reviews are available -->
+                            <p>No customer reviews available for this product.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Product Review Area ==-->
+    @section Scripts {
+        <script src="~/assetsv2/js/ProductQuickView.js">
+            </script>
+       
+
+   
+
+
+   
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var skuCode = document.getElementById("skuCode").value;
+
+                // Call the API to get the product rating based on the SkuCode
+                fetch(`/api/Rating?productid=${skuCode}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        var averageRating = data.rating;
+
+                        averageRating = Math.min(Math.max(averageRating, 0), 5);
+
+                        var ratingIcons = document.getElementsByClassName("ratting-icons")[0];
+                        ratingIcons.innerHTML = '';
+
+                        // Add filled stars based on the average rating
+                        for (var i = 0; i < 5; i++) {
+                            var star = document.createElement("i");
+                            if (i < averageRating) {
+                                star.className = "lastudioicon-star-rate-1";
+                            }
+                            else{
+                                star.className = "lastudioicon-star-rate-2";
+                            }
+                            ratingIcons.appendChild(star);
+                        }
+
+                        // Update the review count (modify as needed)
+                        document.querySelector(".review-count").textContent = data.custom ;
+                    })
+                    .catch(error => {
+                        console.error("Error fetching rating:", error);
+                    });
+
+
+            });
+        </script>
+        <script>
+
+            function HandleBuyNow() {
+                console.log("hello");
+                // Set the hidden input field 'buynow' to true
+                document.getElementById('buynow1').value = 'true';
+
+                // Programmatically submit the form
+                document.querySelector('form').submit();
+
+            }
+            //for wishlist
+            function HandleAddToWishlist2(skuCode, productName) {
+                // Prevent the default action
+                event.preventDefault();
+
+                // Set the product-specific values in the hidden form fields
+                document.getElementById('SkuCode').value = skuCode;
+                document.getElementById('ProductName').value = productName;
+
+                // Set buynow to false for normal wishlist action
+                document.getElementById('buynow').value = 'true';
+
+                // Submit the form programmatically
+                document.getElementById('wishlistForm').submit();
+            }
+
+
+        </script>
+        <script>
+        var baseUrl = '@Model.Currenturl';
+var selectedSizeFromServer = '@Model.SelectedSize';
+var selectedMaterialFromServer = '@Model.SelectedMaterial';
+var selectedAddOnFromServer = '@Model.SelectedAddOn';
+
+$(document).ready(function () {
+   
+    var sizeSelected = false;
+    var materialSelected = false;
+    var addonSelected = false;
+    var sizePrice = 0;
+    var materialPrice = 0;
+    var addonPrice = 0;
+    // Utility function to update the URL with query parameters
+    function updateQueryString(params) {
+        const url = new URL(window.location);
+        Object.keys(params).forEach(key => {
+            if (params[key] !== null) {
+                url.searchParams.set(key, params[key]);
+            } else {
+                url.searchParams.delete(key);
+            }
+        });
+        window.history.replaceState({}, '', url);
+    }
+    function calculateTotalPrice() {
+        let totalPrice = 0;
+
+        if (addonSelected) {
+            // If addon is selected, add size, material, and addon prices
+            totalPrice = sizePrice + materialPrice + addonPrice;
+        }
+        else if (materialSelected && sizeSelected) {
+            totalPrice += materialPrice + sizePrice;
+        }
+        else {
+            // If no addon is selected, sum size and material prices only if selected
+            if (sizeSelected) {
+                totalPrice += sizePrice;
+            }
+            if (materialSelected) {
+                totalPrice += materialPrice;
+            }
+
+        }
+        $('#selectedPrice').val(totalPrice);
+        $(".amount").html(totalPrice); // Ensure price is displayed with 2 decimal places
+
+    }
+
+
+
+
+    // Function to initialize the page with pre-selected options from the server
+    function initializeSelection() {
+        if (selectedSizeFromServer) {
+            const sizeElement = $(`.product-action-size ul li a[data-size="${selectedSizeFromServer}"]`);
+            if (sizeElement.length) {
+                sizeElement.click(); // Simulate click for size
+            }
+        }
+
+        if (selectedMaterialFromServer) {
+            const materialElement = $(`.product-action-material-type ul li a[data-material="${selectedMaterialFromServer}"]`);
+            if (materialElement.length) {
+                materialElement.click(); // Simulate click for material
+            }
+        }
+        if (selectedAddOnFromServer) {
+            const addonElement = $(`.product-action-addon-type ul li a[data-addon="${selectedAddOnFromServer}"]`);
+            if (addonElement.length) {
+                addonElement.click(); // Simulate click for material
+            }
+        }
+
+    }
+
+    // Handle Size Selection
+    $('.product-action-size ul li a').on('click', function () {
+        // Remove 'active' class from all size options
+        $(this).closest('ul').find('li').removeClass('active');
+
+        // Add 'active' class to the selected size option
+        $(this).parent().addClass('active');
+
+        // Get the selected size, image URL, and other data from the data attributes
+        var imageUrl = $(this).data('image-url');
+        sizePrice = parseFloat($(this).data('price'));
+        var stock = $(this).data('stock');
+        var selectedSize = $(this).data('size');
+        // Update the product image
+        $('#product-image').attr('src', imageUrl);
+        $(".slick-slide.slick-current.slick-active img").attr('src', imageUrl);
+        $(".zoomImg").attr('src', imageUrl);
+        // Update the price display
+
+
+        // Update the hidden input for selected size
+        $('#selectedSize').val(selectedSize);
+
+
+        // Mark size as selected
+        sizeSelected = true;
+
+        calculateTotalPrice();
+
+        // Update the URL with the selected size, preserving material if it's selected
+        updateQueryString({ size: selectedSize, material: $('#selectedMaterial').val() || null, addon: $('#selectedaddon').val() || null });
+    });
+    $(".single-product-slider").click(function () {
+        let currentimgurl = $('.slick-slide.slick-current.slick-active img').attr('src');
+        $(".zoomImg").attr('src', currentimgurl);
+
+    });
+
+    // Handle Material Selection
+    $('.product-action-material-type ul li a').on('click', function () {
+        // Remove 'active' class from all material options
+        $(this).closest('ul').find('li').removeClass('active');
+
+        // Add 'active' class to the selected material option
+        $(this).parent().addClass('active');
+
+        // Get the selected material name from the data attribute
+        var imageUrl = $(this).data('image-url');
+        var selectedMaterial = $(this).data('material');
+        materialPrice = parseFloat($(this).data('price'));
+
+        $('#product-image').attr('src', imageUrl);
+        $(".slick-slide.slick-current.slick-active img").attr('src', imageUrl);
+        $(".zoomImg").attr('src', imageUrl);
+        // Update the hidden input for selected material
+        $('#selectedMaterial').val(selectedMaterial);
+
+        // Mark material as selected
+        materialSelected = true;
+        calculateTotalPrice();
+
+
+
+
+
+
+        updateQueryString({ material: selectedMaterial, size: $('#selectedSize').val() || null, addon: $('#selectedaddon').val() || null });
+    });
+    $(".single-product-slider").click(function () {
+        let currentimgurl = $('.slick-slide.slick-current.slick-active img').attr('src');
+        $(".zoomImg").attr('src', currentimgurl);
+
+    });
+    // Handle AddOn Selection
+    $('.product-action-addon-type ul li a').on('click', function () {
+        // Remove 'active' class from all material options
+        $(this).closest('ul').find('li').removeClass('active');
+
+        // Add 'active' class to the selected material option
+        $(this).parent().addClass('active');
+
+        // Get the selected material name from the data attribute
+        var selectedaddon = $(this).data('addon');
+        addonPrice = parseFloat($(this).data('price'));
+
+        // Update the hidden input for selected material
+        $('#selectedaddon').val(selectedaddon);
+
+
+        // Mark material as selected
+        addonSelected = true;
+        calculateTotalPrice();
+
+
+
+
+        updateQueryString({ addon: selectedaddon, size: $('#selectedSize').val() || null, material: $('#selectedMaterial').val() || null });
+    });
+   
+        // Check if neither size nor material options exist
+        if ($('.product-action-size').length === 0 && $('.product-action-material-type').length === 0) {
+            var productPriceString = '@Model.Products.Price';
+            var productPrice = parseFloat(productPriceString);
+
+ 
+            $('#selectedPrice').val(productPrice);
+            $('.amount').html(productPrice);
+         
+        }
+   
+
+    // Initialize the selections based on the server-side values
+    initializeSelection();
+
+    // Click Event: Buy Now and Add to Cart (button 1)
+    $('#buynowandaddtocart1').on('click', function (e) {
+
+
+
+
+        var selectedSize = $('#selectedSize').val();
+        var selectedMaterial = $('#selectedMaterial').val();
+
+
+        // If neither size nor material exists, prevent the action
+        if ($('.product-action-size').length === 0 && $('.product-action-material-type').length === 0) {
+
+            return true;
+        }
+
+        // Check if both size and material are unselected
+        if (!selectedSize && !selectedMaterial) {
+            alert("Please select either a size or a material.");
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Click Event: Buy Now and Add to Cart (button 2)
+    $('#buynowandaddtocart2').on('click', function (e) {
+        var selectedSize = $('#selectedSize').val();
+        var selectedMaterial = $('#selectedMaterial').val();
+
+
+        // If neither size nor material exists, prevent the action
+        if ($('.product-action-size').length === 0 && $('.product-action-material-type').length === 0) {
+
+            return true;
+        }
+
+        // Check if both size and material are unselected
+        if (!selectedSize && !selectedMaterial) {
+            alert("Please select either a size or a material.");
+            e.preventDefault();
+            return false;
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.star');
+    const ratingValue = document.getElementById('rating-value');
+
+    stars.forEach((star, index) => {
+        star.addEventListener('mouseover', function () {
+            highlightStars(index + 1);
+        });
+
+        star.addEventListener('click', function () {
+            ratingValue.value = index + 1; // Set the rating value
+            highlightStars(index + 1); // Highlight stars based on selection
+        });
+
+        star.addEventListener('mouseout', function () {
+            highlightStars(ratingValue.value); // Keep stars highlighted based on selected rating
+        });
+    });
+
+    function highlightStars(rating) {
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.style.color = '#ffc107'; // Yellow color for selected stars
+            } else {
+                star.style.color = '#ddd'; // Default color for unselected stars
+            }
+        });
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const submitButton = document.getElementById("submitbtn");
+    const ratingField = document.getElementById("rating-value");
+    submitButton.addEventListener("click", function (e) {
+        if (ratingField.value === "0") {
+            alert("Please select a rating before submitting your review.");
+
+            e.preventDefault();
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Check if "success" is present in the query string
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('success')) {
+        alert("Review submitted successfully!");
+    }
+});
+</script>
+
+    }

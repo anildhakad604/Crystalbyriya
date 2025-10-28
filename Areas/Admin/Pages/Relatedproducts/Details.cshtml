@@ -1,0 +1,31 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Relatedproducts.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>RelatedProduct</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RelatedProduct.BlogId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RelatedProduct.BlogId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RelatedProduct.Skucode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RelatedProduct.Skucode)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.RelatedProduct.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

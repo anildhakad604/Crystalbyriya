@@ -1,21 +1,11 @@
-
-namespace Astaberry.Models
+﻿    namespace CrystalByRiya.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    public  class TblCategory
+    public class TblCategory
     {
-       
-        [Key]
-        public int Categoryid { get; set; }
-        [Required]
-        public string Categoryname { get; set; }
-        [Required]
-        public string Categoryimage { get; set; }
-
-
-
+        public int Id { get; set; }
+        public string MenuList { get; set; }
+        public string Url { get; set; }
+        public string Description { get; set; }
+      
     }
 }

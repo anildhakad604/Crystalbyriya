@@ -5,65 +5,65 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Astaberry.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using CrystalByRiya.Models;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Data;
+using CrystalByRiya.Classes;
 
-namespace Astaberry.Areas.Admin.Pages.Products
+namespace CrystalByRiya.Areas.Admin.Pages.Products
 {
     public class CreateModel : PageModel
     {
-        private readonly Astaberry.Models.ApplicationDbContext _context;
-        private readonly IWebHostEnvironment webHostEnvironment;
-        public List<SelectListItem> Options { get; set; }
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
+     
+        public IList<SelectListItem> Category { get; set; }             
+        public IList<SelectListItem> SubCategory { get; set; }
 
-        public CreateModel(Astaberry.Models.ApplicationDbContext context, IWebHostEnvironment _webHostEnvironment)
+        private readonly AmazonS3 _amazonS3;
+        private readonly AwsCredentials awsCredentials;
+
+        public CreateModel(CrystalByRiya.Models.ApplicationDbContext context, AwsCredentials awsCredentials, AmazonS3 amazonS3)
         {
             _context = context;
-            webHostEnvironment = _webHostEnvironment;
+            this.awsCredentials = awsCredentials;
+            _amazonS3 = amazonS3;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            string logedin = HttpContext.Session.GetString("Login");
-            if (string.IsNullOrEmpty(logedin))
-            {
-                return RedirectToPage("../Login");
-
-            }
-            else
-            {
-                Options = _context.TblSizes.Select(a =>
-                                  new SelectListItem
-                                  {
-                                      Value = a.Sizeid.ToString(),
-                                      Text = a.Size
-                                  }).ToList();
-                return Page();
-            }
+            Category = await _context.TblCategory.Select(c => new SelectListItem { Text = c.MenuList, Value = c.Id.ToString() }).ToListAsync();
+            SubCategory = await _context.TblSubcategory.Select(c => new SelectListItem { Text = c.SubCategoryname, Value = c.SubCategoryid.ToString() }).ToListAsync();
+            return Page();
         }
 
         [BindProperty]
-        public TblProduct TblProduct { get; set; }
-        [BindProperty]
-        public IFormFile file { get; set; }
+        public Product Product { get; set; } = default!;
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        
+
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnPostAsync(string LongDescription,string ParentCode,IFormFile thumbnail ,string title )
         {
-            
-
-            var files = Path.Combine(webHostEnvironment.WebRootPath, "img/HomeImages", file.FileName);
-            using (var fileStream = new FileStream(files, FileMode.Create))
+            if (thumbnail != null && thumbnail.Length > 1024 * 1024) // 1 MB in bytes
             {
-                await file.CopyToAsync(fileStream);
+                ModelState.AddModelError("Product.Thumbnail", "The thumbnail size must not exceed 1 MB.");
+                return Page(); // Return to the page with the validation error
             }
-            TblProduct.THUMBNAIL = file.FileName;
-            _context.TblProducts.Add(TblProduct);
+            string fileName = await _amazonS3.UploadFileToS3(thumbnail, awsCredentials.ProductsFoldername);
+
+            // Save thumbnail details in the database
+
+
+            Product.ProductDescription = LongDescription;
+            Product.ParentCode = ParentCode;
+            Product.Thumbnail = fileName;
+            Product.MetaTitle = title;
+            await _context.TblProducts.AddAsync(Product);
             await _context.SaveChangesAsync();
 
+           
             return RedirectToPage("./Index");
         }
     }

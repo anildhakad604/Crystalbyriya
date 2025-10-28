@@ -1,0 +1,110 @@
+﻿@page
+@model CrystalByRiya.Pages.contactusModel
+@{
+}
+@section Metatags {
+    <title> Crystal By Riya | Pre-Owned Excellence</title>
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Crystals By Riya | Home" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:title" content="Epitome Cars | Pre-Owned Excellence">
+    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
+    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+}
+
+<main class="main-content">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title-content content-style-2">
+                        <div class="bread-crumbs"><a href="/index">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0);">Contact Us</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Title Area ==-->
+    <!--== Start Contact Area ==-->
+    <section class="contact-area pt-3 pt-md-5 area-padding">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2 class="title mb-4 text-center">We are Happy to Help You</h2>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <p>For Any queries related to our product , please feel free to reach out to us on our customer care email id : <a href="mailto:support.crystalsbyriya.com" style="color: var(--primary-color); font-weight: 500;">support.crystalsbyriya.com</a>. Or whatsapp us on <a href="https://api.whatsapp.com/send?phone=918287945785" style="color: var(--primary-color); font-weight: 500;">+91-8287945785</a>.</p>
+                    <p>You can also write a note to us through our chat bot or ping us on <a href="https://www.instagram.com/crystalsbyriya?igsh=MTgwb25jNXFnZXlqcA==" style="color: var(--primary-color); font-weight: 500;">Instagram</a></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-lg-7">
+                    <div class="contact-form">
+                        <form class="contact-form-wrapper form-style" method="post">
+                            @if (!ModelState.IsValid)
+                            {
+                                <div class="validation-summary-errors">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                </div>
+                            }
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="contactus.Name" placeholder="Name*" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="contactus.Phone" placeholder="Phone Number">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input class="form-control" type="email" name="contactus.Email" placeholder="Email*" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0">
+                                        <textarea class="form-control textarea" name="contactus.Message" placeholder="How can we help?" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group mb-0 text-center text-lg-start">
+                                        <button class="btn btn-theme btn-black" type="submit">Send Message</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Message Notification -->
+                        <div class="form-message"></div>
+                    </div>
+                </div>
+                <div class=" col-lg-5 d-none d-lg-block">
+                    <div class="contact-map-area h-100">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14044.543781417527!2d77.1536845!3d28.7162581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d01f6c862c9b1%3A0x6516d9daf825ca5b!2sCrystals%20by%20Riya!5e0!3m2!1sen!2sin!4v1699949592345!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Contact Area ==-->
+    <!--== Start Map Area ==-->
+    <div class="contact-map-area d-lg-none">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14044.543781417527!2d77.1536845!3d28.7162581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d01f6c862c9b1%3A0x6516d9daf825ca5b!2sCrystals%20by%20Riya!5e0!3m2!1sen!2sin!4v1699949592345!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    <!--== End Map Area ==-->
+</main>

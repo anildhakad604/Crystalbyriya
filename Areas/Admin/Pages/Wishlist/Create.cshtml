@@ -1,0 +1,69 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Wishlist.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>AddingWishlist</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AddingWishlist.UserName" class="control-label"></label>
+                <input asp-for="AddingWishlist.UserName" class="form-control" />
+                <span asp-validation-for="AddingWishlist.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddingWishlist.UserEmail" class="control-label"></label>
+                <input asp-for="AddingWishlist.UserEmail" class="form-control" />
+                <span asp-validation-for="AddingWishlist.UserEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddingWishlist.Phone" class="control-label"></label>
+                <input asp-for="AddingWishlist.Phone" class="form-control" />
+                <span asp-validation-for="AddingWishlist.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddingWishlist.ProductName" class="control-label"></label>
+                <input asp-for="AddingWishlist.ProductName" class="form-control" />
+                <span asp-validation-for="AddingWishlist.ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddingWishlist.Image" class="control-label"></label>
+                <input asp-for="AddingWishlist.Image" class="form-control" />
+                <span asp-validation-for="AddingWishlist.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddingWishlist.Price" class="control-label"></label>
+                <input asp-for="AddingWishlist.Price" class="form-control" />
+                <span asp-validation-for="AddingWishlist.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddingWishlist.Date" class="control-label"></label>
+                <input asp-for="AddingWishlist.Date" class="form-control" />
+                <span asp-validation-for="AddingWishlist.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddingWishlist.Marketing" class="control-label"></label>
+                <input asp-for="AddingWishlist.Marketing" class="form-control" />
+                <span asp-validation-for="AddingWishlist.Marketing" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

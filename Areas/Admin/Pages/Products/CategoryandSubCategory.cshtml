@@ -1,0 +1,87 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Products.CategoryandSubCategoryModel
+@{
+    ViewData["Title"] = "Category and SubCategory";
+}
+
+<h2>Category and SubCategory</h2>
+
+<form method="post">
+    <div>
+        <div class="form-group">
+            <input class="form-control form-control-lg" type="text" id="SkuCodeInput" name="SkuCode" placeholder="Sku Code">
+            <a class="btn btn-danger" id="getinfo">Get Info</a>
+        </div>
+        <ul class="checkbox-group">
+            @if(Model.Categories!=null && Model.Categories.Any())
+            @foreach (var category in Model.Categories)
+            {
+                <div>
+                <li><input type="checkbox" id="category-@category.Id" name="SelectedCategoryIds" value="@category.Id" /><b>@category.Id - @category.MenuList</b></li>
+                <ul class="Subcategory">
+                        @foreach (var item in Model.SubCategories.Where(e => e.CategoryId == category.Id))
+                        {
+                        <div>
+                            <label>
+                                <input type="checkbox" id="subcategory-@item.SubCategoryid" name="SelectedSubCategoryIds" value="@item.SubCategoryid" /> @item.SubCategoryid - @item.SubCategoryname
+                            </label>
+                        </div>
+                        }
+                </ul>
+        </div>
+            }
+    </ul>
+    </div>
+    <button type="submit" class="btn btn-danger">Save</button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('getinfo').addEventListener('click', function (e) {
+            e.preventDefault();
+            var skuCode = document.getElementById('SkuCodeInput').value;
+
+            if (!skuCode) {
+                alert('Please enter a SKU code.');
+                return;
+            }
+
+            // Adjusted API path
+            fetch(`/api/GetInfo?skuCode=${skuCode}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Deselect all checkboxes
+                    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+
+                    // Populate the categories and subcategories
+                    data.selectedCategories.forEach(categoryId => {
+                        var categoryCheckbox = document.getElementById(`category-${categoryId}`);
+                        if (categoryCheckbox) {
+                            categoryCheckbox.checked = true;
+                        }
+                    });
+
+                    data.selectedSubCategories.forEach(subCategoryId => {
+                        var subCategoryCheckbox = document.getElementById(`subcategory-${subCategoryId}`);
+                        if (subCategoryCheckbox) {
+                            subCategoryCheckbox.checked = true;
+                        }
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+
+<style>
+    .SubCategory {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkbox-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+</style>

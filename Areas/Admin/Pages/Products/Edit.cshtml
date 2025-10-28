@@ -1,87 +1,455 @@
 ﻿@page
-@model Astaberry.Areas.Admin.Pages.Products.EditModel
+@model CrystalByRiya.Areas.Admin.Pages.Products.EditModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit Product</h1>
+<h1>Edit</h1>
 
-<h4>If there is no Offer price applicable please enter actual price in offer price section</h4>
+<h4>Product</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="TblProduct.Id" />
-            <input type="hidden" asp-for="TblProduct.THUMBNAIL" />
-            <div class="form-group">
-                <label asp-for="TblProduct.Skucode" class="control-label"></label>
-                <input asp-for="TblProduct.Skucode" class="form-control" />
-                <span asp-validation-for="TblProduct.Skucode" class="text-danger"></span>
+            <input type="hidden" asp-for="Product.ID" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.SkuCode" class="control-label"></label>
+                        <input asp-for="Product.SkuCode" class="form-control" />
+                        <span asp-validation-for="Product.SkuCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.ProductName" class="control-label"></label>
+                        <input asp-for="Product.ProductName" class="form-control" />
+                        <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TblProduct.ProductName" class="control-label"></label>
-                <input asp-for="TblProduct.ProductName" class="form-control" />
-                <span asp-validation-for="TblProduct.ProductName" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.Qty" class="control-label"></label>
+                        <input asp-for="Product.Qty" class="form-control" />
+                        <span asp-validation-for="Product.Qty" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.Price" class="control-label"></label>
+                        <input asp-for="Product.Price" class="form-control" />
+                        <span asp-validation-for="Product.Price" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TblProduct. QTY" class="control-label"></label>
-                <input asp-for="TblProduct.QTY" class="form-control" />
-                <span asp-validation-for="TblProduct.QTY" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Product.Keywords" class="control-label"></label>
+                        <input asp-for="Product.Keywords" class="form-control" />
+                        <span asp-validation-for="Product.Keywords" class="text-danger"></span>
+                    </div>
+                </div>
+
             </div>
-            <div class="form-group">
-                <label asp-for="TblProduct.Price" class="control-label"></label>
-                <input asp-for="TblProduct.Price" class="form-control" />
-                <span asp-validation-for="TblProduct.Price" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Product.ProductDescription" class="control-label"></label>
+                        <textarea id="editor" asp-for="Product.ProductDescription" class="form-control" style="height:1250px;"></textarea>
+                        <span asp-validation-for="Product.ProductDescription" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.AltText" class="control-label"></label>
+                        <input asp-for="Product.AltText" class="form-control" />
+                        <span asp-validation-for="Product.AltText" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.ParentUrl" class="control-label"></label>
+                        <input asp-for="Product.ParentUrl" class="form-control" />
+                        <span asp-validation-for="Product.ParentUrl" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.Thumbnail" class="control-label"></label>
+                        <input asp-for="Product.Thumbnail" class="form-control" type="file" name="thumbnail" id="imageUpload" accept="image/*" />
+                        <span asp-validation-for="Product.Thumbnail" class="text-danger"></span>
+                        <input type="hidden" name="thumbnailimg" value="@Model.imgname" />
+                        <div>
+                            <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; height: auto; margin-top: 10px; border: 1px solid #ddd; padding: 5px;" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.ParentCode" class="control-label"></label>
+                        <input asp-for="Product.ParentCode" class="form-control" />
+                        <span asp-validation-for="Product.ParentCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.ShortDescription" class="control-label"></label>
+                        <input asp-for="Product.ShortDescription" class="form-control" />
+                        <span asp-validation-for="Product.ShortDescription" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.Tags" class="control-label"></label>
+                        <input asp-for="Product.Tags" class="form-control" />
+                        <span asp-validation-for="Product.Tags" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.AddedOn" class="control-label"></label>
+                        <input asp-for="Product.AddedOn" class="form-control" type="date" />
+                        <span asp-validation-for="Product.AddedOn" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.Size" class="control-label"></label>
+                        <input asp-for="Product.Size" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              
+                <div class="form-group">
+                    <label asp-for="Product.MetaTag" class="control-label"></label>
+                    <input asp-for="Product.MetaTag" class="form-control" />
+                    <span asp-validation-for="Product.MetaTag" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Product.MetaDescription" class="control-label"></label>
+                        <input asp-for="Product.MetaDescription" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Product.MetaTitle" class="control-label"></label>
+                        <textarea id="metatitle" asp-for="Product.MetaTitle" class="form-control" style="height:1250px;"></textarea>
+                        <span asp-validation-for="Product.MetaTitle" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table for dynamic entries -->
+            <div class="form-group">
+    <h3>Materials</h3>
+    <table class="table table-striped table-bordered orders" id="material-orders">
+        <thead class="text-center" style="background-color:black; color:#fff;">
+            <tr>
+                <th class="text-center">Material Name</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through existing Materials -->
+                        @if (Model.Materialnames != null && Model.Materialnames.Any())
+                        {
+                            @foreach (var item in Model.Materialnames)
+                            {
+                                <tr>
+                                    <!-- Material Name -->
+                                    <td>
+                                        <input class="form-control" type="text" name="MaterialName" value="@item.MaterialName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="text" name="MaterialPrice" value="@item.Price" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="file" name="MaterialImage" />
+                                        <input type="hidden" name="ExistingMaterialImage" value="@item.Image" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control" name="newMaterialName1" placeholder="Material Name" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" name="newMaterialPrice1" placeholder="Price" />
+                            </td>
+                            <td>
+                                <input type="file" class="form-control" name="newMaterialImage1" placeholder="Image"  />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control" name="newMaterialName2" placeholder="Material Name" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" name="newMaterialPrice2" placeholder="Price" />
+                            </td>
+                            <td>
+                                <input type="file" class="form-control" name="newMaterialImage2" placeholder="Image"  />
+                            </td>
+                        </tr>
+            <!-- Row for adding new Material entries -->
            
-          
+        </tbody>
+    </table>
+</div>
+
+
+
+            <!-- Display Category and SubCategory Information from Stored Procedure -->
+
             <div class="form-group">
-                <label asp-for="TblProduct.ParentCode" class="control-label"></label>
-                <input asp-for="TblProduct.ParentCode" class="form-control" />
-                <span asp-validation-for="TblProduct.ParentCode" class="text-danger"></span>
+                <table class="table table-striped table-bordered">
+                    <thead class="text-center" style="background-color:black; color:#fff;">
+                        <tr>
+                            <th>Category ID</th>
+                            <th>Menu List</th>
+                            <th>SubCategory ID</th>
+                            <th>SubCategory Name</th>
+                            <th>SkuCode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detail in Model.ProductDetailsList)
+                        {
+                            <tr>
+                                <td>@detail["CategoryId"]</td>
+                                <td>@detail["MenuList"]</td>
+                                <td>@detail["SubCategoryId"]</td>
+                                <td>@detail["SubCategoryName"]</td>
+                                <td>@detail["SkuCode"]</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-            
+
             <div class="form-group">
-                <label asp-for="TblProduct.THUMBNAIL" class="control-label">Only .Webp files (Dimension 400X400)</label>
-                <input asp-for="TblProduct.THUMBNAIL" class="form-control" type="file" name="file" id="file" accept="image/webp" />
-                <span asp-validation-for="TblProduct.THUMBNAIL" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" id="Submit" />
+                <input type="submit" value="Save" id="Create" class="btn btn-success" />
+                <a href="./Index" class="btn btn-danger">Cancel</a>
+                <input type="hidden" name="Sizehiddencollection">
+                <input type="hidden" name="Materialhiddencolllection" />
             </div>
         </form>
-    </div>
-</div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-    $('#file').on('change', function () {
-        var ext = $('#file').val().split('.').pop().toLowerCase();
-        if ($.inArray(ext, ['webp']) == -1) {
-            alert('invalid extension!');
-            $("#Submit").hide();
-            return;
 
-        } else {
-            $("#Submit").show();
+
+
+        @section Scripts {
+
+            <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
+            <script>
+                ClassicEditor.create(document.querySelector('#editor'), {
+                    toolbar: {
+                        items: [
+                            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
+                            'undo', 'redo', '|', 'insertTable', 'mediaEmbed'
+                        ]
+                    },
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                            { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                            { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                            { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                            { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                            { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                            { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                        ]
+                    }
+                })
+                .then(editor => {
+                    console.log(editor);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            </script>
+            <script>
+                var rowCount = 1;
+
+                // Add new row dynamically
+                $('#add').click(function () {
+                    rowCount++;
+                    $('#orders').append('<tr id="row' + rowCount + '">'
+                        + '<td colspan="3"><input type="text" class="form-control" name="newSkuCode[]" /></td>'
+                        + '<td colspan="1"><input class="form-control" type="text" name="newSize[]" /></td>'
+                        + '<td colspan="1"><input type="text" class="form-control" name="newImage[]" /></td>'
+                        + '<td colspan="1"><input type="text" class="form-control" name="newStock[]" /></td>'
+                        + '<td colspan="1"><input type="text" class="form-control" name="newPrice[]" /></td>'
+                        + '<td colspan="1"><button type="button" name="remove" id="' + rowCount + '" class="btn btn-danger btn_remove circle">-</button></td>'
+                        + '</tr>');
+                });
+
+                // Remove row when "-" button is clicked
+                $(document).on('click', '.btn_remove', function () {
+                    var button_id = $(this).attr("id");
+                    $('#row' + button_id + '').remove();
+                });
+
+
+
+                // Store the data as a JSON string in the hidden input field
+
+            </script>
+            <script>
+                ClassicEditor.create(document.querySelector('#metatitle'), {
+                    toolbar: {
+                        items: [
+                            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
+                            'undo', 'redo', '|', 'insertTable', 'mediaEmbed'
+                        ]
+                    },
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                            { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                            { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                            { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                            { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                            { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                            { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                        ]
+                    }
+                })
+                .then(editor => {
+                    console.log(editor);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            </script>
+
+            <script>
+                $("#Create").click(function () {
+                    var sizearray = new Array();
+                    $('#orders tr').each(function (i, row) {
+                        let Skucode = $(this).closest('tr').find("td:eq(0) input").val();
+                        var Size = $(this).closest('tr').find("td:eq(1) input").val();
+                        var image = $(this).closest('tr').find("td:eq(2) input").val();
+                        var stock = $(this).closest('tr').find("td:eq(3) input").val();
+                        var price = $(this).closest('tr').find("td:eq(4) input").val();
+                        var sizecollection = {};
+                        sizecollection.Skucode = Skucode;
+                        sizecollection.Size = Size;
+                        sizecollection.image = image;
+                        sizecollection.stock = stock;
+                        sizecollection.price = price;
+                        sizearray.push(sizecollection);
+
+                    });
+                    document.getElementsByName("Sizehiddencollection")[0].value = JSON.stringify(sizearray);
+                    var materialArray = new Array();
+                    $('#material-orders tr').each(function (i, row) {
+                        var materialName = $(this).closest('tr').find("td:eq(0) input").val();
+                        var materialPrice = $(this).closest('tr').find("td:eq(1) input").val();
+                        var materialImage = $(this).closest('tr').find("td:eq(2) input").val();
+
+                        var materialCollection = {};
+                        materialCollection.MaterialName = materialName;
+                        materialCollection.Price = materialPrice;
+                        materialCollection.Image = materialImage;
+                        materialArray.push(materialCollection);
+                    });
+                    document.getElementsByName("Materialhiddencolllection")[0].value = JSON.stringify(materialArray);
+                });
+            </script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+           
+
+
+
         }
-        const size =
-            (this.files[0].size / 1024);
+        @*  <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
+        <script>
+        ClassicEditor.create(document.querySelector('#editor'))
+        .then(editor => {
+        console.log(editor);
+        })
+        .catch(error => {
+        console.error(error);
+        });
+        </script>
+        <script>
+        var rowCount = 1;
+        $('#add').click(function () {
+        rowCount++;
+        $('#orders').append('<tr id="row' + rowCount + '"><td colspan="3"><input type="text" class="form-control" /></td><input class="form-control" type="hidden" data-type="product_id" id="product_id_' + rowCount + '" name="product_id[]" for="' + rowCount + '"/ > <td colspan="1"><input class="form-control assignedhours" type="text" id="quantity_' + rowCount + '" name="quantity[]" for="' + rowCount + '" /></td><td colspan="1"><input type="text" class="form-control" id="totalhoursworked" name="product_unit[]" for="1" /></td><td width="20%"><input type="text" class="form-control description" id="description" name="description[]" for="1" /></td><td colspan="1" width="10%"><input type="text" name="totalconsumedtime" id="totalconsumedtime" class="form-control" /></td><td colspan="1"><button type="button" name="remove" id="' + rowCount + '" class="btn btn-danger btn_remove cicle"> -</button></td></tr>');
+        });
+        </script>
+        <script>
+        $(document).on('click', '.btn_remove', function () {
+        var button_id = $(this).attr('id');
+        $('#row' + button_id + '').remove();
+        });
+        </script>
+        <script>
+        $("#Create").click(function () {
+        var sizearray = [];
+        $('#orders tr').each(function (i, row) {
+        let Skucode = $(this).closest('tr').find("td:eq(0) input").val();
+        var Size = $(this).closest('tr').find("td:eq(1) input").val();
+        var image = $(this).closest('tr').find("td:eq(2) input").val();
+        var stock = $(this).closest('tr').find("td:eq(3) input").val();
 
-        if (size > 50) {
-            alert("File must be less than 50kb");
-            $("#Submit").hide();
-        } else {
-            $("#Submit").show();
-        }
-    });
+        var price = $(this).closest('tr').find("td:eq(4) input").val();
+        var sizecollection = {};
+        sizecollection.Skucode = Skucode;
+        sizecollection.Size = Size;
+        sizecollection.image = image;
+        sizecollection.stock = stock;
+        sizecollection.price = price;
+        sizearray.push(sizecollection);
+        });
+        document.getElementsByName("Sizehiddencollection")[0].value = JSON.stringify(sizearray);
+        }); *@
+        <script>
+            document.getElementById('imageUpload').addEventListener('change', function(event) {
+                const imagePreview = document.getElementById('imagePreview');
+                const file = event.target.files[0];
 
-</script>
-}
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block'; // Show the preview image
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.src = '#';
+                    imagePreview.style.display = 'none'; // Hide the preview image if no file selected
+                }
+            });
+        </script>

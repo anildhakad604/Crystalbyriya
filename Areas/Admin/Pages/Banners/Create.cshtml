@@ -1,53 +1,47 @@
 ﻿@page
-@model Astaberry.Areas.Admin.Pages.Banners.CreateModel
+@model CrystalByRiya.Areas.Admin.Pages.Banners.CreateModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Add Banners</h1>
+<h1>Create</h1>
 
+<h4>Banners</h4>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label">Desktop Image Name</label>
-                <input asp-for="TblBanners.DesktopImageName" type="file" name="DesktopImageNames" class="form-control" />
-                <span asp-validation-for="TblBanners.DesktopImageName" class="text-danger"></span>
+                <label asp-for="Banners.MobileImageName" class="control-label"></label>
+                <input name="MobileImage" class="form-control" type="file" required />
+               
+            </div>
+            <div class="form-group"> 
+                <label asp-for="Banners.DesktopImageName" class="control-label"></label>
+                <input name="DekstopImage" class="form-control"type="file" required />
+               
             </div>
             <div class="form-group">
-                <label class="control-label">Mobile Image Name</label>
-                <input asp-for="TblBanners.MobileImageName" type="file" name="MobileImageNames" class="form-control" />
-                <span asp-validation-for="TblBanners.MobileImageName" class="text-danger"></span>
+                <label asp-for="Banners.TargetUrl" class="control-label"></label>
+                <input asp-for="Banners.TargetUrl" class="form-control" required />
+                <span asp-validation-for="Banners.TargetUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Navigate To</label>
-                <select name="Navigateto" class="form-control">
-                    <option value="0">Select</option>
-                    <option value="1">Category</option>
-                    <option value="2">Range</option>
-                </select>
-                <span asp-validation-for="TblBanners.CategoryName" class="text-danger"></span>
+                <label asp-for="Banners.AltText" class="control-label"></label>
+                <input asp-for="Banners.AltText" class="form-control" required />
+                <span asp-validation-for="Banners.AltText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TblBanners.CategoryName" class="control-label"></label>
-                <select asp-for="TblBanners.CategoryName" asp-items="Model.Options" name="CategoryName" class="form-control">
-                    <option>Select</option>
-                </select>
-                <span asp-validation-for="TblBanners.CategoryName" class="text-danger"></span>
+                <label asp-for="Banners.Type" class="control-label"></label>
+                <input asp-for="Banners.Type" class="form-control" required />
+                <span asp-validation-for="Banners.Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TblBanners.SubCategoryName" class="control-label"></label>
-                <select asp-for="TblBanners.SubCategoryName" name="SubCategoryName" asp-items="Model.SubCatOptions" class="form-control">
-                    <option>Select</option>
-                </select>
-                <span asp-validation-for="TblBanners.SubCategoryName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TblBanners.Alt" class="control-label"></label>
-                <input asp-for="TblBanners.Alt" name="Alt" class="form-control" />
-                <span asp-validation-for="TblBanners.Alt" class="text-danger"></span>
+                <label asp-for="Banners.Text" class="control-label"></label>
+                <input asp-for="Banners.Text" class="form-control" required />
+                <span asp-validation-for="Banners.Text" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -62,22 +56,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
-    $(document).ready(function () {
-        $("#Upload").hide();
-        $("#url").hide();
-        $("select").change(function () {
-            var type = $("#type").val();
-            if (type == 0) {
-                $("#Upload").show();
-                $("#url").hide();
-            }
-            else if (type == 1) {
-                $("#Upload").hide();
-                $("#url").show();
-            }
-        });
-    });
-
-</script>
 }

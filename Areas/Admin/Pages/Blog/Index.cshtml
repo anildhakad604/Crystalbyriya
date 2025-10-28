@@ -1,72 +1,64 @@
 ﻿@page
-@model Astaberry.Areas.Admin.Pages.Blog.IndexModel
+@model CrystalByRiya.Areas.Admin.Pages.Blog.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Blog List</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New Blog</a>
+    <a asp-page="Create" class="btn btn-danger">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TblBlog[0].BlogTitle)
+                @Html.DisplayNameFor(model => model.Blogs[0].BlogTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TblBlog[0].Blogdescription)
+                @Html.DisplayNameFor(model => model.Blogs[0].ShortDescription)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Blogs[0].PublishedDate)
+            </th>
+            
+          
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Blogs[0].ThumbnailImage)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TblBlog[0].Date)
+                @Html.DisplayNameFor(model => model.Blogs[0].Keywords)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TblBlog[0].Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TblBlog[0].Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TblBlog[0].Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TblBlog[0].Month)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TblBlog[0].Year)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.TblBlog) {
+@foreach (var item in Model.Blogs) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.BlogTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Blogdescription)
+                @Html.DisplayFor(modelItem => item.ShortDescription)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishedDate)
+            </td>
+            
+            
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.ThumbnailImage)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @Html.DisplayFor(modelItem => item.Keywords)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Month)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
+           
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Blogid">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.Blogid">Details</a> |

@@ -5,83 +5,57 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Astaberry.Models;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using System.IO;
+using CrystalByRiya.Models;
+using CrystalByRiya.Classes;
+using CrystalByRiya.Classes;
+using System.Linq.Expressions;
 
-namespace Astaberry.Areas.Admin.Pages.Banners
+namespace CrystalByRiya.Areas.Admin.Pages.Banners
 {
     public class CreateModel : PageModel
     {
-        private readonly Astaberry.Models.ApplicationDbContext _context;
-        private readonly IWebHostEnvironment webHostEnvironment;
-
-        public CreateModel(Astaberry.Models.ApplicationDbContext context, IWebHostEnvironment _webHostEnvironment)
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
+        private readonly AwsCredentials _awsCredentials;
+        private readonly AmazonS3 _amazonS3;
+        public CreateModel(CrystalByRiya.Models.ApplicationDbContext context,AwsCredentials awsCredentials,AmazonS3 amazonS3) 
         {
             _context = context;
-            webHostEnvironment = _webHostEnvironment;
+            _awsCredentials = awsCredentials;
+            _amazonS3 = amazonS3;
         }
 
         public IActionResult OnGet()
         {
-            string logedin = HttpContext.Session.GetString("Login");
-            if (string.IsNullOrEmpty(logedin))
-            {
-                return RedirectToPage("../Login");
-
-            }
-            else
-            {
-
-                Options = _context.TblCategories.Select(a =>
-                                     new SelectListItem
-                                     {
-                                         Value = a.Categoryname.ToString(),
-                                         Text = a.Categoryname
-                                     }).ToList();
-                SubCatOptions = _context.TblSubCategories.Select(a =>
-                                     new SelectListItem
-                                     {
-                                         Value = a.SubCategoryName.ToString(),
-                                         Text = a.SubCategoryName
-                                     }).ToList();
-                return Page();
-            }
+            return Page();
         }
 
         [BindProperty]
-        public TblBanner TblBanners { get; set; }
+        public Banner Banners { get; set; } = default!;
 
-
-        public List<SelectListItem> Options { get; set; }
-        public List<SelectListItem> SubCatOptions { get; set; }
-
-        [BindProperty]
-        public IFormFile DesktopImageNames { get; set; }
-        [BindProperty]
-        public IFormFile MobileImageNames { get; set; }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnPostAsync(IFormFile MobileImage, IFormFile DekstopImage)
         {
-            
-            var file = Path.Combine(webHostEnvironment.WebRootPath, "img/slider/cosmetic", DesktopImageNames.FileName);
-            using (var fileStream = new FileStream(file, FileMode.Create))
+           
+            if (MobileImage != null)
             {
-                await DesktopImageNames.CopyToAsync(fileStream);
+                Banners.MobileImageName = await _amazonS3.UploadFileToS3(MobileImage, _awsCredentials.BannerFoldername);
             }
-
-            var mobilefile = Path.Combine(webHostEnvironment.WebRootPath, "img/slider/cosmetic", MobileImageNames.FileName);
-            using (var fileStreams = new FileStream(mobilefile, FileMode.Create))
+            else
             {
-                await MobileImageNames.CopyToAsync(fileStreams);                
-            }           
-            TblBanners.DesktopImageName = DesktopImageNames.FileName;
-            TblBanners.MobileImageName = MobileImageNames.FileName;           
+                Banners.MobileImageName = "NA";
+            }
+            if (DekstopImage != null)
+            {
+                Banners.DesktopImageName = await _amazonS3.UploadFileToS3(DekstopImage, _awsCredentials.BannerFoldername);
+            }
+            else
+            {
+                Banners.DesktopImageName = "NA";
+            }
+            
 
-            _context.TblBanners.Add(TblBanners);
+
+            _context.TblBanners.Add(Banners);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

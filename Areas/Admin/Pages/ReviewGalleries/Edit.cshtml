@@ -1,0 +1,54 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.ReviewGalleries.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ReviewGallery</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ReviewGallery.Id" />
+            <div class="form-group">
+                
+                <label asp-for="ReviewGallery.ImageName" class="control-label"></label>
+                <input asp-for="ReviewGallery.ImageName" class="form-control" />
+                <span asp-validation-for="ReviewGallery.ImageName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="ReviewGallery.Email" class="control-label"></label>
+                <input asp-for="ReviewGallery.Email" class="form-control" />
+                <span asp-validation-for="ReviewGallery.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <label asp-for="ReviewGallery.ProductId" class="control-label"></label>
+                <input asp-for="ReviewGallery.ProductId" class="form-control" />
+                <span asp-validation-for="ReviewGallery.ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ReviewGallery.Approved" /> @Html.DisplayNameFor(model => model.ReviewGallery.Approved)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

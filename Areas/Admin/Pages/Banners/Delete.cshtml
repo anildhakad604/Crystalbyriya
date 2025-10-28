@@ -1,35 +1,57 @@
 ﻿@page
-@model Astaberry.Areas.Admin.Pages.Banners.DeleteModel
+@model CrystalByRiya.Areas.Admin.Pages.Banners.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete Banners</h1>
+<h1>Delete</h1>
 
-<h3>Are you sure you want to delete this Banners?</h3>
+<h3>Are you sure you want to delete this?</h3>
 <div>
-    <table class="table">
-        <tr>
-            <td>
-                <img src="~/img/slider/cosmetic/@Model.TblImageGallery.DesktopImageName" class="img-fluid" />
-            </td>
-            <td>
-                <img src="~/img/slider/cosmetic/@Model.TblImageGallery.MobileImageName" class="img-fluid" />
-            </td>
-            <td>
-                @Model.TblImageGallery.CategoryName
-            </td>
-            <td>
-                @Model.TblImageGallery.SubCategoryName
-            </td>
-        </tr>
-    </table>
+    <h4>Banners</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.MobileImageName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.MobileImageName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.DesktopImageName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.DesktopImageName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.TargetUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.TargetUrl)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.AltText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.AltText)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Banners.Text)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Banners.Text)
+        </dd>
+    </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="TblImageGallery.Id" />
-        <input type="hidden" asp-for="TblImageGallery.DesktopImageName" name="DesktopImageName" />
-        <input type="hidden" asp-for="TblImageGallery.MobileImageName" name="MobileImageName" />
+        <input type="hidden" asp-for="Banners.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

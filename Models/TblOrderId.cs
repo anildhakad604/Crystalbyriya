@@ -1,5 +1,5 @@
 
-namespace Astaberry.Models
+namespace CrystalByRiya.Models
 {
     using System;
     using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace Astaberry.Models
         [Required]
         public string Orderid { get; set; }
         [Required]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         [Required]
         public double CouponCodeapplied { get; set; }
 
@@ -29,5 +29,6 @@ namespace Astaberry.Models
         public double TotalAmount { get; set; }
         public string PaymentFrom { get; set; }
         public string PaymentStatus { get; set; }
+        public string OrderNotes { get; set; }
     }
 }

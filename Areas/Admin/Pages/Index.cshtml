@@ -1,5 +1,5 @@
 ﻿@page
-@model Astaberry.Areas.Admin.Pages.IndexModel
+@model CrystalByRiya.Areas.Admin.Pages.IndexModel
 @{
 
 
@@ -9,9 +9,9 @@
         <div class="col-lg-4 col-sm-6">
             <div class="card gradient-1">
                 <div class="card-body">
-                    <h3 class="card-title text-white">Products Sold</h3>
+                    <h3 class="card-title text-white">Products</h3>
                     <div class="d-inline-block">
-                        <h2 class="text-white">@Model.ProductSold</h2>
+                        <h2 class="text-white">@Model.TotalProducts</h2>
                     </div>
                     <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <h3 class="card-title text-white">Total Sales</h3>
                     <div class="d-inline-block">
-                        <h2 class="text-white">@Model.TotalSales</h2>
+                        <h2 class="text-white">@Model.TotalOrderAmount</h2>
                     </div>
                     <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <h3 class="card-title text-white">Total Customers</h3>
                     <div class="d-inline-block">
-                        <h2 class="text-white">@Model.TotalRegisteredUser</h2>
+                        <h2 class="text-white">@Model.TotalRegisteredUsers</h2>
                     </div>
                     <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
                 </div>
@@ -49,7 +49,7 @@
                             <div>
                                 <h4 class="mb-1">Product Sales</h4>
                                 <p>Total Earnings of the Month</p>
-                                <h3 class="m-0">Rs @Model.TotalSales</h3>
+                                <h3 class="m-0">Rs @Model.TotalOrderAmount</h3>
                             </div>
                             <div>
                                 <ul>
@@ -196,9 +196,7 @@
                         });
 
                 },
-                error: function () {
-                    alert("Error loading data! Please try again.");
-                }
+              
             });
         })
     

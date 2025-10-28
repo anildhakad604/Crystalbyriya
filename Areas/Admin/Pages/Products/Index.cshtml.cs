@@ -5,39 +5,64 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Astaberry.Models;
-using Microsoft.AspNetCore.Http;
+using CrystalByRiya.Models;
 
-namespace Astaberry.Areas.Admin.Pages.Products
+namespace CrystalByRiya.Areas.Admin.Pages.Products
 {
     public class IndexModel : PageModel
     {
-        private readonly Astaberry.Models.ApplicationDbContext _context;
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
 
-        public IndexModel(Astaberry.Models.ApplicationDbContext context)
+        public IndexModel(CrystalByRiya.Models.ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IList<TblProduct> TblProduct { get;set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; } = string.Empty;
 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            string logedin = HttpContext.Session.GetString("Login");
-            if (string.IsNullOrEmpty(logedin))
-            {
-                return RedirectToPage("../Login");
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
+        public int PageSize { get; set; } = 10;
+        public IList<Product> Product { get; set; } = default;
 
-            }
-            else
-            {
-                TblProduct = await _context.TblProducts.ToListAsync();
-                return Page();
-            }
-        }
-        public async Task OnPostSearch(string Skucode)
+
+
+        public async Task OnGetAsync(int currentPage = 1)
         {
-            TblProduct = await _context.TblProducts.Where(Sku => Sku.Skucode.Contains(Skucode)).Take(15).ToListAsync();
+            CurrentPage = currentPage;
+
+            // Apply search filter if a search term is entered
+            var productsQuery = _context.TblProducts.AsQueryable();
+            if (!string.IsNullOrEmpty(SearchTerm))
+            {
+                productsQuery = productsQuery.Where(p => p.ProductName.Contains(SearchTerm) || p.SkuCode.Contains(SearchTerm));
+            }
+
+            // Get total count for pagination
+            var totalProducts = await productsQuery.CountAsync();
+            TotalPages = (int)Math.Ceiling(totalProducts / (double)PageSize);
+
+            // Fetch products with pagination
+            Product = await productsQuery
+                .OrderByDescending(p => p.AddedOn)
+                .Skip((CurrentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
         }
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

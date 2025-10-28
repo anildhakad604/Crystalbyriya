@@ -1,11 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    string AdminUser = HttpContextAccessor.HttpContext.Session.GetString("Login");
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Astaberry Admin</title>
+    <title>Crystal By Riya Admin</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <!-- Custom Stylesheet -->
@@ -14,7 +20,13 @@
 </head>
 
 <body>
-
+    <script>
+        var adminSession = '@AdminUser';
+        if (!adminSession) {
+           
+            window.location.href = '/adminlogin';
+        }
+    </script>
     <!--*******************
         Preloader start
     ********************-->
@@ -38,7 +50,7 @@
     ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="index.html">
+                <a href="/index">
                     <b class="logo-abbr"><img src="~/Areas/Admin/images/logo.png" alt=""> </b>
                     <span class="logo-compact"><img src="~/Areas/Admin/images/logo-compact.png" alt=""></span>
                     <span class="brand-title">
@@ -82,7 +94,7 @@
 
                     </li>
                     <li>
-                        <a asp-page="/Orders/Index" aria-expanded="false">
+                        <a href="/Admin/Orders/BillingDetails" aria-expanded="false">
                             <i class="icon-lock menu-icon"></i><span class="nav-text">ORDERS</span>
                         </a>
                     </li>
@@ -91,38 +103,45 @@
                             <i class="icon-lock menu-icon"></i><span class="nav-text">BANNERS</span>
                         </a>
                     </li>  
-                    <li>
-                        <a asp-page="/OtherBanners/Index" aria-expanded="false">
-                            <i class="icon-lock menu-icon"></i><span class="nav-text">OTHER BANNERS</span>
-                        </a>
-                    </li>
+               
               
+               
                     <li>
-                        <a asp-page="/Concerns/Index" aria-expanded="false">
-                            <i class="icon-lock menu-icon"></i><span class="nav-text">CONCERNS</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-page="/CouponCodes/Index" aria-expanded="false">
+                        <a asp-page="/Coupon/Index" aria-expanded="false">
                             <i class="icon-lock menu-icon"></i><span class="nav-text">COUPON CODES</span>
                         </a>
                     </li>
                     <li>
-                        <a asp-page="/ImageGalleries/Index" aria-expanded="false">
+                        <a asp-page="/Gallery/Index" aria-expanded="false">
                             <i class="icon-lock menu-icon"></i><span class="nav-text">IMAGE GALLERIES</span>
                         </a>
                     </li>
                   
                     <li>
-                        <a asp-page="/ProductDetail/Index" aria-expanded="false">
+                        <a asp-page="/Products/Index" aria-expanded="false">
                             <i class="icon-lock menu-icon"></i><span class="nav-text">PRODUCTS DETAIL</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a asp-page="/Productsizes/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">PRODUCTS SIZES</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Products/CategoryandSubCategory" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">SubCategoryWise Product</span>
                         </a>
                     </li>
                     
                   
                     <li>
-                        <a asp-page="/Reviews/Index" aria-expanded="false">
+                        <a asp-page="/Review/Index" aria-expanded="false">
                             <i class="icon-lock menu-icon"></i><span class="nav-text">REVIEWS</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/ReviewGalleries/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">REVIEW GALLERY</span>
                         </a>
                     </li>
                   
@@ -133,11 +152,12 @@
                         </a>
                     </li>
                     
+            
                     <li>
-                        <a asp-page="/JobPosting/Index" aria-expanded="false">
-                            <i class="icon-lock menu-icon"></i><span class="nav-text">JOB</span>
+                        <a asp-page="/Instagrams/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">INSTAGRAM</span>
                         </a>
-                    </li>
+                    </li>   
                     <li>
                         <a asp-page="/Reports/Index" aria-expanded="false">
                             <i class="icon-lock menu-icon"></i><span class="nav-text">REPORT</span>
@@ -146,6 +166,66 @@
                     <li>
                         <a asp-page="/OfferImages/Index" aria-expanded="false">
                             <i class="icon-lock menu-icon"></i><span class="nav-text">OFFERIMAGES</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/ProductFaqs/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">PRODUCT FAQS</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/BlogsFaq/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">BLOGS FAQS</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Announcements/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">ANNOUNCEMENTS</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Subcategories/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">SUBCATEGORY</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Materials/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">Materials</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/AddOns/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">AddOns</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Category/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">Category</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Comments/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">Comments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Wishlist/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">Wishlist</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/AddToCart/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">Add To Cart</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Relatedproducts/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">Related Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-page="/Employee/Index" aria-expanded="false">
+                            <i class="icon-lock menu-icon"></i><span class="nav-text">Employee</span>
                         </a>
                     </li>
                     <li class="mega-menu mega-menu-sm">
@@ -164,6 +244,7 @@
                             <i class="icon-lock menu-icon"></i><span class="nav-text">SIGNOUT</span>
                         </a>
                     </li>
+
 
                 </ul>
             </div>
@@ -194,11 +275,8 @@
             <!--**********************************
             Footer start
         ***********************************-->
-            <div class="footer">
-                <div class="copyright">
-                    <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
-                </div>
-            </div>
+         
+
             <!--**********************************
             Footer end
         ***********************************-->

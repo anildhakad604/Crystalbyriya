@@ -1,0 +1,13 @@
+﻿@page
+@model CrystalByRiya.Pages.Index1Model
+@{
+}
+
+
+<h1>Make Payment</h1>
+
+<form method="post">
+    <input type="hidden" name="orderId" value="@Model.OrderId" />
+    <input type="text" name="amount" placeholder="Enter amount" />
+    <button type="submit">Pay Now</button>
+</form>

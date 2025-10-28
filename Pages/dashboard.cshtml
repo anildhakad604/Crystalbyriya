@@ -1,0 +1,325 @@
+﻿@page
+@model CrystalByRiya.Pages.dashboardModel
+@{
+}
+
+
+<main class="main-content">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title-content content-style-2">
+                        <div class="bread-crumbs"><a href="/Index">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Account</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Title Area ==-->
+    <!--== Start Account Area Wrapper ==-->
+    <section class="account-area area-padding pt-3 pt-md-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h3 class="fw-semibold">Welcome, @Model.UserEmail</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row gy-3">
+                <div class="col-md-4">
+
+                    <div class="account-left-col">
+                        <div class="profile-info-parent d-flex align-items-center mb-3">
+                            <div class="profile-thumb me-2">
+                                <img src="assets/img/account/1.png" alt="">
+                            </div>
+                            <div class="profile-name">
+                                <h5 class="fw-semibold mb-0">@Model.Register.Name</h5>
+                            </div>
+                        </div>
+
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action active" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile"><i class="lni lni-user"></i> Profile Details</a>
+                            <a class="list-group-item list-group-item-action" id="list-orders-list" data-bs-toggle="list" href="#list-orders" role="tab" aria-controls="list-orders">
+                                <i class="lni lni-shopping-basket"></i> Your Orders
+                            </a>
+                            <a class="list-group-item list-group-item-action" id="list-wishlist-list" data-bs-toggle="list" href="#list-wishlist" onclick="getWishlist()"  role="tab" aria-controls="list-wishlist"><i class="lni lni-heart"></i> Your Wishlist</a>
+                            <a href="javascript:void(0)" class="list-group-item list-group-item-action" id="list-logout-list" onclick="document.getElementById('logoutForm').submit();" style="cursor: pointer;">
+                                <i class="lni lni-exit"></i> Logout
+                            </a>
+
+                            <!-- Hidden logout form -->
+                            
+
+                        </div>
+                        <form id="logoutForm" method="post" asp-page-handler="Logout" style="display: none;">
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-8">
+                    <div class="account-right-col">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                                <div class="account-details-parent">
+                                    <form asp-page-handler="Edit" method="post" id="accountDetailsForm">
+                                    <div class="account-details-header d-flex justify-content-between pb-2 mb-2">
+                                        <div class="section-title mb-0">
+                                            <h5 class="fw-semibold mb-0 mt-2">Account Details</h5>
+                                        </div>
+                                        <!-- Edit and Save Button -->
+                                            <!-- Edit and Save Button -->
+                                            <div class="btn-parent">
+                                                <a href="javascript:void(0)" class="btn btn-black btn-theme px-4 py-2" id="editButton" onclick="enableEditing()">Edit</a>
+                                                <button type="submit" class="btn btn-black btn-theme px-4 py-2" id="saveButton" style="display:none;">Save</button>
+                                            </div>
+
+
+                                    </div>
+                                   
+                                        <div class="row gy-2">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="fullName" class="form-label">Full Name</label>
+                                                    <input type="text" class="form-control" id="fullName" asp-for="Detail.FullName" required readonly />
+                                                    <span asp-validation-for="Detail.FullName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="phone" class="form-label">Phone Number</label>
+                                                    <input type="number" class="form-control" id="phone" asp-for="Detail.ContactNumber" required readonly />
+                                                    <span asp-validation-for="Detail.ContactNumber" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="email" class="form-label">Email Address</label>
+                                                    <input type="email" class="form-control" id="email" asp-for="Detail.Emailid" required readonly>
+                                                    <span asp-validation-for="Detail.Emailid" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="street_address">Street address </label>
+                                                    <input type="text" class="form-control" id="street_address" asp-for="Detail.Address" required readonly>
+                                                    <span asp-validation-for="Detail.Address" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="apt_address">Apartment, suite etc. (optional)</label>
+                                                    <input type="text" class="form-control" id="apt_address" asp-for="Detail.Apartment" readonly>
+                                                    <span asp-validation-for="Detail.Apartment" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="town_city">Town / City </label>
+                                                    <input type="text" class="form-control" id="town_city" asp-for="Detail.City" required readonly>
+                                                    <span asp-validation-for="Detail.City" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="state_region">State </label>
+                                                    <select class="form-control niceselect" id="state_region" asp-for="Detail.State" required readonly>
+                                                   
+                                                        <option value="" selected disabled hidden>Select State</option>
+
+                                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                                        <option value="Assam">Assam</option>
+                                                        <option value="Bihar">Bihar</option>
+                                                        <option value="Chandigarh">Chandigarh</option>
+                                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                                        <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                                        <option value="Daman and Diu">Daman and Diu</option>
+                                                        <option value="Delhi">Delhi</option>
+                                                        <option value="Lakshadweep">Lakshadweep</option>
+                                                        <option value="Puducherry">Puducherry</option>
+                                                        <option value="Goa">Goa</option>
+                                                        <option value="Gujarat">Gujarat</option>
+                                                        <option value="Haryana">Haryana</option>
+                                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                                        <option value="Jharkhand">Jharkhand</option>
+                                                        <option value="Karnataka">Karnataka</option>
+                                                        <option value="Kerala">Kerala</option>
+                                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                                        <option value="Maharashtra">Maharashtra</option>
+                                                        <option value="Manipur">Manipur</option>
+                                                        <option value="Meghalaya">Meghalaya</option>
+                                                        <option value="Mizoram">Mizoram</option>
+                                                        <option value="Nagaland">Nagaland</option>
+                                                        <option value="Odisha">Odisha</option>
+                                                        <option value="Punjab">Punjab</option>
+                                                        <option value="Rajasthan">Rajasthan</option>
+                                                        <option value="Sikkim">Sikkim</option>
+                                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                                        <option value="Telangana">Telangana</option>
+                                                        <option value="Tripura">Tripura</option>
+                                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                                        <option value="Uttarakhand">Uttarakhand</option>
+                                                        <option value="West Bengal">West Bengal</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="zipCode">Zip Code</label>
+                                                    <input class="form-control" id="zipCode" type="text" asp-for="Detail.PinCode" required readonly>
+                                                    <span asp-validation-for="Detail.PinCode" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="list-orders" role="tabpanel" aria-labelledby="list-orders-list">
+                                <div class="cart-table-wrap">
+                                    <div class="cart-table table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th class="pro-remove"> </th>
+                                                    <th class="pro-name text-center">Product</th>
+                                                    <th class="pro-material text-center">Material</th>
+                                                    <th class="pro-size text-center">Size</th>
+                                                    <th class="pro-price">Price</th>
+                                                    <th class="pro-quantity">Quantity</th>
+                                                    <th class="pro-subtotal">Subtotal</th>
+                                                    <th class="pro-status text-center">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="order-items">
+                                                <!-- Dynamic content will be inserted here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                          
+
+                                <div class="tab-pane fade" id="list-wishlist" role="tabpanel" aria-labelledby="list-wishlist-list">
+                                <div class="wishlist-table-wrap">
+                                    <div class="wishlist-table table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th class="pro-thumbnail"> </th>
+                                                    <th class="pro-name">Product</th>
+                                                    <th class="pro-stock-status">Stock Status</th>
+                                                    <th class="pro-price">Price</th>
+                                                    <th class="pro-action"> </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.WishlistItems != null && Model.WishlistItems.Count > 0)
+                                                {
+                                                    foreach (var item in Model.WishlistItems)
+                                                    {
+                                                        <tr>
+                                                            <td class="pro-remove">
+                                                                <a href="javascript:void(0);" onclick="removeFromWishlist('@item.ProductId')">
+                                                                    <i class="lastudioicon-e-remove"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td class="pro-thumbnail">
+                                                                <div class="pro-info">
+                                                                    <div class="pro-img">
+                                                                        <a href="#">
+                                                                            <img src="@item.Image" alt="product-thumb">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="pro-name">
+                                                                <span class="ms-1">@item.ProductName</span>
+                                                            </td>
+                                                            <td class="pro-stock-status">
+                                                                
+                                                            </td>
+                                                            <td class="pro-price">&#8377;@item.Price</td>
+                                                            <td class="pro-action">
+                                                                <a class="btn-theme btn-black" href="#">Add to cart</a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td colspan="6" class="text-center">
+                                                            Your wishlist is empty.
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                          
+                        
+
+                     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Account Area Wrapper ==-->
+    <style>
+        /* Common styles for all inputs */
+        input, select {
+            transition: background-color 0.3s, color 0.3s, border 0.3s;
+        }
+
+            /* Readonly styles */
+            input[readonly], select[readonly] {
+                background-color: #f5f5f5; /* Light grey background */
+                color: #6c757d; /* Muted text color */
+                border: 1px solid #ced4da; /* Subtle border */
+                cursor: not-allowed; /* Pointer cursor feedback */
+            }
+
+            /* Disabled styles */
+            input:disabled, select:disabled {
+                background-color: #e9ecef; /* Slightly darker grey */
+                color: #adb5bd; /* More muted text color */
+                border: 1px dashed #ced4da; /* Dashed border */
+                cursor: not-allowed; /* Pointer cursor feedback */
+                opacity: 0.7; /* Slightly faded look */
+            }
+
+            /* Editable state styles */
+            input:not([readonly]):not(:disabled),
+            select:not([readonly]):not(:disabled) {
+                background-color: #fff; /* White background */
+                color: #212529; /* Default text color */
+                border: 1px solid #ced4da; /* Standard border */
+                cursor: text; /* Text input cursor */
+            }
+
+            /* Focus styles for editable fields */
+            input:focus:not([readonly]):not(:disabled),
+            select:focus:not([readonly]):not(:disabled) {
+                border-color: #80bdff; /* Highlight border */
+                outline: none; /* Remove default outline */
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle glow */
+            }
+
+    </style>
+</main>
+<script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/DashboardPage.js"></script>

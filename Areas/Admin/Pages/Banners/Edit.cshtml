@@ -1,0 +1,61 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Banners.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Banners</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Banners.Id" />
+            <div class="form-group">
+                <label asp-for="Banners.MobileImageName" class="control-label"></label>
+                <input asp-for="Banners.MobileImageName" class="form-control" name="mobileimage"  type="file"/>
+                <input type="hidden" asp-for="@Model.hdnmobileimage" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Banners.DesktopImageName" class="control-label"></label>
+                <input asp-for="Banners.DesktopImageName" class="form-control" name="dekstopimage"  type="file"/>
+                <input type="hidden" asp-for="@Model.hdndekstopimage" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Banners.TargetUrl" class="control-label"></label>
+                <input asp-for="Banners.TargetUrl" class="form-control" />
+                <span asp-validation-for="Banners.TargetUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Banners.AltText" class="control-label"></label>
+                <input asp-for="Banners.AltText" class="form-control" />
+                <span asp-validation-for="Banners.AltText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Banners.Type" class="control-label"></label>
+                <input asp-for="Banners.Type" class="form-control" />
+                <span asp-validation-for="Banners.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Banners.Text" class="control-label"></label>
+                <input asp-for="Banners.Text" class="form-control" />
+                <span asp-validation-for="Banners.Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

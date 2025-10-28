@@ -1,0 +1,23 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Announcements.CreateModel
+@{
+    ViewData["Title"] = "Create Announcement";
+}
+
+<h2>Create Announcement</h2>
+
+<form method="post">
+   
+    <div class="form-group">
+
+        <label asp-for="Announcement.AnnouncementText" class="control-label"></label>
+        <input asp-for="Announcement.AnnouncementText" class="form-control" />
+        <span asp-validation-for="Announcement.AnnouncementText" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,450 @@
+﻿@page
+@model CrystalByRiya.Pages.shop_accountModel
+
+@{
+
+}
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Crystals By Riya</title>
+
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface:400" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i,500,600,700,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,600,700,900,900i" rel="stylesheet">
+
+    <!--== Bootstrap CSS ==-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--== Font-awesome Icons CSS ==-->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--== Icofont Min Icons CSS ==-->
+    <link href="assets/css/icofont.min.css" rel="stylesheet" />
+    <!--== lastudioIcons CSS ==-->
+    <link href="assets/css/lastudioIcons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/mmenu.min.css" />
+    <!--== Animate CSS ==-->
+    <link href="assets/css/animate.css" rel="stylesheet" />
+    <!--== Aos CSS ==-->
+    <link href="assets/css/aos.css" rel="stylesheet" />
+    <!--== FancyBox CSS ==-->
+    <link href="assets/css/jquery.fancybox.min.css" rel="stylesheet" />
+    <!--== Slicknav CSS ==-->
+    <link href="assets/css/slicknav.css" rel="stylesheet" />
+    <!--== Swiper CSS ==-->
+    <link href="assets/css/swiper.min.css" rel="stylesheet" />
+    <!--== Slick CSS ==-->
+    <link href="assets/css/slick.css" rel="stylesheet" />
+
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <!--wrapper start-->
+    <div class="wrapper shop-fullwidth-wrapper" id="page">
+
+
+
+
+        <main class="main-content">
+            <!--== Start Page Title Area ==-->
+            <div class="page-title-area page-title-area2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="page-title-content content-style-2">
+                                <div class="bread-crumbs"><a asp-page="/">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Account</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--== End Page Title Area ==-->
+            <!--== Start Account Area Wrapper ==-->
+            <section class="account-area area-padding pt-3 pt-md-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-title">
+                                <h3 class="fw-semibold">Welcome, @Model.UserEmail</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-3">
+                        <div class="col-md-4">
+
+                            <div class="account-left-col">
+                                <div class="profile-info-parent d-flex align-items-center mb-3">
+                                    <div class="profile-thumb me-2">
+                                        <img src="assets/img/account/1.png" alt="">
+                                    </div>
+                                    <div class="profile-name">
+                                        <h5 class="fw-semibold mb-0">@Model.Detail.Name</h5>
+                                    </div>
+                                </div>
+
+                                <div class="list-group" id="list-tab" role="tablist">
+                                    <a class="list-group-item list-group-item-action active" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile"><i class="lni lni-user"></i> Profile Details</a>
+                                    <a class="list-group-item list-group-item-action" id="list-orders-list" data-bs-toggle="list" href="#list-orders" role="tab" aria-controls="list-orders"><i class="lni lni-shopping-basket"></i> Your Orders</a>
+                                    <a class="list-group-item list-group-item-action" id="list-wishlist-list" data-bs-toggle="list" href="#list-wishlist" role="tab" aria-controls="list-wishlist"><i class="lni lni-heart"></i> Your Wishlist</a>
+                                    <a class="list-group-item list-group-item-action" id="list-logout-list" data-bs-toggle="list" href="javascript:void(0)" aria-controls="list-logout"><i class="lni lni-exit"></i> Logout</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="account-right-col">
+                                <div class="tab-content" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                                        <div class="account-details-parent">
+                                            <div class="account-details-header d-flex justify-content-between pb-2 mb-2">
+                                                <div class="section-title mb-0">
+                                                    <h5 class="fw-semibold mb-0 mt-2">Account Details</h5>
+                                                </div>
+                                                <div class="btn-parent">
+                                                    <a href="javascript:void(0)" class="btn btn-black btn-theme px-4 py-2">Edit</a>
+                                                </div>
+                                            </div>
+                                            <form action="" method="" id="accountDetailsForm">
+                                                <div class="row gy-2">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="fullName" class="form-label">Full Name</label>
+                                                            <input type="text" class="form-control" id="fullName" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="phone" class="form-label">Phone Number</label>
+                                                            <input type="text" class="form-control" id="phone" asp-for="Detail.ContactNumber" required />
+                                                            <span asp-validation-for="Detail.ContactNumber" class="text-danger"></span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="email" class="form-label">Email Address</label>
+                                                            <input type="email" class="form-control" id="email" asp-for="Detail.Emailid" required>
+                                                            <span asp-validation-for="Detail.Emailid" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="street_address">Street address </label>
+                                                            <input type="text" class="form-control" id="street_address" asp-for="Detail.Address" required>
+                                                            <span asp-validation-for="Detail.Address" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="apt_address">Apartment, suite etc. (optional)</label>
+                                                            <input type="text" class="form-control" id="apt_address" asp-for="Detail.Apartment">
+                                                            <span asp-validation-for="Detail.Apartment" class="text-danger"></span>>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="town_city">Town / City </label>
+                                                            <input type="text" class="form-control" id="town_city" asp-for="Detail.City" required>
+                                                            <span asp-validation-for="Detail.City" class="text-danger"></span>>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="state_region">State </label>
+                                                            <select class="form-control niceselect" id="state_region" name="state" asp-for="Detail.State" required>
+                                                                <span asp-validation-for="Detail.State" class="text-danger"></span>>
+                                                                <option value="none" selected hidden></option>
+                                                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                                                <option value="Assam">Assam</option>
+                                                                <option value="Bihar">Bihar</option>
+                                                                <option value="Chandigarh">Chandigarh</option>
+                                                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                                                <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                                                <option value="Daman and Diu">Daman and Diu</option>
+                                                                <option value="Delhi">Delhi</option>
+                                                                <option value="Lakshadweep">Lakshadweep</option>
+                                                                <option value="Puducherry">Puducherry</option>
+                                                                <option value="Goa">Goa</option>
+                                                                <option value="Gujarat">Gujarat</option>
+                                                                <option value="Haryana">Haryana</option>
+                                                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                                                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                                                <option value="Jharkhand">Jharkhand</option>
+                                                                <option value="Karnataka">Karnataka</option>
+                                                                <option value="Kerala">Kerala</option>
+                                                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                                                <option value="Maharashtra">Maharashtra</option>
+                                                                <option value="Manipur">Manipur</option>
+                                                                <option value="Meghalaya">Meghalaya</option>
+                                                                <option value="Mizoram">Mizoram</option>
+                                                                <option value="Nagaland">Nagaland</option>
+                                                                <option value="Odisha">Odisha</option>
+                                                                <option value="Punjab">Punjab</option>
+                                                                <option value="Rajasthan">Rajasthan</option>
+                                                                <option value="Sikkim">Sikkim</option>
+                                                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                                                <option value="Telangana">Telangana</option>
+                                                                <option value="Tripura">Tripura</option>
+                                                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                                                <option value="Uttarakhand">Uttarakhand</option>
+                                                                <option value="West Bengal">West Bengal</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="zipCode">Zip Code</label>
+                                                            <input class="form-control" id="zipCode" type="text" asp-for="Detail.PinCode" required>
+                                                            <span asp-validation-for="Detail.PinCode" class="text-danger"></span>>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="password" class="form-label mt-15">Password</label>
+                                                            <input type="password" class="form-control" id="password" value="@Model.Password" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="list-orders" role="tabpanel" aria-labelledby="list-orders-list">
+                                        <div class="cart-table-wrap">
+                                            <div class="cart-table table-responsive">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="list-wishlist" role="tabpanel" aria-labelledby="list-wishlist-list">
+                                        <div class="wishlist-table-wrap">
+                                            <div class="wishlist-table table-responsive">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--== End Account Area Wrapper ==-->
+        </main>
+
+        <!--== Start Footer Area Wrapper ==-->
+        <footer class="footer-area footer-style7">
+            <div class="moving-text-slider-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text-white text-center fw-semibold">Whatever you are seeking is already seeking you.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-main">
+                <div class="container">
+                    <div class="row gy-3">
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="widget-item  ml-11 ml-xs-0">
+                                <div class="footer-logo-area">
+                                    <a asp-page="/">
+                                        <img class="logo-main" src="assets/img/logo.png" alt="Logo">
+                                    </a>
+                                    <p class="mb-0">This journey of crystals and self-reflection inspired me to share it with others. It's about nurturing self-love, developing self-dependence, and understanding how crystals can change our lives, so let’s uplift each other and seek magic within us.</p>
+                                    <h6 class="fw-semibold mt-5 mt-md-3">FOLLOW US ON</h6>
+                                    <div class="widget-social-icons m-0">
+                                        <a href="https://m.facebook.com/p/crystalsbyriya-100076325670695/" target="_blank">
+                                            <i class="lastudioicon lastudioicon-b-facebook"></i>
+                                        </a>
+                                        <a class="mr-30" href="https://www.instagram.com/crystalsbyriya?igshid=MThsYzk4aGJvdjY0OQ==" target="_blank">
+                                            <i class="lastudioicon lastudioicon-b-instagram"></i>
+                                        </a>
+                                        <a href="https://m.youtube.com/@@crystalsbyriya" target="_blank">
+                                            <i class="lastudioicon lastudioicon-b-youtube-play"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="widget-item ml-11 ml-xs-0 mt-xs-30">
+                                        <h4>QUICK LINKS</h4>
+                                        <nav class="widget-menu-wrap">
+                                            <ul class="nav-menu nav">
+                                                <li><a href="#">By Category</a></li>
+                                                <li><a href="#">By Intention</a></li>
+                                                <li><a href="#">By Chakras</a></li>
+                                                <li><a href="#">By Crystals</a></li>
+                                                <li><a href="#">Silver Products</a></li>
+                                                <li><a href="#">Blogs</a></li>
+                                                <li><a href="#">Contact Us</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="widget-item ml-11 ml-xs-0 mt-sm-30">
+                                        <h4>CUSTOMER CARE</h4>
+                                        <nav class="widget-menu-wrap">
+                                            <ul class="nav-menu nav">
+                                                <li><a href="#">Privacy & Policy</a></li>
+                                                <li><a href="#">Shipping Policy</a></li>
+                                                <li><a href="#">Refund and Return</a></li>
+                                                <li><a href="#">Terms of Service</a></li>
+                                                <li><a href="#">Customization</a></li>
+                                                <li><a href="#">Track Your Order</a></li>
+                                                <li><a href="#">FAQs</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="widget-item ml-11 mt-sm-30">
+                                        <h4>NEWSLETTER</h4>
+                                        <div class="newsletter-content-wrap mb-4">
+                                            <form class="newsletter-form" action="#">
+                                                <input class="form-control" type="text" id="email" placeholder="Enter your email address...">
+                                                <button class="btn btn-newsletter" type="submit">Subscribe</button>
+                                            </form>
+                                        </div>
+                                        <div class="payments-secure-content-wrap">
+                                            <p class="mb-1" style="color: var(--secondary-color);">100% secure payments</p>
+                                            <div class="payments-method">
+                                                <img src="assets/img/icons/payment-method.png" alt="img" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="widget-item text-center">
+                                        <p class="mb-0">
+                                            Crystals By Riya @@ 2024 | All Rights Reserved. Designed & developed By
+                                            <a href="https://www.asharpinfotech.com/" style="color: var(--tertiary-color);">Asharp Infotech</a>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--== End Footer Area Wrapper ==-->
+
+    </div>
+
+
+    <div class="chat-popup-parent">
+        <!--== Instagram Button ==-->
+        <a href="https://www.instagram.com/crystalsbyriya/" class="instagram" target="_blank">
+            <i class="lni lni-instagram-original"></i>
+        </a>
+
+        <!--== WhatsApp Button ==-->
+        <a href="https://api.whatsapp.com/send?phone=918287945785" class="whatsapp" target="_blank">
+            <i class="lni lni-whatsapp"></i>
+        </a>
+    </div>
+
+    <a href="javascript:void(0)" class="chat-btn float">
+        <i class="lni lni-popup chat-open"></i>
+        <i class="lni lni-close chat-close d-none"></i>
+    </a>
+
+    <!--== Scroll Top Button ==-->
+    <div class="scroll-to-top" id="scrollToTopBtn">
+        <span class="icofont-arrow-up"></span>
+    </div>
+
+ 
+    <!--== Start Aside Search Menu ==-->
+    <div class="search-box-wrapper">
+        <div class="search-box-content-inner">
+            <div class="search-box-form-wrap">
+                <div class="search-note">
+                    <p>Start typing and press Enter to search</p>
+                </div>
+                <form action="#" method="post">
+                    <div class="search-form position-relative">
+                        <label for="search-input" class="sr-only">Search</label>
+                        <input type="search" class="form-control" placeholder="Search" id="search-input">
+                        <button class="search-button"><i class="lastudioicon-zoom-1"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--== End Aside Search Menu ==-->
+        <a href="javascript:;" class="search-close"><i class="lastudioicon-e-remove"></i></a>
+    </div>
+  
+   
+    <!--=======================Javascript============================-->
+    <!--=== Modernizr Min Js ===-->
+    <script src="assets/js/modernizr.js"></script>
+    <!--=== jQuery Min Js ===-->
+    <script src="assets/js/jquery-main.js"></script>
+    <!--=== jQuery Migration Min Js ===-->
+    <script src="assets/js/mmenu.min.js"></script>
+    <script src="assets/js/jquery-migrate.js"></script>
+    <!--=== Popper Min Js ===-->
+    <script src="assets/js/popper.min.js"></script>
+    <!--=== Bootstrap Min Js ===-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--=== jquery Appear Js ===-->
+    <script src="assets/js/jquery.appear.js"></script>
+    <!--=== jquery Swiper Min Js ===-->
+    <script src="assets/js/swiper.min.js"></script>
+    <!--=== jquery Fancybox Min Js ===-->
+    <script src="assets/js/fancybox.min.js"></script>
+    <!--=== jquery Aos Min Js ===-->
+    <script src="assets/js/aos.min.js"></script>
+    <!--=== jquery Slicknav Js ===-->
+    <script src="assets/js/jquery.slicknav.js"></script>
+    <!--=== jquery Countdown Js ===-->
+    <script src="assets/js/jquery.countdown.min.js"></script>
+    <!--=== jquery Tippy Js ===-->
+    <script src="assets/js/tippy.all.min.js"></script>
+    <!--=== Isotope Min Js ===-->
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <!--=== jquery Vivus Js ===-->
+    <script src="assets/js/vivus.js"></script>
+    <!--=== Parallax Min Js ===-->
+    <script src="assets/js/parallax.min.js"></script>
+    <!--=== Slick  Min Js ===-->
+    <script src="assets/js/slick.min.js"></script>
+    <!--=== jquery Wow Min Js ===-->
+    <script src="assets/js/wow.min.js"></script>
+    <!--=== jquery Zoom Min Js ===-->
+    <script src="assets/js/jquery-zoom.min.js"></script>
+
+    <!--=== Custom Js ===-->
+    <script src="assets/js/custom.js"></script>
+
+</body>
+
+
+</html>

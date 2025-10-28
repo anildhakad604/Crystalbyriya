@@ -1,0 +1,60 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Materials.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-danger">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Material[0].SkuCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Material[0].MaterialName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Material[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Material[0].Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Material[0].AltText)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Material) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SkuCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                    <img src="https://djelgxoby50a9.cloudfront.net/Images/@(item.Image)" height="50" width="50" class="lazyload" />
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AltText)
+                </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

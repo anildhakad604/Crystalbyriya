@@ -1,0 +1,224 @@
+﻿@page
+@model CrystalByRiya.Pages.SearchResultModel
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@section Metatags {
+    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:url" content="@Model.Currenturl" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
+    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+}
+
+
+
+
+
+
+<main class="main-content">
+    <!--== Start Page Title Area ==-->
+    <div class="page-title-area page-title-area2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-title-content content-style-2">
+                        <div class="bread-crumbs"><a href="/index">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Search Results</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Title Area ==-->
+    <!--== Start Product List Area ==-->
+    <section class="product-list-area pt-3 pt-md-5 area-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-left-padding">
+                        <div class="shop-toolbar-wrap">
+                        
+                            <div class="shop-toolbar-right">
+                                <div class="product-showing-status">
+                                    <p class="count-result">Showing @Model.SelectedProduct.Count() results</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-list-item-parent">
+                            <div class="row" id="product-container">
+                                @foreach (var product in Model.SelectedProduct)
+                                {
+                                    <div class="col-6 col-md-4 col-lg-3">
+                                        <!-- Start Product Item -->
+                                        <div class="product-item">
+                                            <div class="product-thumb">
+                                                <a asp-page="/detail" asp-route-skucode="@product.SkuCode" asp-route-productname="@product.ProductName.Replace(' ','-')">
+                                                    <img src=" @Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @product.Thumbnail)" alt="@product.ProductName" class="lazyload">
+                                                    <span class="bg-thumb" data-bg-img="@product.Thumbnail" style="background-image: url(@product.Thumbnail);"></span>
+                                                    <span class="thumb-overlay"></span>
+                                                </a>
+                                                <div class="product-action">
+                                                    <a href="javascript:void(0);" id="@product.SkuCode" class="action-quick-view ht-tooltip quview" data-tippy-content="Quick View">
+                                                        <i class="lastudioicon-eye"></i>
+                                                    </a>
+
+                                                    <!-- Add to Wishlist Button -->
+                                                    <a href="javascript:void(0);" class="action-wishlist ht-tooltip" data-tippy-content="Add to wishlist" onclick="HandleAddToWishlist2('@product.SkuCode', '@product.ProductName')">
+                                                        <i class="lastudioicon-heart-2"></i>
+                                                    </a>
+
+                                                    <!-- Hidden Form for Wishlist Submission -->
+                                                    <form id="wishlistForm" method="post" asp-page-handler="AddToWishlist" style="display:none;">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" id="SkuCode" name="SkuCode" value="@product.SkuCode" />
+                                                        <input type="hidden" id="ProductName" name="ProductName" value="@product.ProductName" />
+                                                        <input type="hidden" id="buynow" name="buynow" value="false" />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="product-footer position-relative">
+                                                <div class="product-info d-block">
+                                                    <div class="content-inner text-center">
+                                                        <h4 class="title"><a asp-page="/detail" asp-route-skucode="@product.SkuCode" asp-route-productname="@product.ProductName.Replace(' ','-')">@product.ProductName</a></h4>
+                                                        <div class="prices">
+                                                            <span class="price">₹ @product.Price</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-action-button-parent">
+                                                    <a href="javascript:void(0);" id="@product.SkuCode" class="btn product-action-button quview"><i class="lastudioicon-bag-3 me-1"></i> ADD TO CART</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Product Item -->
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--== End Product List Area ==-->
+    <aside class="product-quick-view-modal">
+        <div class="product-quick-view-inner">
+            <div class="product-quick-view-content">
+                <button type="button" class="btn-close">
+                    <span class="close-icon"><i class="lastudioicon-e-remove"></i></span>
+                </button>
+                <div class="row row-gutter-0">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="thumb">
+                            <div class="swiper-container quick-view-slider-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/by-category/quick-view/1.jpg" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://djelgxoby50a9.cloudfront.net/assetsv2/img/by-category/quick-view/2.jpg" alt="">
+                                    </div>
+                                </div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="single-product-info">
+                            <h4 class="title">Title</h4>
+                            <div class="product-rating">
+                                <div class="review">
+                                    <p><span></span>99 in stock</p>
+                                </div>
+                            </div>
+                            <div class="prices">
+                                <span class="price">&#8377; 111100</span>
+                            </div>
+                            <p class="product-desc mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fringilla quis ipsum enim viverra. Enim in morbi tincidunt ante luctus tincidunt integer. Sed adipiscing vehicula.</p>
+                            <div class="sizes mb-4">
+                                <h6 class="title" id="title">Sizes</h6>
+                                <button type="button" class="btn btn-sizes">50mm</button>
+                                <button type="button" class="btn btn-sizes">4mm</button>
+                                <button type="button" class="btn btn-sizes">6mm</button>
+                                <button type="button" class="btn btn-sizes">8mm</button>
+                            </div>
+                            <div class="material mb-4">
+                                <h6 class="title" id="title">Material</h6>
+                                <button type="button" class="btn btn-sizes">Gold</button>
+                                <button type="button" class="btn btn-sizes">Silver</button>
+                                <button type="button" class="btn btn-sizes">Bronze</button>
+                            </div>
+
+                            <div class="quick-product-action">
+                                <div class="action-top">
+                                    <div class="pro-qty-area">
+                                        <div class="pro-qty">
+                                            <input type="text" id="quantity1" title="Quantity" value="1" name="Qty" min="1" max="10">
+                                            <a class="inc qty-btn">+</a><a class="dec qty-btn">-</a>
+                                        </div>
+                                    </div>
+                                    <a class="btn-theme btn-black" onclick="HandleAddToCart3()">Add to cart</a>
+                                </div>
+                                <form id="addtocartForms" method="post" asp-page-handler="AddToCart" style="display:none;">
+                                    @Html.AntiForgeryToken() <!-- Protect against CSRF attacks -->
+                                    <input type="hidden" id="Skucode" name="SkuCode" />
+                                    <input type="hidden" id="Productname" name="ProductName" />
+                                    <input type="hidden" id="totalPrice" name="Price" />
+                                    <input type="hidden" id="selectedSize" name="Size" />
+                                    <input type="hidden" id="selectedMaterial" name="MaterialName" />
+                                    <input type="hidden" id="quantity" name="Qty" />
+                                </form>
+                                <div class="action-bottom">
+                                    <a class="btn-wishlist"><i class="labtn-icon labtn-icon-wishlist" onclick="HandleAddToWishlist3()"></i>Add to wishlist</a>
+                                </div>
+                                <form id="wishlistForms" method="post" asp-page-handler="AddToWishlist" style="display:none;">
+                                    @Html.AntiForgeryToken() <!-- Protect against CSRF attacks -->
+                                    <input type="hidden" id="Skucode1" name="SkuCode" />
+                                    <input type="hidden" id="Productname1" name="ProductName" />
+                                    <input type="hidden" id="Buynow" name="buynow" value="false" />
+                                </form>
+                            </div>
+                            <div class="product-ratting">
+                                <div class="product-sku">
+                                    SKU: <span>N/A</span>
+                                </div>
+                            </div>
+
+                            <div class="widget">
+                                <h3 class="title">Tags:</h3>
+                                <div class="widget-tags">
+                                    <ul>
+                                        <li><a href="#">lorem,</a></li>
+                                        <li><a href="#">lorem,</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="canvas-overlay"></div>
+    </aside>
+</main>
+
+@section Scripts {
+    <script>
+
+    </script>
+    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/ProductQuickView.js">
+
+    </script>
+}

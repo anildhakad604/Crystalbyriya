@@ -5,46 +5,46 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Astaberry.Models;
-using Microsoft.AspNetCore.Http;
+using CrystalByRiya.Models;
+using CrystalByRiya.Classes;
 
-namespace Astaberry.Areas.Admin.Pages.Blog
+namespace CrystalByRiya.Areas.Admin.Pages.Blog
 {
     public class DeleteModel : PageModel
     {
-        private readonly Astaberry.Models.ApplicationDbContext _context;
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
 
-        public DeleteModel(Astaberry.Models.ApplicationDbContext context)
+        private readonly AmazonS3 _amazonS3;
+        private readonly AwsCredentials awsCredentials;
+
+        public DeleteModel(CrystalByRiya.Models.ApplicationDbContext context, AwsCredentials awsCredentials, AmazonS3 amazonS3)
         {
             _context = context;
+            this.awsCredentials = awsCredentials;
+            _amazonS3 = amazonS3;
         }
 
         [BindProperty]
-        public TblBlog TblBlog { get; set; }
+        public Blogs Blogs { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            string logedin = HttpContext.Session.GetString("Login");
-            if (string.IsNullOrEmpty(logedin))
+            if (id == null)
             {
-                return RedirectToPage("../Login");
+                return NotFound();
+            }
 
+            var blogs = await _context.TblBlogs.FirstOrDefaultAsync(m => m.Blogid == id);
+
+            if (blogs == null)
+            {
+                return NotFound();
             }
             else
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                TblBlog = await _context.TblBlogs.FirstOrDefaultAsync(m => m.Blogid == id);
-
-                if (TblBlog == null)
-                {
-                    return NotFound();
-                }
-                return Page();
+                Blogs = blogs;
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
@@ -54,11 +54,13 @@ namespace Astaberry.Areas.Admin.Pages.Blog
                 return NotFound();
             }
 
-            TblBlog = await _context.TblBlogs.FindAsync(id);
-
-            if (TblBlog != null)
+            var blogs = await _context.TblBlogs.FindAsync(id);
+            if (blogs != null)
             {
-                _context.TblBlogs.Remove(TblBlog);
+                Blogs = blogs;
+                await _amazonS3.DeleteFileFromS3(Blogs.Image);
+                await _amazonS3.DeleteFileFromS3(Blogs.ThumbnailImage);
+                _context.TblBlogs.Remove(Blogs);
                 await _context.SaveChangesAsync();
             }
 

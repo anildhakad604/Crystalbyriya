@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Astaberry.Models
+namespace CrystalByRiya.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,6 +17,7 @@ namespace Astaberry.Models
     {
         [Key]
         public int Id { get; set; }
+        public string Orderid { get; set; }
         [Required]
         public string Emailid { get; set; }
         [Required]
@@ -29,6 +30,7 @@ namespace Astaberry.Models
         [Required]
         public string Address { get; set; }        
        
+
         public string Apartment { get; set; }
         [Required]
         public string City { get; set; }
@@ -39,6 +41,8 @@ namespace Astaberry.Models
         [Required]
         public string PinCode { get; set; }  
       
-        public string Gst { get; set; }    
+        public string Gst { get; set; }
+        [Required]
+        public string FullName { get; set; }
     }
 }

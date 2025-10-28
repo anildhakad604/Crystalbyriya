@@ -1,0 +1,45 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Employee.CreateModel
+
+@{
+    ViewData["Title"] = "Create New Employee";
+}
+
+<h2>Create New Employee</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="NewEmployee.Username" class="control-label">Username</label>
+        <input asp-for="NewEmployee.Username" value=""class="form-control" />
+        <span asp-validation-for="NewEmployee.Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewEmployee.Email" class="control-label">Email</label>
+        <input asp-for="NewEmployee.Email" class="form-control" />
+        <span asp-validation-for="NewEmployee.Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewEmployee.Password" class="control-label">Password</label>
+        <input asp-for="NewEmployee.Password" class="form-control" type="password" />
+        <span asp-validation-for="NewEmployee.Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NewEmployee.ContactNo" class="control-label">Contact No</label>
+        <input asp-for="NewEmployee.ContactNo" class="form-control" />
+        <span asp-validation-for="NewEmployee.ContactNo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewEmployee.Role" class="control-label">Contact No</label>
+        <input asp-for="NewEmployee.Role" class="form-control" />
+        <span asp-validation-for="NewEmployee.Role" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+        <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

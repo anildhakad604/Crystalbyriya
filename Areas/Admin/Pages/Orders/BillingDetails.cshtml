@@ -1,0 +1,107 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Orders.BillingDetailsModel
+
+<h2 class="text-center">Order List</h2>
+
+@if (Model.Orders != null && Model.Orders.Any())
+{
+    <table class="table table-striped table-bordered text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Coupon Code Applied</th>
+                <th>Email ID</th>
+                <th>Status</th>
+                <th>Total Amount</th>
+                <th>Payment From</th>
+                <th>Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="./OrderDetails" asp-route-orderid="@order.Orderid" class="btn btn-link">
+                            @order.Orderid
+                        </a>
+                    </td>
+                    <td>@order.Date</td>
+                    <td>@order.CouponCodeapplied</td>
+                    <td>@order.Emailid</td>
+                    <td>
+                        <select class="form-control status-dropdown" data-order-id="@order.Orderid" data-field="Status">
+                            <option value="Pending" selected="@(order.Status == "Pending" ? "selected" : null)">Pending</option>
+                            <option value="Completed" selected="@(order.Status == "Completed" ? "selected" : null)">Completed</option>
+                            <option value="Dispatched" selected="@(order.Status == "Dispatched" ? "selected" : null)">Dispatched</option>
+                        </select>
+                    </td>
+                    <td>@order.TotalAmount</td>
+                    <td>@order.PaymentFrom</td>
+                    <td>
+                        <select class="form-control payment-status-dropdown" data-order-id="@order.Orderid" data-field="PaymentStatus">
+                            @if (order.PaymentStatus == "Pending")
+                            {
+                                <option value="Pending" selected>Pending</option>
+                                <option value="Completed">Completed</option>
+                            }
+                            @if (order.PaymentStatus == "Completed")
+                            {
+                                <option value="Pending">Pending</option>
+                                <option value="Completed" selected>Completed</option>
+                            }
+                           
+                        </select>
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form id="orderForm">
+        @Html.AntiForgeryToken()
+    </form>
+}
+else
+{
+    <p>No orders available.</p>
+}
+
+
+
+@section Scripts {
+    
+    <script>
+        // Retrieve the Anti-Forgery token from the hidden input in the form
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        document.querySelectorAll('.status-dropdown, .payment-status-dropdown').forEach(dropdown => {
+            dropdown.addEventListener('change', function () {
+                const orderId = this.getAttribute('data-order-id');
+                const field = this.getAttribute('data-field');
+                const value = this.value;
+
+                fetch('@Url.Page("/Orders/BillingDetails", "UpdateStatus")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': token
+                    },
+                    body: JSON.stringify({ orderId: orderId, field: field, value: value })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        alert('Failed to update status. Please try again.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+}
+
+
+

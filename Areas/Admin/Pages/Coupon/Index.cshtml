@@ -1,0 +1,72 @@
+﻿@page
+@model CrystalByRiya.Areas.Admin.Pages.Coupon.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-danger">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CouponCodes[0].CouponCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CouponCodes[0].CouponName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CouponCodes[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CouponCodes[0].ApplicableFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CouponCodes[0].ApplicableTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CouponCodes[0].IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CouponCodes[0].DiscountPercentage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CouponCodes) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CouponCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CouponName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicableFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicableTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountPercentage)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

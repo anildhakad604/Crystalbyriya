@@ -5,46 +5,46 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Astaberry.Models;
-using Microsoft.AspNetCore.Http;
+using CrystalByRiya.Models;
+using CrystalByRiya.Classes;
 
-namespace Astaberry.Areas.Admin.Pages.Products
+namespace CrystalByRiya.Areas.Admin.Pages.Products
 {
     public class DeleteModel : PageModel
     {
-        private readonly Astaberry.Models.ApplicationDbContext _context;
+        private readonly CrystalByRiya.Models.ApplicationDbContext _context;
 
-        public DeleteModel(Astaberry.Models.ApplicationDbContext context)
+
+        private readonly AmazonS3 _amazonS3;
+        private readonly AwsCredentials awsCredentials;
+
+        public DeleteModel(CrystalByRiya.Models.ApplicationDbContext context, AwsCredentials awsCredentials, AmazonS3 amazonS3)
         {
             _context = context;
+            this.awsCredentials = awsCredentials;
+            _amazonS3 = amazonS3;
         }
-
         [BindProperty]
-        public TblProduct TblProduct { get; set; }
+        public Product Product { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            string logedin = HttpContext.Session.GetString("Login");
-            if (string.IsNullOrEmpty(logedin))
+            if (id == null)
             {
-                return RedirectToPage("../Login");
+                return NotFound();
+            }
 
+            var product = await _context.TblProducts.FirstOrDefaultAsync(m => m.ID == id);
+
+            if (product == null)
+            {
+                return NotFound();
             }
             else
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                TblProduct = await _context.TblProducts.FirstOrDefaultAsync(m => m.Id == id);
-
-                if (TblProduct == null)
-                {
-                    return NotFound();
-                }
-                return Page();
+                Product = product;
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
@@ -54,11 +54,12 @@ namespace Astaberry.Areas.Admin.Pages.Products
                 return NotFound();
             }
 
-            TblProduct = await _context.TblProducts.FindAsync(id);
-
-            if (TblProduct != null)
+            var product = await _context.TblProducts.FindAsync(id);
+            if (product != null)
             {
-                _context.TblProducts.Remove(TblProduct);
+                Product = product;
+                await _amazonS3.DeleteFileFromS3(Product.Thumbnail);
+                _context.TblProducts.Remove(Product);
                 await _context.SaveChangesAsync();
             }
 

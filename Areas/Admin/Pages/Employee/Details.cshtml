@@ -1,0 +1,32 @@
+﻿@page "{id:int}"
+@model CrystalByRiya.Areas.Admin.Pages.Employee.DetailsModel
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<h2>Employee Details</h2>
+
+<div class="form-group">
+    <label for="Username">Username:</label>
+    <input class="form-control" id="Username" value="@Model.Employee.Username" disabled />
+</div>
+
+<div class="form-group">
+    <label for="Email">Email:</label>
+    <input class="form-control" id="Email" value="@Model.Employee.Email" disabled />
+</div>
+
+<div class="form-group">
+    <label for="ContactNo">Contact Number:</label>
+    <input class="form-control" id="ContactNo" value="@Model.Employee.ContactNo" disabled />
+</div>
+
+<div class="form-group">
+    <label for="Rights">Rights:</label>
+    <textarea class="form-control" id="Rights" disabled>@Model.Employee.Role</textarea>
+</div>
+
+<div class="form-group">
+    <a asp-page="./Index" class="btn btn-primary">Back to List</a>
+</div>

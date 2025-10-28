@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Astaberry.Models
+namespace CrystalByRiya.Models
 {
     using System;
     using System.Collections.Generic;
@@ -17,6 +17,7 @@ namespace Astaberry.Models
     {
         [Key]
         public int Id { get; set; }
+        public string Orderid { get; set; }
         [Required]
         public string Emailid { get; set; }
         [Required]
