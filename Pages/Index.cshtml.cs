@@ -27,8 +27,11 @@ namespace CrystalByRiya.Pages
         public List<Blogs> Blogs { get; set; }
         public string Currenturl { get; set; }
         public List<Announcement> Announcements { get; set; }
+
+        public List<Product> Products { get; set; }
         public List<BestSeller> SpBestseller { get; set; }
-       
+ 
+
 
         public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext context)
         {
@@ -60,6 +63,7 @@ namespace CrystalByRiya.Pages
                 Blogs = await _context.TblBlogs.Where(e => e.IsActive == true).OrderByDescending(e => e.Blogid).Take(3).ToListAsync();
                 Announcements = await _context.TblAnnouncement.ToListAsync();
                 SpBestseller = await _context.SpBestSeller.FromSqlRaw("SpBestseller").ToListAsync();
+                Products= await _context.TblProducts.ToListAsync();
             }
             catch (Exception ex)
             {

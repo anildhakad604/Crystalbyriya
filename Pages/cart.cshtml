@@ -33,188 +33,266 @@
     <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
 }
 
-<script>
-    function handleAddToCart3() {
-        var useremail = '@userEmail';
-        if (useremail) {
-            window.location.href = '/checkout';
-
-        }
-        else{
-            var redirectUrl = encodeURIComponent('/checkout');
-            window.location.href = '/checkout?redirectUrl=' + redirectUrl;
-        }
-    }
-</script>
-
-<main class="main-content site-wrapper-reveal">
-    <!--== Start Page Title Area ==-->
-    <div class="page-title-area page-title-area2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="page-title-content content-style-2">
-                        <div class="bread-crumbs"><a href="/index">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Cart</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 m-auto">
-                    <div class="section-title text-center mb-2">
-                        <h2 class="title">Cart</h2>
-                    </div>
-                </div>
-
-            </div>
+<!-- Page Title -->
+<section class="s-page-title">
+    <div class="container">
+        <div class="content">
+            <h1 class="title-page">Shopping Cart</h1>
+            <ul class="breadcrumbs-page">
+                <li><a href="index.html" class="h6 link">Home</a></li>
+                <li class="d-flex"><i class="icon icon-caret-right"></i></li>
+                <li>
+                    <h6 class="current-page fw-normal">Shopping Cart</h6>
+                </li>
+            </ul>
         </div>
     </div>
-
-    <!--== Start Cart Area Wrapper ==-->
-    <section class="product-area cart-page-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="shipping-info">
-                        <div class="loading-bar">
-                            <div class="load-percent"></div>
-                            <div class="label-free-shipping">
-                                <div class="free-shipping svg-icon-style">
-                                    <span class="svg-icon" id="svg-icon-shipping2" data-svg-icon="../assetsv2/img/icons/shop1.svg"></span>
-                                </div>
-                               @*  <p>Purchase Above &#8377;3000 to get Free Shipping</p> *@
+</section>
+<!-- /Page Title -->
+<!-- View Cart -->
+<div class="flat-spacing each-list-prd">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-9 col-xl-8">
+                <div class="tf-cart-sold">
+                    <div class="notification-sold bg-surface">
+                        <img class="icon" src="icon/fire.svg" alt="Icon">
+                        <div class="count-text h6">
+                            Your cart will expire in
+                            <div class="js-countdown time-count cd-has-zero cd-no" data-timer="65" data-labels=":,:,:,"></div>
+                            minutes! Please checkout now before your items sell out!
+                        </div>
+                    </div>
+                    <div class="notification-progress">
+                        <div class="text">
+                            <i class="icon icon-truck"></i>
+                            <p class="h6">
+                                Free Shipping for orders over <span class="text-primary fw-bold">$150</span>
+                            </p>
+                        </div>
+                        <div class="progress-cart">
+                            <div class="value" style="width: 0%;" data-progress="50">
+                                <span class="round"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="cart-table-wrap">
-                        <div class="cart-table table-responsive">
-                            <table id="orders">
-                                <thead>
-                                    <tr>
-                                        <th class="pro-remove"> </th>
-                                      @*   <th class="pro-sku">Skucode</th>
-                                        <th class="pro-childsku">ChildSkucode</th> *@
-
-                                     
-                                        <th class="pro-size">Size</th>
-                                        <th class="pro-material">Material</th>
-                                        <th class="pro-material">AddOn</th>
-
-                                        <th class="pro-name text-center">Product</th>
-                                        <th class="pro-price">Price</th>
-                                        <th class="pro-quantity">Quantity</th>
-                                        
-                                        <th class="pro-subtotal">Subtotal</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody id="orders">
-                                    @if (Model.Carts.Count>0 )
-                                    {
-                                        
-                                        @foreach (var item in Model.Carts)
-                                        {
-                                            int Qty = item.Qty;
-                                            double Price = item.Price;
-                                            double QtyandPrice = Qty * Price;
-                                            SubTotal += QtyandPrice;
-                                            totalamount += QtyandPrice;
-                                            <tr>
-                                                <td class="pro-remove">
-                                                    <a asp-route-id="@item.ProductId" asp-route-size="@item.Size" asp-route-material="@item.MaterialName" asp-route-addon="@item.Addon" asp-page-handler="Delete"><i class="lastudioicon-e-remove"></i></a>
-                                                </td>
-
-                                              
-
-                                             
-                                                <!-- Size -->
-                                                <td class="pro-size">
-                                                    <span>@item.Size</span>
-                                                </td>
-
-                                                <!-- Material -->
-                                                <td class="pro-material">
-                                                    <span>@item.MaterialName</span>
-                                                </td>
-                                                <td class="pro-material">
-                                                    <span>@item.Addon</span>
-                                                </td>
-                                                <td class="pro-thumbnail">
-                                                    <div class="pro-info text-center">
-                                                        <div class="pro-img">
-                                                            <a href="#"><img src=" @Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @item.Image)" alt="@item.ProductName"></a>
-                                                        </div>
-                                                        <div class="pro-name"><span>@item.ProductName</span></div>
-                                                    </div>
-                                                </td>
-                                                <td class="pro-price">
-                                                    <span class="Price" data-price="@item.Price">&#8377; @item.Price</span>
-                                                </td>
-                                                <td class="pro-quantity">
-                                                    <form method="post" asp-page-handler="UpdateQuantity" class="quantity-form">
-                                                        <input type="hidden" name="productID" value="@item.ProductId" />
-                                                        <input type="hidden" name="size" value="@item.Size" />
-                                                        <select name="quantity" id="quantity_@item.ProductId" title="Quantity" class="Quantity" onchange="this.form.submit()">
-                                                            @for (int i = 1; i <= 10; i++)
-                                                            {
-                                                                if (i == item.Qty)
-                                                                {
-                                                                    <option value="@i" selected>@i</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value="@i">@i</option>
-                                                                }
-                                                            }
-
-                                                        </select>
-                                                    </form>
-                                                </td>
-
-                                                <td class="pro-subtotal">
-                                                    <span class="Subtotal">&#8377; @QtyandPrice.00</span>
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <tr><td colspan="6">No Item in Your Cart</td></tr>
-
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="coupon-action">
-                        <div class="coupon">
-                            <form method="post" asp-page-handler="CouponCode">
-                            <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code">
-                            <button type="submit" class="button" name="apply_coupon" value="Apply coupon">Apply coupon</button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="cart-payment">
-                       
-                        <button class="btn-theme" onclick="handleAddToCart3()">Proceed to Checkout</button>
+                
+                    <table class="tf-table-page-cart">
+                        <thead>
+                            <tr>
+                                <th class="h6">Product</th>
+                                <th class="h6">Price</th>
+                                <th class="h6">Quality</th>
+                                <th class="h6">Total price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Carts)
+                            {
+                                var itemTotal = item.Price * item.Qty;
+
+                                <tr class="tf-cart_item each-prd file-delete">
+                                    <td>
+                                        <div class="cart_product">
+                                            <a href="/product-detail/@item.ProductId" class="img-prd">
+                                                <img class="lazyload" src="/images/products/@item.Image" data-src="images/products/@item.Image" alt="@item.ProductName">
+                                            </a>
+                                            <div class="infor-prd">
+                                                <h6 class="prd_name">
+                                                    <a href="/product-detail/@item.ProductId" class="link">
+                                                        @item.ProductName
+                                                    </a>
+                                                </h6>
+                                                <div class="prd_select text-small">
+                                                    Size:
+                                                    <div class="size-select">
+                                                        <select class="bg-white">
+                                                            <option selected>@item.Size</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="cart_price h6 each-price" data-cart-title="Price">₹@item.Price</td>
+                                    <td class="cart_quantity" data-cart-title="Quantity">
+                                        <form method="post" asp-page-handler="UpdateQuantity">
+                                            <input type="hidden" name="productID" value="@item.ProductId" />
+                                            <input type="hidden" name="size" value="@item.Size" />
+
+                                            <div class="wg-quantity">
+                                                <button class="btn-quantity minus-quantity" type="button"
+                                                        onclick="updateQty(this, -1)">
+                                                    <i class="icon-minus fs-14"></i>
+                                                </button>
+
+                                                <input class="quantity-product"
+                                                       type="number"
+                                                       name="quantity"
+                                                       value="@item.Qty"
+                                                       min="1" />
+
+                                                <button class="btn-quantity plus-quantity" type="button"
+                                                        onclick="updateQty(this, 1)">
+                                                    <i class="icon-plus fs-14"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                        @* <div class="wg-quantity">
+                                            <button class="btn-quantity minus-quantity" type="button">
+                                                <i class="icon-minus fs-14"></i>
+                                            </button>
+                                            <input class="quantity-product" type="text" name="number" value="1">
+                                            <button class="btn-quantity plus-quantity" type="button">
+                                                <i class="icon-plus fs-14"></i>
+                                            </button>
+                                        </div> *@
+                                    </td>
+                                    <td class="cart_total h6">
+                                        ₹@itemTotal
+                                    </td>
+                                    <td class="cart_remove remove link" data-cart-title="Remove">
+                                        <a asp-page="Cart"
+                                           asp-page-handler="Delete"
+                                           asp-route-id="@item.ProductId"
+                                           asp-route-size="@item.Size"
+                                           asp-route-addon="@item.Addon"
+                                           asp-route-material="@item.MaterialName">
+                                            <i class="icon icon-close"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <form method="post" asp-page-handler="CouponCode">
+                        <div class="ip-discount-code">
+                            <input type="text" name="coupon_code" placeholder="Add voucher discount" required />
+                            <button class="tf-btn animate-btn" type="submit">
+                                Apply Code
+                            </button>
+                        </div>
+                    </form>
+                    <div class="group-discount mb-xl-0">
+                        <div class="box-discount">
+                            <div class="discount-top">
+                                <div class="discount-off">
+                                    <p class="h6">Discount</p>
+                                    <h6 class="sale-off h6 fw-bold">30% OFF</h6>
+                                </div>
+                                <div class="discount-from">
+                                    <p class="h6">
+                                        For all orders <br>form $150
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="discount-bot">
+                                <h6>Code: <span class="coupon-code">Themesflat</span></h6>
+                                <button class="tf-btn coupon-copy-wrap h6" type="button">
+                                    Apply Code
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-discount">
+                            <div class="discount-top">
+                                <div class="discount-off">
+                                    <p class="h6">Discount</p>
+                                    <h6 class="sale-off h6 fw-bold">15% OFF</h6>
+                                </div>
+                                <div class="discount-from">
+                                    <p class="h6">
+                                        For all orders <br>form $100
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="discount-bot">
+                                <h6>Code: <span class="coupon-code">SliVox</span></h6>
+                                <button class="tf-btn coupon-copy-wrap h6" type="button">
+                                    Apply Code
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-discount">
+                            <div class="discount-top">
+                                <div class="discount-off">
+                                    <p class="h6">Discount</p>
+                                    <h6 class="sale-off h6 fw-bold">20% OFF</h6>
+                                </div>
+                                <div class="discount-from">
+                                    <p class="h6">
+                                        For all orders <br>form $200
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="discount-bot">
+                                <h6>Code: <span class="coupon-code">MasShin</span></h6>
+                                <button class="tf-btn coupon-copy-wrap h6" type="button">
+                                    Apply Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+            
+            </div>
+            <div class="col-xxl-3 col-xl-4">
+                <div class="fl-sidebar-cart bg-white-smoke sticky-top">
+                    <div class="box-order-summary">
+                        <h4 class="title fw-semibold">Order Summary</h4>
+                        <div class="subtotal h6 text-button d-flex justify-content-between align-items-center">
+                            <h6 class="fw-bold">Subtotal</h6>
+                            <span class="total">₹@Model.Subtotal</span>
+                        </div>
+                        <div class="discount  text-button d-flex justify-content-between align-items-center">
+                            <h6 class="fw-bold">Discounts</h6>
+                            <span class="total h6">-₹@Model.DiscountAmount</span>
+                        </div>
+                        <div class="ship">
+                            <h6 class="fw-bold">Shipping</h6>
+                            <div class="flex-grow-1">
+                                <fieldset class="ship-item">
+                                    <input type="radio" name="ship-check" class="tf-check-rounded" id="free" checked>
+                                    <label class="h6" for="free">
+                                        <span>Free Shipping</span>
+                                        <span class="price">₹@Model.Shipping</span>
+                                    </label>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <h5 class="total-order d-flex justify-content-between align-items-center">
+                            <span>Total</span>
+                                <span class="total each-total-price">₹@Model.Total</span>
+                        </h5>
+                        <div class="list-ver">
+                            <a href="checkout.html" class="tf-btn w-100 animate-btn">
+                                Process to checkout
+                                <i class="icon icon-arrow-right"></i>
+                            </a>
+                            <a href="shop-default.html" class="tf-btn btn-white animate-btn animate-dark w-100">
+                                Continue shopping
+                                <i class="icon icon-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</div>
+<!-- /View Cart -->
 
+    <script>
+        function updateQty(btn, change) {
+            let input = btn.parentElement.querySelector("input");
+            let value = parseInt(input.value) || 1;
 
-</main>
+            value += change;
+            if (value < 1) value = 1;
 
-@section Scripts {
+            input.value = value;
 
-    <script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/CartPage.js">
-       
+            // auto submit form
+            btn.closest("form").submit();
+        }
     </script>
-
-
-    
-
-
-}

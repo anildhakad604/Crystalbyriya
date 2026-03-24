@@ -75,6 +75,7 @@ namespace CrystalByRiya.Pages
         public IList<Product> RecentlyViewedProducts { get; set; }
         public IList<CombinedReview> CombinedReviews { get; set; } = new List<CombinedReview>();
 
+        public IList<Product> RelatedProducts { get; set; }
 
         public async Task OnGet(string skucode, string productname, string size = null, string material = null, string addon = null)
         {
@@ -156,6 +157,21 @@ namespace CrystalByRiya.Pages
             RecentlyViewedProducts = await _context.TblProducts
                 .Where(p => skuCodes.Contains(p.SkuCode))
                 .ToListAsync();
+
+
+            // Fetch related SKU codes from RelatedProduct table
+            var relatedSkuCodes = await _context.Set<RelatedProduct>()
+                .Where(r => r.Skucode == skucode)
+                .Select(r => r.Skucode)
+                .ToListAsync();
+
+            // Fetch actual product details
+            RelatedProducts = await _context.TblProducts
+                .Where(p => relatedSkuCodes.Contains(p.SkuCode) && p.SkuCode != skucode)
+                .ToListAsync();
+
+
+
         }
         public async Task<IActionResult> OnPostAddToCart(int Qty, string MaterialName, string Size, string SkuCode, bool buynow, string Price, string Childsku, string AddOn)
         {

@@ -7601,23 +7601,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {},
+    "C:\\Users\\AC\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\admin\\Downloads\\CrystalByRiya (13)\\CrystalByRiya (13)\\CrystalByRiya\\CrystalByRiya\\CrystalByRiya.csproj",
+      "projectUniqueName": "C:\\Users\\AC\\Desktop\\AsharpInfoTech\\CrystalByRiya_2\\CrystalByRiya\\CrystalByRiya\\CrystalByRiya.csproj",
       "projectName": "CrystalByRiya",
-      "projectPath": "C:\\Users\\admin\\Downloads\\CrystalByRiya (13)\\CrystalByRiya (13)\\CrystalByRiya\\CrystalByRiya\\CrystalByRiya.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\admin\\Downloads\\CrystalByRiya (13)\\CrystalByRiya (13)\\CrystalByRiya\\CrystalByRiya\\obj\\",
+      "projectPath": "C:\\Users\\AC\\Desktop\\AsharpInfoTech\\CrystalByRiya_2\\CrystalByRiya\\CrystalByRiya\\CrystalByRiya.csproj",
+      "packagesPath": "C:\\Users\\AC\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\AC\\Desktop\\AsharpInfoTech\\CrystalByRiya_2\\CrystalByRiya\\CrystalByRiya\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\AC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7643,9 +7643,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -7725,8 +7725,20 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'MimeKit' 4.12.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g7hc-96xr-gvvx",
+      "libraryId": "MimeKit",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }
