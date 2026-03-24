@@ -247,7 +247,7 @@
                             <div class="swiper-slide">
                                 <div class="card-product">
                                     <div class="card-product_wrapper">
-                                        <a href="/product-detail?sku=@item.SkuCode" class="product-img">
+                                        <a asp-page="detail class="product-img" asp-route-sku="item.SkuCode" asp-route-productname="item.ParentUrl">
                                             <img class="lazyload img-product"
                                                  src="/images/products/@item.Thumbnail"
                                                  alt="">
@@ -346,7 +346,7 @@
                             <div class="swiper-slide">
                                 <div class="card-product">
                                     <div class="card-product_wrapper">
-                                        <a href="/product-detail?sku=@item.SkuCode" class="product-img">
+                                        <a asp-page="detail asp-route-sku="item.SkuCode" asp-route-productname="item.ParentUrl" class="product-img">
                                             <img class="lazyload img-product"
                                                  src="/images/products/@item.Thumbnail"
                                                  alt="@item.AltText">
@@ -616,7 +616,7 @@
                 {
                     <div class="swiper-slide">
                         <div class="article-blog type-space-2 hover-img4 wow fadeInLeft">
-                            <a href="blog-detail.html" class="entry_image img-style4">
+                            <a href="blog-detail.html" class="entry_image img-style4" >
                                 <img src="images/blog/@item.Image" data-src="images/blog/@item.Image" alt="Image"
                                 class="lazyload aspect-ratio-0">
                             </a>
