@@ -116,9 +116,9 @@
         }
       });
 
-      var formatted = total.toLocaleString("en-US", {
+      var formatted = total.toLocaleString("en-IN", {
         style: "currency",
-        currency: "USD",
+        currency: "INR",
       });
       $(".tf-totals-total-value").text(formatted);
     }
@@ -135,9 +135,9 @@
         var quantity = parseInt($(this).find(".quantity-product").val(), 10);
         if (!isNaN(price) && !isNaN(quantity)) {
           var subtotal = price * quantity;
-          var formatted = subtotal.toLocaleString("en-US", {
+          var formatted = subtotal.toLocaleString("en-IN", {
             style: "currency",
-            currency: "USD",
+            currency: "INR",
           });
           $(this).find(".each-subtotal-price").text(formatted);
         }
@@ -162,9 +162,9 @@
         }
       });
 
-      var formatted = total.toLocaleString("en-US", {
+      var formatted = total.toLocaleString("en-IN", {
         style: "currency",
-        currency: "USD",
+        currency: "INR",
       });
       $(".each-total-price").text(formatted);
     }
@@ -227,7 +227,9 @@
       },
     );
 
-    $(".remove").on("click", function (e) {
+    // Only intercept the mini-cart remove icon here.
+    // The cart page uses a Razor Page handler link that should be allowed to navigate.
+    $(".tf-mini-cart-wrap").on("click", ".remove", function (e) {
       e.preventDefault();
       var $this = $(this);
       $this.closest(".file-delete").remove();
@@ -1113,35 +1115,6 @@
         .trim();
       const submenu = $item.find("> .sub-menu");
       const id = "dropdown-menu-" + i;
-      if (text.toLowerCase() === "home") {
-        const $li = $(`
-              <li class="nav-mb-item">
-                  <a href="#${id}" class="collapsed mb-menu-link" data-bs-toggle="collapse" aria-expanded="false" aria-controls="${id}">
-                      <span>${text}</span>
-                      <span class="icon icon-caret-down"></span>
-                  </a>
-                  <div id="${id}" class="collapse">
-                      <ul class="sub-nav-menu"></ul>
-                  </div>
-              </li>
-          `);
-        $(".modalDemo .demo-name").each(function () {
-          const $demoName = $(this);
-          const link = $demoName.attr("href") || "#";
-          const title = $demoName.text().trim();
-          const isActive = $demoName.hasClass("active");
-          if (title) {
-            const activeClass = isActive ? "active" : "";
-            $li
-              .find(".sub-nav-menu")
-              .append(
-                `<li><a href="${link}" class="sub-nav-link ${activeClass}">${title}</a></li>`,
-              );
-          }
-        });
-        $mobileMenu.append($li);
-        return;
-      }
 
       if (submenu.length > 0) {
         const $li = $(`

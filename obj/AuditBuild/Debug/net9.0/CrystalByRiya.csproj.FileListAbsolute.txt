@@ -1,0 +1,11 @@
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.csproj.AssemblyReference.cache
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.AssemblyInfoInputs.cache
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.AssemblyInfo.cs
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.csproj.CoreCompileInputs.cache
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.RazorAssemblyInfo.cache
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.RazorAssemblyInfo.cs
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\AuditBuild\Debug\net9.0\CrystalByRiya.sourcelink.json

@@ -1,0 +1,633 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = CrystalByRiya
+build_property.RootNamespace = CrystalByRiya
+build_property.ProjectDir = C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Materials/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcTWF0ZXJpYWxzXEVkaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddOns/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkT25zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddOns/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkT25zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddOns/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkT25zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddOns/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkT25zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddOns/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkT25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddToCart/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkVG9DYXJ0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddToCart/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkVG9DYXJ0XERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddToCart/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkVG9DYXJ0XERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddToCart/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkVG9DYXJ0XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/AddToCart/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQWRkVG9DYXJ0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Announcements/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQW5ub3VuY2VtZW50c1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Announcements/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQW5ub3VuY2VtZW50c1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Announcements/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQW5ub3VuY2VtZW50c1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Announcements/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQW5ub3VuY2VtZW50c1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Announcements/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQW5ub3VuY2VtZW50c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Banners/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmFubmVyc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Banners/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmFubmVyc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Banners/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmFubmVyc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Banners/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmFubmVyc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Banners/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmFubmVyc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/BlogsFaq/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ3NGYXFcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/BlogsFaq/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ3NGYXFcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/BlogsFaq/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ3NGYXFcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/BlogsFaq/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ3NGYXFcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/BlogsFaq/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ3NGYXFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Blog/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Blog/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Blog/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Blog/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Blog/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQmxvZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Category/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ2F0ZWdvcnlcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Category/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ2F0ZWdvcnlcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Category/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ2F0ZWdvcnlcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Category/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ2F0ZWdvcnlcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Category/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ2F0ZWdvcnlcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Comments/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ29tbWVudHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Comments/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ29tbWVudHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Comments/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ29tbWVudHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Comments/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ29tbWVudHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Comments/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ29tbWVudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Coupon/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ291cG9uXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Coupon/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ291cG9uXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Coupon/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ291cG9uXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Coupon/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ291cG9uXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Coupon/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcQ291cG9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Employee/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcRW1wbG95ZWVcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Employee/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcRW1wbG95ZWVcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Employee/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcRW1wbG95ZWVcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Employee/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcRW1wbG95ZWVcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Employee/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcRW1wbG95ZWVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Gallery/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcR2FsbGVyeVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Gallery/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcR2FsbGVyeVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Gallery/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcR2FsbGVyeVxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Gallery/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcR2FsbGVyeVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Gallery/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcR2FsbGVyeVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Instagrams/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcSW5zdGFncmFtc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Instagrams/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcSW5zdGFncmFtc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Instagrams/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcSW5zdGFncmFtc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Instagrams/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcSW5zdGFncmFtc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Instagrams/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcSW5zdGFncmFtc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Materials/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcTWF0ZXJpYWxzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Materials/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcTWF0ZXJpYWxzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Materials/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcTWF0ZXJpYWxzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Materials/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcTWF0ZXJpYWxzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Materials/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcTWF0ZXJpYWxzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Orders/BillingDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcT3JkZXJzXEJpbGxpbmdEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Orders/OrderDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcT3JkZXJzXE9yZGVyRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ProductFaqs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdEZhcXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ProductFaqs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdEZhcXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ProductFaqs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdEZhcXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ProductFaqs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdEZhcXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ProductFaqs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdEZhcXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Productsizes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNpemVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Productsizes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNpemVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Productsizes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNpemVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Productsizes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNpemVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Productsizes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNpemVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/CategoryandSubCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcQ2F0ZWdvcnlhbmRTdWJDYXRlZ29yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/CategoryAndSubCategoryDelete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcQ2F0ZWdvcnlBbmRTdWJDYXRlZ29yeURlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/CategoryAndSubcategoryEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcQ2F0ZWdvcnlBbmRTdWJjYXRlZ29yeUVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Products/Sizes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUHJvZHVjdHNcU2l6ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Relatedproducts/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmVsYXRlZHByb2R1Y3RzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Relatedproducts/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmVsYXRlZHByb2R1Y3RzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Relatedproducts/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmVsYXRlZHByb2R1Y3RzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Relatedproducts/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmVsYXRlZHByb2R1Y3RzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Relatedproducts/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmVsYXRlZHByb2R1Y3RzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Reports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ReviewGalleries/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3R2FsbGVyaWVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ReviewGalleries/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3R2FsbGVyaWVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ReviewGalleries/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3R2FsbGVyaWVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ReviewGalleries/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3R2FsbGVyaWVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/ReviewGalleries/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3R2FsbGVyaWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Review/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Review/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3XERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Review/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3XERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Review/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Review/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcUmV2aWV3XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Subcategories/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcU3ViY2F0ZWdvcmllc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Subcategories/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcU3ViY2F0ZWdvcmllc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Subcategories/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcU3ViY2F0ZWdvcmllc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Subcategories/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcU3ViY2F0ZWdvcmllc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Subcategories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcU3ViY2F0ZWdvcmllc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Wishlist/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcV2lzaGxpc3RcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Wishlist/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcV2lzaGxpc3RcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Wishlist/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcV2lzaGxpc3RcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Wishlist/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcV2lzaGxpc3RcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Pages/Wishlist/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cUGFnZXNcV2lzaGxpc3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/Shared/_RoleMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cU2hhcmVkXF9Sb2xlTWVudS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Areas/Admin/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/AboutUs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWJvdXRVcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/adminlogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5sb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/blog.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYmxvZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/blogdetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYmxvZ2RldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/cart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcY2FydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/category.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcY2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/checkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcY2hlY2tvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/Components/Category/Category.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xDYXRlZ29yeVxDYXRlZ29yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/contactus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcY29udGFjdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcZGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcZGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/Error1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IxLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/exchange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcZXhjaGFuZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/faq.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcZmFxLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/ForgetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9yZ2V0UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/Index1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgxLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/myaccount.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcbXlhY2NvdW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/productlist.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvZHVjdGxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXRQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/rewards.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNccmV3YXJkcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/SearchResult.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VhcmNoUmVzdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/shipping.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcc2hpcHBpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/shop-account.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcc2hvcC1hY2NvdW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/termandconditions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVybWFuZGNvbmRpdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/thankyou.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGhhbmt5b3UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/wishlist.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcd2lzaGxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/AC/Desktop/AsharpInfoTech/CrystalByRiya_2/CrystalByRiya/CrystalByRiya/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-3xu89zt77k
