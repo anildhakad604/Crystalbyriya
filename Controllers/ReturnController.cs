@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace CrystalByRiya.Controllers
 {
+    [Route("api/response")]
     public class ReturnController : Controller
     {
         ApplicationDbContext context;
@@ -29,6 +30,7 @@ namespace CrystalByRiya.Controllers
         }
 
         [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Return(string responses)
         {
             string xverify = PhonePeCredientials.xverify;

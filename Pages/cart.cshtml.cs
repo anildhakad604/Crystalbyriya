@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -22,6 +21,7 @@ namespace CrystalByRiya.Pages
         public CouponCodes Coupon { get; set; }
         public string CouponMessage { get; set; }
         public List<Item> Carts { get; set; } = new List<Item>();
+        public List<CouponCodes> AvailableCoupons { get; set; } = new List<CouponCodes>();
         public List<ChildskuCode> ChildSkuCodes { get; set; } = new List<ChildskuCode>();
         public List<Cart> CartMarketing { get; set; } = new List<Cart>();
         public double GstAmount { get; set; }
@@ -35,9 +35,9 @@ namespace CrystalByRiya.Pages
         {
             try
             {
-              var productID=  HttpContext.Session.GetString("productid");
-              var quantity=  HttpContext.Session.GetInt32("quantity");
-              var childsku=  HttpContext.Session.GetString("childsku");
+                var productID = HttpContext.Session.GetString("productid");
+                var quantity = HttpContext.Session.GetInt32("quantity");
+                var childsku = HttpContext.Session.GetString("childsku");
                 // Get the current URL
                 Currenturl = HttpContext.Request.GetDisplayUrl();
                 var useremail = HttpContext.Session.GetString("UserEmail");
@@ -70,10 +70,10 @@ namespace CrystalByRiya.Pages
 
                 }
 
-                // Retrieve the cart from the session
-                else
-
+                // If user is logged in and session cart has items, sync with database
+                else if (useremail != null && Carts.Count > 0)
                 {
+                    // User is logged in and has items in session cart - sync with database
                     CartMarketing = await _context.TblCarts.Where(e => e.UserEmail == useremail).ToListAsync();
                     if (CartMarketing.Count > 0 && CartMarketing.Any())
                     {
@@ -92,11 +92,9 @@ namespace CrystalByRiya.Pages
 
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Carts);
                     }
-                    else
-                    {
-                        Carts = new List<Item>();
-                    }
                 }
+                // If user is not logged in, keep session cart as is (or empty)
+                // No database query needed for logged-out users
                 if (!string.IsNullOrEmpty(productID) && quantity.HasValue)
                 {
                     // Find the item in the cart based on ProductID
@@ -108,6 +106,14 @@ namespace CrystalByRiya.Pages
                         cartItem.Qty = quantity.Value;
                     }
                 }
+
+                var now = DateTime.Now;
+                AvailableCoupons = await _context.CouponCodes
+                    .AsNoTracking()
+                    .Where(c => c.IsActive && c.ApplicableFrom <= now && c.ApplicableTo >= now)
+                    .OrderByDescending(c => c.DiscountPercentage)
+                    .ThenBy(c => c.ApplicableTo)
+                    .ToListAsync();
 
                 // Calculate totals
                 CalculateTotals();
@@ -125,8 +131,9 @@ namespace CrystalByRiya.Pages
 
         private void CalculateTotals()
         {
-        string check=    HttpContext.Session.GetString("AppliedCoupon");
+            string check = HttpContext.Session.GetString("AppliedCoupon");
             var discountvalue = HttpContext.Session.GetInt32("Discount");
+            var merchandiseSubtotal = 0.0;
             Total = 0;
             GstAmount = 0;
 
@@ -134,51 +141,93 @@ namespace CrystalByRiya.Pages
             {
                 if (item == null) continue;
 
-                Total += item.Price * item.Qty;
+                merchandiseSubtotal += item.Price * item.Qty;
                 GstAmount += Convert.ToDouble(item.Gst);
             }
 
-            if (Total < 3000)
+            Subtotal = merchandiseSubtotal;
+
+            if (check == "True" && discountvalue.HasValue)
             {
-                Shipping = 80;
-                Total += Shipping;
+                DiscountAmount = Subtotal * discountvalue.Value / 100.0;
             }
             else
             {
-                Shipping = 0;
+                DiscountAmount = 0;
             }
 
-            Subtotal = Total - GstAmount;
+            var discountedSubtotal = Subtotal - DiscountAmount;
+            Shipping = discountedSubtotal < 3000 ? 80 : 0;
+            Total = discountedSubtotal + Shipping;
+
             if (check == "True")
             {
-
-                DiscountAmount = Subtotal * (double)discountvalue / 100;
-                Subtotal -= DiscountAmount;
                 HttpContext.Session.SetString("AppliedCoupon", "True");
             }
         }
         public async Task<IActionResult> OnPostCouponCode(string coupon_code)
         {
+            var normalizedCouponCode = coupon_code?.Trim();
             var carts = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") ?? new List<Item>();
+            var useremail = HttpContext.Session.GetString("UserEmail");
+
+            if ((carts == null || !carts.Any()) && !string.IsNullOrWhiteSpace(useremail))
+            {
+                CartMarketing = await _context.TblCarts.Where(e => e.UserEmail == useremail).ToListAsync();
+                if (CartMarketing.Any())
+                {
+                    carts = CartMarketing.Select(cart => new Item
+                    {
+                        ProductName = cart.ProductName,
+                        ProductId = cart.ProductId,
+                        Qty = cart.Qty,
+                        skucode = cart.ProductId,
+                        Price = cart.Price,
+                        Gst = cart.Gst,
+                        MaterialName = cart.material,
+                        Size = cart.size,
+                        Image = cart.Image
+                    }).ToList();
+
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", carts);
+                }
+            }
 
             if (carts == null || !carts.Any())
             {
+                HttpContext.Session.Remove("AppliedCoupon");
+                HttpContext.Session.Remove("Discount");
                 TempData["CouponMessage"] = "Your cart is empty. Add items to the cart before applying a coupon.";
                 return RedirectToPage("cart");
             }
 
-            Coupon = await _context.CouponCodes.FirstOrDefaultAsync(e => e.CouponCode == coupon_code);
+            if (string.IsNullOrWhiteSpace(normalizedCouponCode))
+            {
+                HttpContext.Session.Remove("AppliedCoupon");
+                HttpContext.Session.Remove("Discount");
+                TempData["CouponMessage"] = "Please enter a coupon code.";
+                return RedirectToPage("cart");
+            }
+
+            Coupon = await _context.CouponCodes
+                .FirstOrDefaultAsync(e => e.CouponCode == normalizedCouponCode);
 
             if (Coupon == null)
             {
+                HttpContext.Session.Remove("AppliedCoupon");
+                HttpContext.Session.Remove("Discount");
                 TempData["CouponMessage"] = "Invalid coupon code.";
             }
             else if (!Coupon.IsActive)
             {
+                HttpContext.Session.Remove("AppliedCoupon");
+                HttpContext.Session.Remove("Discount");
                 TempData["CouponMessage"] = "This coupon is no longer active.";
             }
             else if (DateTime.Now < Coupon.ApplicableFrom || DateTime.Now > Coupon.ApplicableTo)
             {
+                HttpContext.Session.Remove("AppliedCoupon");
+                HttpContext.Session.Remove("Discount");
                 TempData["CouponMessage"] = "This coupon is not valid for the selected date.";
             }
             else
@@ -307,7 +356,7 @@ namespace CrystalByRiya.Pages
             }
         }
     }
-        public class ChildskuCode
+    public class ChildskuCode
     {
         public string SKUCode { get; set; }
         public string ProductID { get; set; }

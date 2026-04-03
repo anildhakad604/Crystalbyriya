@@ -16,6 +16,385 @@ namespace CrystalByRiya.Pages
     public class checkoutModel : PageModel
     {
         private readonly PhonePePaymentService _paymentService;
+        private static readonly List<string> CountryOptionsData = new()
+        {
+            "Australia",
+            "Austria",
+            "Belgium",
+            "Canada",
+            "Czech Republic",
+            "Denmark",
+            "Finland",
+            "France",
+            "Germany",
+            "United States",
+            "United Kingdom",
+            "India",
+            "Japan",
+            "Mexico",
+            "South Korea",
+            "Spain",
+            "Italy",
+            "Vietnam"
+        };
+
+        private static readonly Dictionary<string, List<string>> StatesByCountry = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["India"] = new List<string>
+            {
+                "Andhra Pradesh",
+                "Arunachal Pradesh",
+                "Assam",
+                "Bihar",
+                "Chhattisgarh",
+                "Goa",
+                "Gujarat",
+                "Haryana",
+                "Himachal Pradesh",
+                "Jharkhand",
+                "Karnataka",
+                "Kerala",
+                "Madhya Pradesh",
+                "Maharashtra",
+                "Manipur",
+                "Meghalaya",
+                "Mizoram",
+                "Nagaland",
+                "Odisha",
+                "Punjab",
+                "Rajasthan",
+                "Sikkim",
+                "Tamil Nadu",
+                "Telangana",
+                "Tripura",
+                "Uttar Pradesh",
+                "Uttarakhand",
+                "West Bengal",
+                "Andaman and Nicobar Islands",
+                "Chandigarh",
+                "Dadra and Nagar Haveli and Daman and Diu",
+                "Delhi",
+                "Jammu and Kashmir",
+                "Ladakh",
+                "Lakshadweep",
+                "Puducherry"
+            },
+            ["Australia"] = new List<string>
+            {
+                "New South Wales",
+                "Queensland",
+                "South Australia",
+                "Tasmania",
+                "Victoria",
+                "Western Australia",
+                "Australian Capital Territory",
+                "Northern Territory"
+            },
+            ["Austria"] = new List<string>
+            {
+                "Burgenland",
+                "Carinthia",
+                "Lower Austria",
+                "Upper Austria",
+                "Salzburg",
+                "Styria",
+                "Tyrol",
+                "Vorarlberg",
+                "Vienna"
+            },
+            ["Belgium"] = new List<string>
+            {
+                "Antwerp",
+                "Brussels-Capital Region",
+                "East Flanders",
+                "Flemish Brabant",
+                "Hainaut",
+                "Liege",
+                "Limburg",
+                "Luxembourg",
+                "Namur",
+                "Walloon Brabant",
+                "West Flanders"
+            },
+            ["Canada"] = new List<string>
+            {
+                "Alberta",
+                "British Columbia",
+                "Manitoba",
+                "New Brunswick",
+                "Newfoundland and Labrador",
+                "Nova Scotia",
+                "Ontario",
+                "Prince Edward Island",
+                "Quebec",
+                "Saskatchewan",
+                "Northwest Territories",
+                "Nunavut",
+                "Yukon"
+            },
+            ["Czech Republic"] = new List<string>
+            {
+                "Prague",
+                "Central Bohemian",
+                "South Bohemian",
+                "Plzen",
+                "Karlovy Vary",
+                "Usti nad Labem",
+                "Liberec",
+                "Hradec Kralove",
+                "Pardubice",
+                "Vysocina",
+                "South Moravian",
+                "Olomouc",
+                "Zlin",
+                "Moravian-Silesian"
+            },
+            ["Denmark"] = new List<string>
+            {
+                "Capital Region",
+                "Central Denmark",
+                "North Denmark",
+                "Region Zealand",
+                "Region of Southern Denmark"
+            },
+            ["Finland"] = new List<string>
+            {
+                "Uusimaa",
+                "Southwest Finland",
+                "Satakunta",
+                "Hame",
+                "Pirkanmaa",
+                "Pohjanmaa",
+                "North Ostrobothnia",
+                "Lapland",
+                "Aland"
+            },
+            ["France"] = new List<string>
+            {
+                "Auvergne-Rhone-Alpes",
+                "Bourgogne-Franche-Comte",
+                "Brittany",
+                "Centre-Val de Loire",
+                "Corsica",
+                "Grand Est",
+                "Hauts-de-France",
+                "Ile-de-France",
+                "Normandy",
+                "Nouvelle-Aquitaine",
+                "Occitanie",
+                "Pays de la Loire",
+                "Provence-Alpes-Cote d'Azur"
+            },
+            ["Germany"] = new List<string>
+            {
+                "Baden-Wurttemberg",
+                "Bavaria",
+                "Berlin",
+                "Brandenburg",
+                "Bremen",
+                "Hamburg",
+                "Hesse",
+                "Lower Saxony",
+                "Mecklenburg-Vorpommern",
+                "North Rhine-Westphalia",
+                "Rhineland-Palatinate",
+                "Saarland",
+                "Saxony",
+                "Saxony-Anhalt",
+                "Schleswig-Holstein",
+                "Thuringia"
+            },
+            ["United States"] = new List<string>
+            {
+                "Alabama",
+                "Alaska",
+                "Arizona",
+                "Arkansas",
+                "California",
+                "Colorado",
+                "Connecticut",
+                "Delaware",
+                "Florida",
+                "Georgia",
+                "Hawaii",
+                "Idaho",
+                "Illinois",
+                "Indiana",
+                "Iowa",
+                "Kansas",
+                "Kentucky",
+                "Louisiana",
+                "Maine",
+                "Maryland",
+                "Massachusetts",
+                "Michigan",
+                "Minnesota",
+                "Mississippi",
+                "Missouri",
+                "Montana",
+                "Nebraska",
+                "Nevada",
+                "New Hampshire",
+                "New Jersey",
+                "New Mexico",
+                "New York",
+                "North Carolina",
+                "North Dakota",
+                "Ohio",
+                "Oklahoma",
+                "Oregon",
+                "Pennsylvania",
+                "Rhode Island",
+                "South Carolina",
+                "South Dakota",
+                "Tennessee",
+                "Texas",
+                "Utah",
+                "Vermont",
+                "Virginia",
+                "Washington",
+                "West Virginia",
+                "Wisconsin",
+                "Wyoming",
+                "District of Columbia"
+            },
+            ["United Kingdom"] = new List<string>
+            {
+                "England",
+                "Scotland",
+                "Wales",
+                "Northern Ireland"
+            },
+            ["Japan"] = new List<string>
+            {
+                "Tokyo",
+                "Osaka",
+                "Kanagawa",
+                "Aichi",
+                "Hokkaido",
+                "Fukuoka",
+                "Hyogo",
+                "Saitama",
+                "Chiba",
+                "Kyoto"
+            },
+            ["Mexico"] = new List<string>
+            {
+                "Aguascalientes",
+                "Baja California",
+                "Baja California Sur",
+                "Campeche",
+                "Chiapas",
+                "Chihuahua",
+                "Coahuila",
+                "Colima",
+                "Durango",
+                "Guanajuato",
+                "Guerrero",
+                "Hidalgo",
+                "Jalisco",
+                "Mexico City",
+                "Michoacan",
+                "Morelos",
+                "Nayarit",
+                "Nuevo Leon",
+                "Oaxaca",
+                "Puebla",
+                "Queretaro",
+                "Quintana Roo",
+                "San Luis Potosi",
+                "Sinaloa",
+                "Sonora",
+                "Tabasco",
+                "Tamaulipas",
+                "Tlaxcala",
+                "Veracruz",
+                "Yucatan",
+                "Zacatecas"
+            },
+            ["South Korea"] = new List<string>
+            {
+                "Seoul",
+                "Busan",
+                "Daegu",
+                "Incheon",
+                "Gwangju",
+                "Daejeon",
+                "Ulsan",
+                "Sejong",
+                "Gyeonggi-do",
+                "Gangwon-do",
+                "Chungcheongbuk-do",
+                "Chungcheongnam-do",
+                "Jeollabuk-do",
+                "Jeollanam-do",
+                "Gyeongsangbuk-do",
+                "Gyeongsangnam-do",
+                "Jeju-do"
+            },
+            ["Spain"] = new List<string>
+            {
+                "Andalusia",
+                "Aragon",
+                "Asturias",
+                "Balearic Islands",
+                "Basque Country",
+                "Canary Islands",
+                "Cantabria",
+                "Castile and Leon",
+                "Castilla-La Mancha",
+                "Catalonia",
+                "Extremadura",
+                "Galicia",
+                "La Rioja",
+                "Madrid",
+                "Murcia",
+                "Navarre",
+                "Valencian Community"
+            },
+            ["Italy"] = new List<string>
+            {
+                "Abruzzo",
+                "Aosta Valley",
+                "Apulia",
+                "Basilicata",
+                "Calabria",
+                "Campania",
+                "Emilia-Romagna",
+                "Friuli Venezia Giulia",
+                "Lazio",
+                "Liguria",
+                "Lombardy",
+                "Marche",
+                "Molise",
+                "Piedmont",
+                "Sardinia",
+                "Sicily",
+                "Trentino-Alto Adige",
+                "Tuscany",
+                "Umbria",
+                "Veneto"
+            },
+            ["Vietnam"] = new List<string>
+            {
+                "Hanoi",
+                "Ho Chi Minh City",
+                "An Giang",
+                "Ba Ria - Vung Tau",
+                "Bac Giang",
+                "Bac Kan",
+                "Bac Lieu",
+                "Bac Ninh",
+                "Ben Tre",
+                "Binh Dinh",
+                "Binh Duong",
+                "Binh Phuoc",
+                "Binh Thuan",
+                "Ca Mau",
+                "Can Tho",
+                "Da Nang"
+            }
+        };
 
 
         private readonly ApplicationDbContext _context;
@@ -65,6 +444,9 @@ namespace CrystalByRiya.Pages
         public double AfterDiscount { get; set; }
 
         public bool NeedsToAddDetails { get; set; }
+        public IReadOnlyList<string> CountryOptions => CountryOptionsData;
+        public IReadOnlyList<string> StateOptions => GetStatesForCountry(Detail?.Country);
+
         public void OnGet(bool isBuyNow = false)
         {
             HttpContext.Session.SetString("isBuyNow", isBuyNow.ToString());
@@ -152,6 +534,8 @@ namespace CrystalByRiya.Pages
                 }
 
             }
+
+            EnsureCheckoutDefaults();
         }
         public async Task<IActionResult> OnPostLoginAsync(string redirectUrl)
         {
@@ -171,7 +555,7 @@ namespace CrystalByRiya.Pages
                 // If redirectUrl is provided, redirect there after login, otherwise redirect to index
                 if (!string.IsNullOrEmpty(redirectUrl))
                 {
-                    return Redirect(redirectUrl);
+                    return LocalRedirect(redirectUrl);
                 }
                 else
                 {
@@ -182,6 +566,7 @@ namespace CrystalByRiya.Pages
             {
                 // If login fails, reload the page and display an error message
                 ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                EnsureCheckoutDefaults();
                 return Page();
             }
         }
@@ -190,6 +575,44 @@ namespace CrystalByRiya.Pages
 
         public async Task<IActionResult> OnPostPlaceOrder(string Phone, string comment, string paymentMethod, bool shipment, string email)
         {
+            EnsureCheckoutDefaults();
+            Phone = string.IsNullOrWhiteSpace(Phone) ? Detail?.ContactNumber : Phone;
+            email = string.IsNullOrWhiteSpace(email) ? Detail?.Emailid : email;
+
+            if (string.IsNullOrWhiteSpace(Phone) || string.IsNullOrWhiteSpace(email))
+            {
+                ModelState.AddModelError(string.Empty, "Please provide a valid email and phone number.");
+                return Page();
+            }
+
+            // Debug: Check what fields are actually being received
+            if (Detail == null)
+            {
+                ModelState.AddModelError(string.Empty, "Billing details object is null.");
+                return Page();
+            }
+
+            // Debug: Log field values for troubleshooting
+            var debugInfo = new List<string>();
+            if (string.IsNullOrWhiteSpace(Detail.Name)) debugInfo.Add("Name is empty");
+            if (string.IsNullOrWhiteSpace(Detail.LastName)) debugInfo.Add("LastName is empty");
+            if (string.IsNullOrWhiteSpace(Detail.Emailid)) debugInfo.Add("Emailid is empty");
+            if (string.IsNullOrWhiteSpace(Detail.ContactNumber)) debugInfo.Add("ContactNumber is empty");
+            if (string.IsNullOrWhiteSpace(Detail.Address)) debugInfo.Add("Address is empty");
+            if (string.IsNullOrWhiteSpace(Detail.City)) debugInfo.Add("City is empty");
+            if (string.IsNullOrWhiteSpace(Detail.State)) debugInfo.Add("State is empty");
+            if (string.IsNullOrWhiteSpace(Detail.Country)) debugInfo.Add("Country is empty");
+            if (string.IsNullOrWhiteSpace(Detail.PinCode)) debugInfo.Add("PinCode is empty");
+
+            if (debugInfo.Any())
+            {
+                var errorMessage = "Missing required fields: " + string.Join(", ", debugInfo);
+                ModelState.AddModelError(string.Empty, errorMessage);
+                return Page();
+            }
+
+            // If we get here, all required fields are filled
+            // No need for additional ModelState.IsValid check since we already validated manually
 
             double subtotal = 0;
             double shipping = 0;
@@ -241,6 +664,12 @@ namespace CrystalByRiya.Pages
 
             }
 
+            if (subtotal <= 0)
+            {
+                ModelState.AddModelError(string.Empty, "Your cart is empty.");
+                return Page();
+            }
+
 
 
             // Apply shipping if necessary
@@ -277,9 +706,13 @@ namespace CrystalByRiya.Pages
                 amount = (decimal)Total;
             }
             double integerAmount = Convert.ToDouble(Math.Round(amount, 2) * 100);
-            Random rnd = new Random();
-            string order_id = rnd.Next(1000, 9999).ToString();
+            
+            // Generate proper Order ID using stored procedure before payment
+            string order_id = await GenerateOrderIdForPayment(email, comment, paymentMethod);
             PhonePeCredientials.OrderId = order_id;
+            HttpContext.Session.SetString("PhonePeTransactionId", order_id);
+            HttpContext.Session.SetString("PreGeneratedOrderId", order_id); // Store for thank you page
+            Random rnd = new Random();
             int newMerchantId = rnd.Next(111111, 999999);
             string NewMid = "UM" + newMerchantId; // Use or remove as per requirement
 
@@ -356,6 +789,72 @@ namespace CrystalByRiya.Pages
             }
         }
 
+        private async Task<string> GenerateOrderIdForPayment(string email, string comment, string paymentMethod)
+        {
+            var date = DateTime.Now;
+            var couponCodeValue = HttpContext.Session.GetInt32("Discount") ?? 0; // Get discount as integer
+            var status = "PENDING";
+            var totalAmount = (decimal)(Total);
+            var paymentFrom = paymentMethod;
+            var paymentStatus = "PENDING";
+            var orderNotes = comment ?? "NA";
+
+            // Define output parameter for the generated Order ID
+            var generatedOrderId = new SqlParameter
+            {
+                ParameterName = "@ProdID",
+                SqlDbType = System.Data.SqlDbType.NVarChar,
+                Size = 50,
+                Direction = System.Data.ParameterDirection.Output
+            };
+
+            // Execute the stored procedure with correct data types
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC SpOrderId @EmailID, @Date, @CouponCode, @Status, @TotalAmount, @PaymentFrom, @PaymentStatus, @OrderNotes, @ProdID OUTPUT",
+                new SqlParameter("@EmailID", email),
+                new SqlParameter("@Date", date),
+                new SqlParameter("@CouponCode", couponCodeValue), // Changed to integer
+                new SqlParameter("@Status", status),
+                new SqlParameter("@TotalAmount", totalAmount),
+                new SqlParameter("@PaymentFrom", paymentFrom),
+                new SqlParameter("@PaymentStatus", paymentStatus),
+                new SqlParameter("@OrderNotes", orderNotes),
+                generatedOrderId
+            );
+
+            // Retrieve the generated Order ID
+            string orderId = generatedOrderId.Value.ToString();
+
+            // Verify the order was actually created in database
+            var verifyOrder = await _context.TblBillingDetails
+                .FirstOrDefaultAsync(o => o.Orderid == orderId);
+
+            if (verifyOrder == null)
+            {
+                // If order not found, create a basic order record manually
+                var newOrder = new TblBillingDetail
+                {
+                    Orderid = orderId,
+                    Emailid = email,
+                    Name = Detail?.Name ?? "",
+                    LastName = Detail?.LastName ?? "",
+                    ContactNumber = Detail?.ContactNumber ?? "",
+                    Address = Detail?.Address ?? "",
+                    City = Detail?.City ?? "",
+                    State = Detail?.State ?? "",
+                    Country = Detail?.Country ?? "",
+                    PinCode = Detail?.PinCode ?? "",
+                    FullName = (Detail?.Name ?? "") + " " + (Detail?.LastName ?? ""),
+                    Gst = "0"
+                };
+
+                _context.TblBillingDetails.Add(newOrder);
+                await _context.SaveChangesAsync();
+            }
+
+            return orderId;
+        }
+
         private static string Sha256Hash(string value)
         {
             using (var sha256 = System.Security.Cryptography.SHA256.Create())
@@ -371,6 +870,37 @@ namespace CrystalByRiya.Pages
 
             // Handle verification response and update order status
             return Page();
+        }
+
+        private void EnsureCheckoutDefaults()
+        {
+            Detail ??= new TblBillingDetail();
+
+            if (string.IsNullOrWhiteSpace(Detail.Country))
+            {
+                Detail.Country = "India";
+            }
+
+            if (string.IsNullOrWhiteSpace(Detail.State))
+            {
+                var states = GetStatesForCountry(Detail.Country);
+                if (states.Count > 0)
+                {
+                    Detail.State = states[0];
+                }
+            }
+        }
+
+        private static List<string> GetStatesForCountry(string country)
+        {
+            if (string.IsNullOrWhiteSpace(country))
+            {
+                country = "India";
+            }
+
+            return StatesByCountry.TryGetValue(country, out var states)
+                ? states
+                : new List<string>();
         }
     }
 

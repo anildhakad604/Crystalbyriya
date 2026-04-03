@@ -23,5 +23,6 @@ namespace CrystalByRiya.Models
         public string MetaTag { get; set; }
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }
+        //public bool IsFeatured { get; set; }
     }
 }

@@ -1,270 +1,337 @@
-﻿@page
+@page
 @model CrystalByRiya.Pages.checkoutModel
 @{
+    double SubTotal = Model.subtotal;
+    double Shipping = Model.shipping;
+    double Discount = Model.DiscountAmount;
+    double Total = Model.Total;
 }
 @section Metatags {
-    <title> Crystal By Riya | Pre-Owned Excellence</title>
-    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <title>Checkout | Dr Astro Crystals</title>
+    <meta name="keywords" content="Healing stones, Crystals and Gemstones, Healing crystals, Natural stones, Authentic crystals, Original crystals, Crystal jewellery, Sterling Silver Jewellery, Silver jewellery crystals, Silver jewellery" />
     <link rel="canonical" href="@Model.Currenturl" />
-    <meta property="og:title" content="Crystals By Riya | Home" />
+    <meta property="og:title" content="Checkout | Dr Astro Crystals" />
     <meta property="og:url" content="@Model.Currenturl" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
-    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+    <meta property="og:site_name" content="Dr Astro Crystals" />
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
-    <meta name="twitter:title" content="Epitome Cars | Pre-Owned Excellence">
-    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
-    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:site" content="@@drastrocrystals">
+    <meta name="twitter:title" content="Checkout | Dr Astro Crystals">
+    <meta name="twitter:description" content="Complete your purchase at Dr Astro Crystals. Reliable healing stones and authentic crystals.">
+    <meta name="twitter:creator" content="Dr Astro Crystals">
     <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
-    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
-}
-@{
-    double SubTotal = 0;
-    double GrandTotal = 0;
 }
 
-
-
-
-
-
-<!-- Page Title -->
-<section class="s-page-title">
-    <div class="container">
-        <div class="content">
-            <h1 class="title-page">Checkout</h1>
-            <ul class="breadcrumbs-page">
-                <li><a href="index.html" class="h6 link">Home</a></li>
-                <li class="d-flex"><i class="icon icon-caret-right"></i></li>
-                <li>
-                    <h6 class="current-page fw-normal">Checkout</h6>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-<!-- /Page Title -->
-<!-- Check Out -->
-<section class="flat-spacing">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-                <div class="tf-page-checkout mb-lg-0">
-                    <div class="wrap-coupon">
-                        <h5 class="mb-12">Have a coupon? <span class="text-primary">Enter your code</span></h5>
-                        <form method="post" asp-page-handler="ApplyCoupon">
-                            <div class="ip-discount-code mb-0">
-                                <input type="text" placeholder="Enter your code" required="">
-                                <button class="tf-btn animate-btn" type="submit">
-                                    Apply Code
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <form method="post" asp-page-handler="PlaceOrder" class="tf-checkout-cart-main">
-                        <div class="box-ip-checkout estimate-shipping">
-                            <h2 class="title type-semibold">Infomation</h2>
-                            <div class="form_content">
-                                <div class="cols tf-grid-layout sm-col-2">
-                                    <fieldset>
-                                        <input type="text" name="first-name_infor" placeholder="First name" required="" asp-for="Detail.Name">
-                                    </fieldset>
-                                    <fieldset>
-                                        <input type="text" name="last-name_infor" placeholder="Last name" required="" asp-for="Detail.LastName">
-                                    </fieldset>
-                                </div>
-                                <div class="cols tf-grid-layout sm-col-2">
-                                    <fieldset>
-                                        <input asp-for="Detail.Emailid" type="email" name="email_infor" placeholder="Email address" required="">
-                                    </fieldset>
-                                    <fieldset>
-                                        <input asp-for="Detail.ContactNumber" type="number" name="phone_infor" placeholder="Phone number" required="">
-                                    </fieldset>
-                                </div>
-                                <fieldset>
-                                    <div class="tf-select">
-                                        <select class="w-100" id="shipping-country-form" name="address[country]" data-default="India">
-                                            <option selected="" disabled="" value=""> Choose country / Region</option>
-                                            
-                                        </select>
+ <!-- Page Title -->
+        <section class="s-page-title">
+            <div class="container">
+                <div class="content">
+                    <h1 class="title-page">Checkout</h1>
+                    <ul class="breadcrumbs-page">
+                        <li><a asp-page="/Index" class="h6 link">Home</a></li>
+                        <li class="d-flex"><i class="icon icon-caret-right"></i></li>
+                        <li>
+                            <h6 class="current-page fw-normal">Checkout</h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- /Page Title -->
+        <!-- Check Out -->
+        <section class="flat-spacing">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="tf-page-checkout mb-lg-0">
+                            <div class="wrap-coupon">
+                                <h5 class="mb-12">Have a coupon? <span class="text-primary">Enter your code</span></h5>
+                                <form method="post" asp-page="/cart" asp-page-handler="CouponCode">
+                                    <div class="ip-discount-code mb-0">
+                                        <input type="text" name="coupon_code" placeholder="Enter your code" required="">
+                                        <button class="tf-btn animate-btn" type="submit">
+                                            Apply Code
+                                        </button>
                                     </div>
-                                </fieldset>
-                                <div class="cols tf-grid-layout sm-col-2">
-                                    <fieldset>
-                                        <input asp-for="Detail.City" type="text" name="city_infor" placeholder="Town/City" required="">
-                                    </fieldset>
-                                    <fieldset>
-                                        <input asp-for="Detail.Address" type="text" name="street_infor" placeholder="Street" required="">
-                                    </fieldset>
-                                </div>
-                                <div class="cols tf-grid-layout sm-col-2">
-                                    <fieldset>
-                                        <div class="tf-select">
-                                            <select id="shipping-province-form" name="address[province]" data-default="" asp-for="Detail.State">
-                                                <option selected="" disabled="" value="">Choose State</option>
-                                            </select>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <input type="number" name="number_card" placeholder="Postal code" required="" asp-for="Detail.PinCode">
-                                    </fieldset>
-                                </div>
-                                <textarea placeholder="Note about your order" style="height: 180px;"></textarea>
+                                </form>
                             </div>
-                        </div>
-                        <div class="box-ip-payment">
-                            <h2 class="title type-semibold">Choose Payment Option</h2>
-                            <div class="payment-method-box" id="payment-method-box">
-                                <div class="payment_accordion">
-                                    <label for="direct" class="payment_check checkbox-wrap " data-bs-toggle="collapse" data-bs-target="#direct-bank" aria-controls="direct-bank">
-                                        <input type="radio" name="payment-method" class="tf-check-rounded style-2" id="direct" checked="">
-                                        <span class="pay-title">Direct bank transfer</span>
-                                    </label>
-                                    <div id="direct-bank" class=" collapse show" data-bs-parent="#payment-method-box">
-                                        <p class="payment_body h6">
-                                            Make your payment directly into our bank account. Please use your Order ID as the payment
-                                            reference.
-                                            Your order will not be shipped until the funds have cleared in our account.
-                                        </p>
-                                </div>
-                                <div class="payment_accordion">
-                                    <label for="credit-card" class="payment_check checkbox-wrap" data-bs-toggle="collapse" data-bs-target="#credit-card-payment" aria-controls="credit-card-payment">
-                                        <input type="radio" name="payment-method" class="tf-check-rounded style-2" id="credit-card">
-                                        <span class="pay-title">Credit card</span>
-                                    </label>
-                                    <div id="credit-card-payment" class="collapse" data-bs-parent="#payment-method-box">
-                                        <div class="payment_body form_content">
+                            <form method="post" asp-page-handler="PlaceOrder" class="tf-checkout-cart-main">
+                                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                                <div class="box-ip-checkout estimate-shipping">
+                                    <h2 class="title type-semibold">Information</h2>
+                                    <div class="form_content">
+                                        <div class="cols tf-grid-layout sm-col-2">
                                             <fieldset>
-                                                <input type="text" placeholder="Name on card">
+                                                <label class="form-label">First name <span class="text-danger">*</span></label>
+                                                <input asp-for="Detail.Name" type="text" placeholder="First name" required="">
+                                                <span asp-validation-for="Detail.Name" class="text-danger"></span>
                                             </fieldset>
-                                            <fieldset class="ip-card">
-                                                <input type="number" placeholder="Card numbers">
-                                                <div class="card-logo">
-                                                    <img src="images/payment/visa-pay.svg" alt="Payment Logo">
-                                                    <img src="images/payment/master-pay.svg" alt="Payment Logo">
-                                                    <img src="images/payment/amex-pay.svg" alt="Payment Logo">
+                                            <fieldset>
+                                                <label class="form-label">Last name <span class="text-danger">*</span></label>
+                                                <input asp-for="Detail.LastName" type="text" placeholder="Last name" required="">
+                                                <span asp-validation-for="Detail.LastName" class="text-danger"></span>
+                                            </fieldset>
+                                        </div>
+                                        <div class="cols tf-grid-layout sm-col-2">
+                                            <fieldset>
+                                                <label class="form-label">Email address <span class="text-danger">*</span></label>
+                                                <input asp-for="Detail.Emailid" id="checkout-email-visible" type="email" placeholder="Email address" required="">
+                                                <input type="hidden" name="email" id="checkout-email-hidden" />
+                                                <span asp-validation-for="Detail.Emailid" class="text-danger"></span>
+                                            </fieldset>
+                                            <fieldset>
+                                                <label class="form-label">Phone number <span class="text-danger">*</span></label>
+                                                <input asp-for="Detail.ContactNumber" id="checkout-phone-visible" type="tel" placeholder="Phone number" required="">
+                                                <input type="hidden" name="Phone" id="checkout-phone-hidden" />
+                                                <span asp-validation-for="Detail.ContactNumber" class="text-danger"></span>
+                                            </fieldset>
+                                        </div>
+                                        <input asp-for="Detail.FullName" id="checkout-fullname" type="hidden" />
+                                        <fieldset>
+                                            <label class="form-label">Country <span class="text-danger">*</span></label>
+                                            <div class="tf-select">
+                                                <select class="w-100" id="shipping-country-form" asp-for="Detail.Country">
+                                                    @foreach (var country in Model.CountryOptions)
+                                                    {
+                                                        <option value="@country">@country</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <span asp-validation-for="Detail.Country" class="text-danger"></span>
+                                        </fieldset>
+                                        <div class="cols tf-grid-layout sm-col-2">
+                                            <fieldset>
+                                                <label class="form-label">Town/City <span class="text-danger">*</span></label>
+                                                <input asp-for="Detail.City" type="text" placeholder="Town/City" required="">
+                                                <span asp-validation-for="Detail.City" class="text-danger"></span>
+                                            </fieldset>
+                                            <fieldset>
+                                                <label class="form-label">State/Province <span class="text-danger">*</span></label>
+                                                <div class="tf-select">
+                                                    <select class="w-100" id="shipping-province-form" asp-for="Detail.State" required="">
+                                                        <option value="">Choose State</option>
+                                                        @foreach (var state in Model.StateOptions)
+                                                        {
+                                                            <option value="@state">@state</option>
+                                                        }
+                                                    </select>
                                                 </div>
+                                                <span asp-validation-for="Detail.State" class="text-danger"></span>
                                             </fieldset>
-                                            <div class="cols tf-grid-layout sm-col-2">
-                                                <fieldset>
-                                                    <input type="date">
-                                                </fieldset>
-                                                <fieldset>
-                                                    <input type="number" placeholder="Postal code">
-                                                </fieldset>
+                                            <fieldset>
+                                                <label class="form-label">Postal code <span class="text-danger">*</span></label>
+                                                <input asp-for="Detail.PinCode" type="text" placeholder="Postal code" required="">
+                                                <span asp-validation-for="Detail.PinCode" class="text-danger"></span>
+                                            </fieldset>
+                                        </div>
+                                        <fieldset>
+                                            <label class="form-label">Street address <span class="text-danger">*</span></label>
+                                            <input asp-for="Detail.Address" type="text" placeholder="Street address" required="">
+                                            <span asp-validation-for="Detail.Address" class="text-danger"></span>
+                                        </fieldset>
+                                        <fieldset>
+                                            <label class="form-label">Order note</label>
+                                            <textarea name="comment" placeholder="Note about your order" style="height: 180px;"></textarea>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="box-ip-payment">
+                                    <h2 class="title type-semibold">Choose Payment Option <span class="text-danger">*</span></h2>
+                                    <div class="payment-method-box" id="payment-method-box">
+                                        <div class="payment_accordion">
+                                            <label for="phonepe" class="payment_check checkbox-wrap" data-bs-toggle="collapse" data-bs-target="#phonepe-payment" aria-controls="phonepe-payment">
+                                                <input type="radio" name="paymentMethod" class="tf-check-rounded style-2" id="phonepe" value="phonepe" checked="">
+                                                <span class="pay-title">PhonePe / Online Payment</span>
+                                            </label>
+                                            <div id="phonepe-payment" class="collapse show" data-bs-parent="#payment-method-box">
+                                                <p class="payment_body h6">
+                                                    You will be redirected to PhonePe to complete the payment securely.
+                                                </p>
                                             </div>
-                                            <div class="checkbox-wrap">
-                                                <input id="save" type="checkbox" class="tf-check style-2">
-                                                <label for="save" class="h6">Save card details</label>
+                                        </div>
+                                        <div class="payment_accordion">
+                                            <label for="cash-on" class="payment_check checkbox-wrap" data-bs-toggle="collapse" data-bs-target="#cash-on-payment" aria-controls="cash-on-payment">
+                                                <input type="radio" name="paymentMethod" class="tf-check-rounded style-2" id="cash-on" value="cod">
+                                                <span class="pay-title">Cash On Delivery</span>
+                                            </label>
+                                            <div id="cash-on-payment" class="collapse" data-bs-parent="#payment-method-box">
+                                                <p class="payment_body h6">
+                                                    Pay when your order is delivered.
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="payment_accordion">
-                                    <label for="cash-on" class="payment_check checkbox-wrap" data-bs-toggle="collapse" data-bs-target="#cash-on-payment" aria-controls="cash-on-payment">
-                                        <input type="radio" name="payment-method" class="tf-check-rounded style-2" id="cash-on">
-                                        <span class="pay-title">Cash On Delivery</span>
-                                    </label>
-                                    <div id="cash-on-payment" class="collapse" data-bs-parent="#payment-method-box"></div>
-                                </div>
-                                <div class="payment_accordion">
-                                    <label for="paypal" class="payment_check checkbox-wrap" data-bs-toggle="collapse" data-bs-target="#paypal-payment" aria-controls="paypal-payment">
-                                        <input type="radio" name="payment-method" class="tf-check-rounded style-2" id="paypal">
-                                        <span class="pay-title">Paypal</span>
-                                    </label>
-                                    <div id="paypal-payment" class="collapse" data-bs-parent="#payment-method-box"></div>
-                                </div>
-                            </div>
-                            <p class="h6 mb-20">
-                                Your personal data will be used to process your order, support your experience throughout this website, and
-                                for
-                                other purposes described in our privacy policy.
-                            </p>
-                            <div class="checkbox-wrap">
-                                <input id="agree" type="checkbox" class="tf-check style-2">
-                                <label for="agree" class="h6">
-                                    I have read and agree to the website <span class="text-primary">
-                                        terms and
-                                        conditions *
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="box-ip-shipping">
-                            <h2 class="title type-semibold">Shipping Method</h2>
-                            <label for="freeship" class="check-ship mb-12">
-                                <input type="radio" id="freeship" class="tf-check-rounded style-2 line-black" name="checkshipping" checked="">
-                                <span class="text h6">
-                                    <span class="">Free shipping (Estimate in 01/05 - 05/05/2025)</span>
-                                    <span class="price">$00.00</span>
-                                </span>
-                            </label>
-                            <label for="express" class="check-ship">
-                                <input type="radio" id="express" class="tf-check-rounded style-2 line-black" name="checkshipping">
-                                <span class="text h6">
-                                    <span class="">Express shipping (Estimate in 01/05 - 05/05/2025)</span>
-                                    <span class="price fw-medium">$5.00</span>
-                                </span>
-                            </label>
-                        </div>
-                        <div class="button_submit">
-                            <button type="submit" class="tf-btn animate-btn w-100">
-                                Payment
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <div class="fl-sidebar-cart sticky-top">
-                    <div class="box-your-order">
-                        <h2 class="title type-semibold">Your Order</h2>
-                        <ul class="list-order-product">
-
-                            @foreach (var item in Model.Carts)
-                            {
-                                <li class="order-item">
-                                    <a href ="/product-detail/@item.ProductId" class="img-prd">
-                                        <img class="lazyload" src="/images/products/@item.Image" data-src="images/products/@item.Image" alt="@item.ProductName">
-                                    </a>
-                                    <div class="infor-prd">
-                                        <h6 class="prd_name">
-                                            <a href="/product-detail/@item.ProductId" class="link">
-                                                @item.ProductName
-                                            </a>
-                                        </h6>
-                                        <div class="prd_select text-small">
-                                            Qty: @item.Qty
-                                        </div>
-                                    </div>
-                                    <p class="price-prd h6">
-                                        ₹@(item.Price* item.Qty)
+                                    <p class="h6 mb-20">
+                                        Your personal data will be used to process your order, support your experience throughout this website, and
+                                        for
+                                        other purposes described in our privacy policy.
                                     </p>
-                                </li>
-                            }
-
+                                    <div class="checkbox-wrap">
+                                        <input id="agree" type="checkbox" class="tf-check style-2" name="terms" required>
+                                        <label for="agree" class="h6">I have read and agree to the website <span class="text-primary">terms and conditions <span class="text-danger">*</span></span></label>
+                                    </div>
+                                </div>
+                                <div class="box-ip-shipping">
+                                    <h2 class="title type-semibold">Shipping Method</h2>
+                                    <div class="check-ship mb-12">
+                                        <div class="text h6">
+                                            <span class="">@(Model.shipping == 0 ? "Free shipping on orders above ₹3000" : "Standard shipping for orders below ₹3000")</span>
+                                            <span class="price">@(Model.shipping == 0 ? "Free" : "₹" + Model.shipping.ToString("F2"))</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="shipment" value="false" />
+                                <div class="button_submit">
+                                    <button type="submit" class="tf-btn animate-btn w-100">
+                                        Place Order
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="fl-sidebar-cart sticky-top">
+                            <div class="box-your-order">
+                                <h2 class="title type-semibold">Your Order</h2>
+                                <ul class="list-order-product">
+                                    @if (Model.Carts != null && Model.Carts.Any())
+                                    {
+                                        foreach (var item in Model.Carts)
+                                        {
+                                            <li class="order-item">
+                                                <a asp-page="/detail" asp-route-skucode="@item.skucode" asp-route-productname="@item.ProductName" class="img-prd">
+                                                    <img class="lazyload" src="/images/products/@item.Image" alt="@item.ProductName">
+                                                </a>
+                                                <div class="infor-prd">
+                                                    <h6 class="prd_name">
+                                                        <a asp-page="/detail" asp-route-skucode="@item.skucode" asp-route-productname="@item.ProductName" class="link">
+                                                            @item.ProductName
+                                                        </a>
+                                                    </h6>
+                                                    <div class="prd_select text-small">
+                                                        Size: @item.Size
+                                                    </div>
+                                                </div>
+                                                <p class="price-prd h6">
+                                                    ₹@((item.Price * item.Qty).ToString("F2"))
+                                                </p>
+                                            </li>
+                                        }
+                                    }
+                                    else if (Model.childskuCodes != null && Model.childskuCodes.Any())
+                                    {
+                                        foreach (var item in Model.childskuCodes)
+                                        {
+                                            <li class="order-item">
+                                                <a asp-page="/detail" asp-route-skucode="@item.SKUCode" asp-route-productname="@item.Product" class="img-prd">
+                                                    <img class="lazyload" src="/images/products/@item.Image" alt="@item.Product">
+                                                </a>
+                                                <div class="infor-prd">
+                                                    <h6 class="prd_name">
+                                                        <a asp-page="/detail" asp-route-skucode="@item.SKUCode" asp-route-productname="@item.Product" class="link">
+                                                            @item.Product
+                                                        </a>
+                                                    </h6>
+                                                    <div class="prd_select text-small">
+                                                        Size: @item.Size
+                                                    </div>
+                                                </div>
+                                                <p class="price-prd h6">
+                                                    ₹@((item.Price * item.Quantity).ToString("F2"))
+                                                </p>
+                                            </li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="order-item">
+                                            <div class="infor-prd">
+                                                <h6 class="prd_name">
+                                                    <span class="link">No items in cart</span>
+                                                </h6>
+                                            </div>
+                                            <p class="price-prd h6">
+                                                ₹0.00
+                                            </p>
+                                        </li>
+                                    }
                                 </ul>
-                           
-                            <ul class="list-total">
-                            <li class="total-item h6">
-                                <span class="fw-bold text-black">Discounts</span>
-                                <span>$0</span>
-                            </li>
-                            <li class="total-item h6">
-                                <span class="fw-bold text-black">Shipping</span>
-                                <span>Free</span>
-                            </li>
-                        </ul>
-                        <div class="last-total h5 fw-medium text-black">
-                            <span>Total</span>
-                            <span>₹@GrandTotal</span>
+                                <ul class="list-total">
+                                    <li class="total-item h6">
+                                        <span class="fw-bold text-black">Subtotal</span>
+                                        <span>₹@SubTotal.ToString("F2")</span>
+                                    </li>
+                                    @if (Discount > 0)
+                                    {
+                                        <li class="total-item h6">
+                                            <span class="fw-bold text-black">Discounts</span>
+                                            <span>-₹@Discount.ToString("F2")</span>
+                                        </li>
+                                    }
+                                    <li class="total-item h6">
+                                        <span class="fw-bold text-black">Shipping</span>
+                                        <span>@(Shipping == 0 ? "Free" : "₹" + Shipping.ToString("F2"))</span>
+                                    </li>
+                                </ul>
+                                <div class="last-total h5 fw-medium text-black">
+                                    <span>Total</span>
+                                    <span>₹@Total.ToString("F2")</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!-- /Check Out -->
+        </section>
+        <!-- /Check Out -->
+<script>
+    (function () {
+        var firstName = document.getElementById("Detail_Name");
+        var lastName = document.getElementById("Detail_LastName");
+        var fullName = document.getElementById("checkout-fullname");
+        var emailVisible = document.getElementById("checkout-email-visible");
+        var emailHidden = document.getElementById("checkout-email-hidden");
+        var phoneVisible = document.getElementById("checkout-phone-visible");
+        var phoneHidden = document.getElementById("checkout-phone-hidden");
+        var countrySelect = document.getElementById("shipping-country-form");
+        var stateSelect = document.getElementById("shipping-province-form");
+        // State data is now managed by backend - no need for duplicate data here
+
+        function syncCheckoutFields() {
+            if (fullName) {
+                var first = firstName ? firstName.value.trim() : "";
+                var last = lastName ? lastName.value.trim() : "";
+                fullName.value = (first + " " + last).trim();
+            }
+
+            if (emailHidden && emailVisible) {
+                emailHidden.value = emailVisible.value;
+            }
+
+            if (phoneHidden && phoneVisible) {
+                phoneHidden.value = phoneVisible.value;
+            }
+        }
+
+        function syncStates() {
+            // State selection is now handled by backend - no JavaScript manipulation needed
+            // The form will post back and update states automatically
+            console.log("State selection handled by backend");
+        }
+
+        [firstName, lastName, emailVisible, phoneVisible].forEach(function (element) {
+            if (element) {
+                element.addEventListener("input", syncCheckoutFields);
+            }
+        });
+
+        if (countrySelect) {
+            countrySelect.addEventListener("change", syncStates);
+        }
+
+        syncCheckoutFields();
+        syncStates();
+    })();
+</script>

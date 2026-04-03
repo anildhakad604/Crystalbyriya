@@ -1,32 +1,35 @@
-﻿@page
+@page
 @model CrystalByRiya.Pages.contactusModel
 @{
 }
 @section Metatags {
-    <title> Crystal By Riya | Pre-Owned Excellence</title>
-    <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
+    <title>Contact Us | Dr Astro Crystals</title>
+    <meta name="description" content="Get in touch with Dr Astro Crystals. Reach out for queries about healing crystals, orders, and spiritual consultations." />
+    <meta name="keywords" content="Contact Dr Astro Crystals, Healing crystals support, Crystal store India, Contact us" />
     <link rel="canonical" href="@Model.Currenturl" />
-    <meta property="og:title" content="Crystals By Riya | Home" />
+    <meta property="og:title" content="Contact Us | Dr Astro Crystals" />
     <meta property="og:url" content="@Model.Currenturl" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
-    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
-
+    <meta property="og:site_name" content="https://www.drastrocrystals.com" />
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
-    <meta name="twitter:title" content="Epitome Cars | Pre-Owned Excellence">
-    <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
-    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:site" content="https://www.drastrocrystals.com">
+    <meta name="twitter:title" content="Contact Us | Dr Astro Crystals">
+    <meta name="twitter:description" content="Get in touch with us for queries about healing crystals, spiritual products, and orders.">
+    <meta name="twitter:creator" content="Dr Astro Crystals">
     <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
-    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+    <meta name="twitter:domain" content="https://www.drastrocrystals.com" />
 }
 
+<!-- Page Title -->
 <section class="s-page-title">
+    <div class="bg-overlay" style="background-image: url(images/banner/page-banner.jpg);">
+    </div>
     <div class="container">
         <div class="content">
             <h1 class="title-page">Contact Us</h1>
             <ul class="breadcrumbs-page">
-                <li><a href="index.html" class="h6 link">Home</a></li>
+                <li><a asp-page="/Index" class="h6 link">Home</a></li>
                 <li class="d-flex"><i class="icon icon-caret-right"></i></li>
                 <li>
                     <h6 class="current-page fw-normal">Contact Us</h6>
@@ -51,7 +54,7 @@
                     <ul class="infor-store">
                         <li>
                             <h5 class="caption fw-semibold">Address</h5>
-                            <p class="h6 mb-12">2972 Westheimer Rd. Santa Ana, Illinois 85486 </p>
+                            <p class="h6 mb-12">Gurusharnam Complex Shop Nᴏ. 11,12 Market Yard Road Panvel, Navi Mumbai (New Mumbai), India 410206 </p>
                             <a href="https://www.google.com/maps?q=2972+Westheimer+Rd.+Santa+Ana,Illinois+85486" target="_blank" class="tf-btn-line">
                                 <span class="h6 text-capitalize fw-semibold">
                                     Get Direction
@@ -65,12 +68,12 @@
                                 <li>
                                     <i class="icon icon-phone"></i>
                                     <span class="br-line type-vertical"></span>
-                                    <a href="tel:+88001234567" class="h6 link">+8(800) 123 4567</a>
+                                    <a href="tel:+88001234567" class="h6 link">+91 88989 99977</a>
                                 </li>
                                 <li>
                                     <i class="icon icon-envelope-simple"></i>
                                     <span class="br-line type-vertical"></span>
-                                    <a href="mailto:themesflat@support.com" class="h6 link">themesflat@support.com</a>
+                                    <a href="mailto:themesflat@support.com" class="h6 link">info@drastrocrystal.com</a>
                                 </li>
                             </ul>
                         </li>
@@ -118,20 +121,41 @@
             <p class="h1 title mb-8">Contact Form</p>
             <p class="s-subtitle h6">Contact us using the form below, we will contact you as soon as possible</p>
         </div>
-        <form class="form-contact-2">
+        <form method="post" class="form-contact-2" autocomplete="off">
+            @if (!ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+            
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            
             <div class="form-content">
                 <div class="tf-grid-layout md-col-3">
                     <fieldset>
-                        <input type="text" placeholder="Your name" required="">
+                        <input type="text" asp-for="contactus.Name" placeholder="Your name" required="">
+                        <span asp-validation-for="contactus.Name" class="text-danger"></span>
                     </fieldset>
                     <fieldset>
-                        <input type="number" placeholder="Your phone number" required="">
+                        <input type="tel" asp-for="contactus.Phonenumber" placeholder="Your phone number" required="">
+                        <span asp-validation-for="contactus.Phonenumber" class="text-danger"></span>
                     </fieldset>
                     <fieldset>
-                        <input type="email" placeholder="Your email" required="">
+                        <input type="email" asp-for="contactus.Email" placeholder="Your email" required="">
+                        <span asp-validation-for="contactus.Email" class="text-danger"></span>
                     </fieldset>
                 </div>
-                <textarea placeholder="Review"></textarea>
+                <textarea asp-for="contactus.Message" placeholder="Your message" rows="5" required=""></textarea>
+                <span asp-validation-for="contactus.Message" class="text-danger"></span>
             </div>
             <div class="form-action">
                 <button type="submit" class="h6 tf-btn animate-btn">
@@ -142,66 +166,3 @@
     </div>
 </section>
 <!-- /Contact Form -->
-<!-- Gallery -->
-<div class="themesFlat flat-spacing pt-0 pb-xl-0">
-    <div class="container">
-        <div class="sect-title text-center wow fadeInUp">
-            <p class="s-title h1 fw-medium mb-8">Shop Instagram</p>
-            <p class="s-subtitle h6">Up to 50% off Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-        </div>
-    </div>
-    <div dir="ltr" class="swiper tf-swiper wow fadeInUp" data-preview="4" data-tablet="3" data-mobile-sm="2" data-mobile="2" data-space="0" data-pagination="2" data-pagination-sm="2" data-pagination-md="3" data-pagination-lg="4">
-        <div class="swiper-wrapper">
-            <!-- item 1 -->
-            <div class="swiper-slide">
-                <div class="gallery-item style-2 hover-img hover-overlay">
-                    <div class="image img-style">
-                        <img class="lazyload" src="images/gallery/gallery-11.jpg" data-src="images/gallery/gallery-11.jpg" alt="">
-                    </div>
-                    <a href="product-detail.html" class="box-icon hover-tooltip">
-                        <span class="icon icon-instagram-logo"></span>
-                        <span class="tooltip">View product</span>
-                    </a>
-                </div>
-            </div>
-            <!-- item 2 -->
-            <div class="swiper-slide">
-                <div class="gallery-item style-2 hover-img hover-overlay">
-                    <div class="image img-style">
-                        <img class="lazyload" src="images/gallery/gallery-12.jpg" data-src="images/gallery/gallery-12.jpg" alt="">
-                    </div>
-                    <a href="product-detail.html" class="box-icon hover-tooltip">
-                        <span class="icon icon-instagram-logo"></span>
-                        <span class="tooltip">View product</span>
-                    </a>
-                </div>
-            </div>
-            <!-- item 3 -->
-            <div class="swiper-slide">
-                <div class="gallery-item style-2 hover-img hover-overlay">
-                    <div class="image img-style">
-                        <img class="lazyload" src="images/gallery/gallery-13.jpg" data-src="images/gallery/gallery-13.jpg" alt="">
-                    </div>
-                    <a href="product-detail.html" class="box-icon hover-tooltip">
-                        <span class="icon icon-instagram-logo"></span>
-                        <span class="tooltip">View product</span>
-                    </a>
-                </div>
-            </div>
-            <!-- item 4 -->
-            <div class="swiper-slide">
-                <div class="gallery-item style-2 hover-img hover-overlay">
-                    <div class="image img-style">
-                        <img class="lazyload" src="images/gallery/gallery-14.jpg" data-src="images/gallery/gallery-14.jpg" alt="">
-                    </div>
-                    <a href="product-detail.html" class="box-icon hover-tooltip">
-                        <span class="icon icon-instagram-logo"></span>
-                        <span class="tooltip">View product</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="sw-dot-default tf-sw-pagination"></div>
-    </div>
-</div>
-<!-- /Gallery -->

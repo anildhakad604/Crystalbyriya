@@ -1,12 +1,14 @@
-﻿@page
+@page
 @model CrystalByRiya.Pages.CartModel
  @using Microsoft.AspNetCore.Http
   @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     string userEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
-    double totalamount = 0;
-    double SubTotal = 0;
-    double GrandTotal = 0;
+    var cartItemCount = Model.Carts?.Count ?? 0;
+    var merchandiseTotal = Model.Carts?.Sum(item => item.Price * item.Qty) ?? 0;
+    var freeShippingThreshold = 3000.0;
+    var shippingProgress = freeShippingThreshold <= 0 ? 100 : Math.Min(100, (merchandiseTotal / freeShippingThreshold) * 100);
+    var remainingForFreeShipping = Math.Max(0, freeShippingThreshold - merchandiseTotal);
 }
 @if (TempData["CouponMessage"] != null)
 {
@@ -15,31 +17,30 @@
     </div>
 }
 @section Metatags {
-    <title> Crystal By Riya | Cart</title>
+    <title> Dr Astro Crystals | Cart</title>
     <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
     <link rel="canonical" href="@Model.Currenturl" />
-    <meta property="og:title" content="Crystals By Riya | Cart" />
+    <meta property="og:title" content="Dr Astro Crystals | Cart" />
     <meta property="og:url" content="@Model.Currenturl" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
-    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+    <meta property="og:site_name" content="https://www.drastrocrystals.com" />
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
-    <meta name="twitter:title" content="Crystal By Riya | Cart">
+    <meta name="twitter:site" content="https://www.drastrocrystals.com">
+    <meta name="twitter:title" content="Dr Astro Crystals | Cart">
     <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
-    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:creator" content="Dr Astro Crystals">
     <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
-    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+    <meta name="twitter:domain" content="https://www.drastrocrystals.com" />
 }
-
 <!-- Page Title -->
 <section class="s-page-title">
     <div class="container">
         <div class="content">
             <h1 class="title-page">Shopping Cart</h1>
             <ul class="breadcrumbs-page">
-                <li><a href="index.html" class="h6 link">Home</a></li>
+                <li><a asp-page="/Index" class="h6 link">Home</a></li>
                 <li class="d-flex"><i class="icon icon-caret-right"></i></li>
                 <li>
                     <h6 class="current-page fw-normal">Shopping Cart</h6>
@@ -55,186 +56,184 @@
         <div class="row">
             <div class="col-xxl-9 col-xl-8">
                 <div class="tf-cart-sold">
-                    <div class="notification-sold bg-surface">
+                    @* <div class="notification-sold bg-surface">
                         <img class="icon" src="icon/fire.svg" alt="Icon">
                         <div class="count-text h6">
                             Your cart will expire in
                             <div class="js-countdown time-count cd-has-zero cd-no" data-timer="65" data-labels=":,:,:,"></div>
                             minutes! Please checkout now before your items sell out!
                         </div>
-                    </div>
+                    </div> *@
                     <div class="notification-progress">
                         <div class="text">
                             <i class="icon icon-truck"></i>
                             <p class="h6">
-                                Free Shipping for orders over <span class="text-primary fw-bold">$150</span>
+                                @if (remainingForFreeShipping > 0)
+                                {
+                                    <text>Free Shipping for orders over <span class="text-primary fw-bold">&#8377;@freeShippingThreshold.ToString("F0")</span></text>
+                                }
+                                else
+                                {
+                                    <text>Your order qualifies for <span class="text-primary fw-bold">Free Shipping</span></text>
+                                }
                             </p>
                         </div>
                         <div class="progress-cart">
-                            <div class="value" style="width: 0%;" data-progress="50">
+                            <div class="value" style="width: @shippingProgress%;" data-progress="@shippingProgress.ToString("F0")">
                                 <span class="round"></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                    <table class="tf-table-page-cart">
-                        <thead>
-                            <tr>
-                                <th class="h6">Product</th>
-                                <th class="h6">Price</th>
-                                <th class="h6">Quality</th>
-                                <th class="h6">Total price</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Carts)
+                <table class="tf-table-page-cart">
+                    <thead>
+                        <tr>
+                            <th class="h6">Product</th>
+                            <th class="h6">Price</th>
+                            <th class="h6">Quality</th>
+                            <th class="h6">Total price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Carts != null && Model.Carts.Any())
+                        {
+                            foreach (var item in Model.Carts)
                             {
                                 var itemTotal = item.Price * item.Qty;
-
                                 <tr class="tf-cart_item each-prd file-delete">
                                     <td>
                                         <div class="cart_product">
-                                            <a href="/product-detail/@item.ProductId" class="img-prd">
-                                                <img class="lazyload" src="/images/products/@item.Image" data-src="images/products/@item.Image" alt="@item.ProductName">
+                                            <a asp-page="/detail"
+                                               asp-route-skucode="@item.skucode"
+                                               asp-route-productname="@item.ProductName"
+                                               class="img-prd">
+                                                <img class="lazyload" src="/images/products/@item.Image" data-src="/images/products/@item.Image" alt="@item.ProductName">
                                             </a>
                                             <div class="infor-prd">
                                                 <h6 class="prd_name">
-                                                    <a href="/product-detail/@item.ProductId" class="link">
+                                                    <a asp-page="/detail"
+                                                       asp-route-skucode="@item.skucode"
+                                                       asp-route-productname="@item.ProductName"
+                                                       class="link">
                                                         @item.ProductName
                                                     </a>
                                                 </h6>
                                                 <div class="prd_select text-small">
-                                                    Size:
-                                                    <div class="size-select">
-                                                        <select class="bg-white">
-                                                            <option selected>@item.Size</option>
-                                                        </select>
-                                                    </div>
+                                                    @if (item.Size != "NA") { <span>Size: @item.Size</span> }
+                                                    @if (item.MaterialName != "NA") { <span>, Material: @item.MaterialName</span> }
+                                                    @if (item.Addon != "NA") { <span>, Addon: @item.Addon</span> }
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart_price h6 each-price" data-cart-title="Price">₹@item.Price</td>
+                                    <td class="cart_price h6 each-price" data-cart-title="Price">&#8377;@item.Price.ToString("F2")</td>
                                     <td class="cart_quantity" data-cart-title="Quantity">
-                                        <form method="post" asp-page-handler="UpdateQuantity">
+                                        <form method="post" asp-page="/cart" asp-page-handler="UpdateQuantity">
+                                            @Html.AntiForgeryToken()
                                             <input type="hidden" name="productID" value="@item.ProductId" />
                                             <input type="hidden" name="size" value="@item.Size" />
-
                                             <div class="wg-quantity">
                                                 <button class="btn-quantity minus-quantity" type="button"
-                                                        onclick="updateQty(this, -1)">
+                                                            onclick="updateQty(this, -1)">
                                                     <i class="icon-minus fs-14"></i>
                                                 </button>
-
                                                 <input class="quantity-product"
-                                                       type="number"
-                                                       name="quantity"
-                                                       value="@item.Qty"
-                                                       min="1" />
-
+                                                           type="number"
+                                                           name="quantity"
+                                                           value="@item.Qty"
+                                                           min="1" max="999" required />
                                                 <button class="btn-quantity plus-quantity" type="button"
-                                                        onclick="updateQty(this, 1)">
+                                                            onclick="updateQty(this, 1)">
                                                     <i class="icon-plus fs-14"></i>
                                                 </button>
                                             </div>
                                         </form>
-                                        @* <div class="wg-quantity">
-                                            <button class="btn-quantity minus-quantity" type="button">
-                                                <i class="icon-minus fs-14"></i>
-                                            </button>
-                                            <input class="quantity-product" type="text" name="number" value="1">
-                                            <button class="btn-quantity plus-quantity" type="button">
-                                                <i class="icon-plus fs-14"></i>
-                                            </button>
-                                        </div> *@
                                     </td>
                                     <td class="cart_total h6">
-                                        ₹@itemTotal
+                                        &#8377;@itemTotal.ToString("F2")
                                     </td>
-                                    <td class="cart_remove remove link" data-cart-title="Remove">
-                                        <a asp-page="Cart"
+                                    <td class="cart_remove link" data-cart-title="Remove">
+                                        <a asp-page="/cart"
                                            asp-page-handler="Delete"
                                            asp-route-id="@item.ProductId"
-                                           asp-route-size="@item.Size"
-                                           asp-route-addon="@item.Addon"
-                                           asp-route-material="@item.MaterialName">
+                                           asp-route-size="@(string.IsNullOrWhiteSpace(item.Size) ? "NA" : item.Size)"
+                                           asp-route-addon="@(string.IsNullOrWhiteSpace(item.Addon) ? "NA" : item.Addon)"
+                                           asp-route-material="@(string.IsNullOrWhiteSpace(item.MaterialName) ? "NA" : item.MaterialName)">
                                             <i class="icon icon-close"></i>
                                         </a>
                                     </td>
                                 </tr>
                             }
-                        </tbody>
-                    </table>
-                    <form method="post" asp-page-handler="CouponCode">
-                        <div class="ip-discount-code">
-                            <input type="text" name="coupon_code" placeholder="Add voucher discount" required />
-                            <button class="tf-btn animate-btn" type="submit">
-                                Apply Code
-                            </button>
-                        </div>
-                    </form>
-                    <div class="group-discount mb-xl-0">
-                        <div class="box-discount">
-                            <div class="discount-top">
-                                <div class="discount-off">
-                                    <p class="h6">Discount</p>
-                                    <h6 class="sale-off h6 fw-bold">30% OFF</h6>
-                                </div>
-                                <div class="discount-from">
-                                    <p class="h6">
-                                        For all orders <br>form $150
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="discount-bot">
-                                <h6>Code: <span class="coupon-code">Themesflat</span></h6>
-                                <button class="tf-btn coupon-copy-wrap h6" type="button">
-                                    Apply Code
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-discount">
-                            <div class="discount-top">
-                                <div class="discount-off">
-                                    <p class="h6">Discount</p>
-                                    <h6 class="sale-off h6 fw-bold">15% OFF</h6>
-                                </div>
-                                <div class="discount-from">
-                                    <p class="h6">
-                                        For all orders <br>form $100
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="discount-bot">
-                                <h6>Code: <span class="coupon-code">SliVox</span></h6>
-                                <button class="tf-btn coupon-copy-wrap h6" type="button">
-                                    Apply Code
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-discount">
-                            <div class="discount-top">
-                                <div class="discount-off">
-                                    <p class="h6">Discount</p>
-                                    <h6 class="sale-off h6 fw-bold">20% OFF</h6>
-                                </div>
-                                <div class="discount-from">
-                                    <p class="h6">
-                                        For all orders <br>form $200
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="discount-bot">
-                                <h6>Code: <span class="coupon-code">MasShin</span></h6>
-                                <button class="tf-btn coupon-copy-wrap h6" type="button">
-                                    Apply Code
-                                </button>
-                            </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <h6>Your cart is empty</h6>
+                                    <a asp-page="/Index" class="tf-btn animate-btn">Continue Shopping</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <form method="post" asp-page="/cart" asp-page-handler="CouponCode">
+                    @Html.AntiForgeryToken()
+                    <div class="ip-discount-code">
+                        <input type="text" name="coupon_code" placeholder="Add voucher discount" required />
+                        <button class="tf-btn animate-btn" type="submit">
+                            Apply Code
+                        </button>
                     </div>
-            
+                </form>
+                <div class="group-discount mb-xl-0">
+                    @if (Model.AvailableCoupons != null && Model.AvailableCoupons.Any())
+                    {
+                        @foreach (var coupon in Model.AvailableCoupons)
+                        {
+                            <form method="post" asp-page-handler="CouponCode" class="box-discount">
+                                <div class="discount-top">
+                                    <div class="discount-off">
+                                        <p class="h6">Discount</p>
+                                        <h6 class="sale-off h6 fw-bold">@coupon.DiscountPercentage% OFF</h6>
+                                    </div>
+                                    <div class="discount-from">
+                                        <p class="h6">
+                                            @(string.IsNullOrWhiteSpace(coupon.CouponName) ? "Apply instant cart voucher code" : coupon.CouponName)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="discount-bot">
+                                    <h6>Code: <span class="coupon-code">@coupon.CouponCode</span></h6>
+                                    @if (!string.IsNullOrWhiteSpace(coupon.Description))
+                                    {
+                                        <p class="text-small mb-2">@coupon.Description</p>
+                                    }
+                                    <input type="hidden" name="coupon_code" value="@coupon.CouponCode" />
+                                    <button class="tf-btn coupon-copy-wrap h6" type="submit">
+                                        Apply Code
+                                    </button>
+                                </div>
+                            </form>
+                        }
+                    }
+                    else
+                    {
+                        <div class="box-discount">
+                            <div class="discount-top">
+                                <div class="discount-off">
+                                    <p class="h6">Discount</p>
+                                    <h6 class="sale-off h6 fw-bold">No Active Coupons</h6>
+                                </div>
+                                <div class="discount-from">
+                                    <p class="h6">
+                                        Check back later for live offers from the backend.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
             <div class="col-xxl-3 col-xl-4">
                 <div class="fl-sidebar-cart bg-white-smoke sticky-top">
@@ -242,34 +241,34 @@
                         <h4 class="title fw-semibold">Order Summary</h4>
                         <div class="subtotal h6 text-button d-flex justify-content-between align-items-center">
                             <h6 class="fw-bold">Subtotal</h6>
-                            <span class="total">₹@Model.Subtotal</span>
+                            <span class="total">&#8377;@Model.Subtotal.ToString("F2")</span>
                         </div>
                         <div class="discount  text-button d-flex justify-content-between align-items-center">
                             <h6 class="fw-bold">Discounts</h6>
-                            <span class="total h6">-₹@Model.DiscountAmount</span>
+                            <span class="total h6">-&#8377;@Model.DiscountAmount.ToString("F2")</span>
                         </div>
                         <div class="ship">
                             <h6 class="fw-bold">Shipping</h6>
                             <div class="flex-grow-1">
                                 <fieldset class="ship-item">
-                                    <input type="radio" name="ship-check" class="tf-check-rounded" id="free" checked>
+                                    <input type="radio" name="ship-check" class="tf-check-rounded" id="free" checked="">
                                     <label class="h6" for="free">
-                                        <span>Free Shipping</span>
-                                        <span class="price">₹@Model.Shipping</span>
+                                        <span>@(Model.Shipping <= 0 ? "Free Shipping" : "Standard Shipping")</span>
+                                        <span class="price">&#8377;@Model.Shipping.ToString("F2")</span>
                                     </label>
                                 </fieldset>
                             </div>
                         </div>
                         <h5 class="total-order d-flex justify-content-between align-items-center">
                             <span>Total</span>
-                                <span class="total each-total-price">₹@Model.Total</span>
+                                <span class="total each-total-price">&#8377;@Model.Total.ToString("F2")</span>
                         </h5>
                         <div class="list-ver">
-                            <a href="checkout.html" class="tf-btn w-100 animate-btn">
+                            <a asp-page="/checkout" class="tf-btn w-100 animate-btn">
                                 Process to checkout
                                 <i class="icon icon-arrow-right"></i>
                             </a>
-                            <a href="shop-default.html" class="tf-btn btn-white animate-btn animate-dark w-100">
+                            <a asp-page="/Index" class="tf-btn btn-white animate-btn animate-dark w-100">
                                 Continue shopping
                                 <i class="icon icon-arrow-right"></i>
                             </a>
@@ -280,8 +279,6 @@
         </div>
     </div>
 </div>
-<!-- /View Cart -->
-
     <script>
         function updateQty(btn, change) {
             let input = btn.parentElement.querySelector("input");
@@ -292,7 +289,9 @@
 
             input.value = value;
 
-            // auto submit form
-            btn.closest("form").submit();
+            // Auto-submit form with small delay to ensure the value is set
+            setTimeout(() => {
+                btn.closest("form").submit();
+            }, 100);
         }
     </script>

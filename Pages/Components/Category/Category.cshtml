@@ -1,15 +1,13 @@
-﻿@model CrystalByRiya.Models.ViewModel.ChildViewModel
+@model CrystalByRiya.Models.ViewModel.ChildViewModel
 
 @foreach (var product in Model.Categories)
 {
-    <li class="has-submenu">
-        <a asp-page="/category" asp-route-Url="@product.Url">@product.MenuList</a>
-        <ul class="submenu-nav">
-            @foreach (var item in Model.SubCategories.Where(e => e.CategoryId == product.Id))
-            {
-                <li><a asp-page="/productlist" asp-route-catname="@product.Url" asp-route-subcatname="Crystals-@item.SubCategoryname.Replace(' ','-')">@item.SubCategoryname</a></li>
-            }
-        </ul>
-    </li>
+
+
+    <li><a asp-page="/productlist" class="sub-menu_link"  asp-route-catname="@product.MenuList.Replace(' ', '-')">@product.MenuList</a></li>
+            
+      
+    
+    
 }
 

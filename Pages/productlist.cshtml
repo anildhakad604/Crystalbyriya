@@ -1,9 +1,4 @@
-﻿@page "{catname?}/{subcatname?}"
-<script>
-    const catname = "@(Request.RouteValues["catname"] ?? "")";
-    const subcatname = "@(Request.RouteValues["subcatname"] ?? "")";
-</script>
-
+﻿@page "{catname?}"
 @model CrystalByRiya.Pages.productlistModel
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
 @using Microsoft.AspNetCore.Http
@@ -12,53 +7,78 @@
     string userEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
     var productlist = Model.PagedProducts;
     var bestsellers = Model.SpBestseller;
+    var currentPage = Model.CurrentPage;
+    var totalPages = Model.TotalPages;
+    var catname = Request.RouteValues["catname"]?.ToString();
 }
 
-
-
 @section Metatags {
-    <title> Crystal By Riya | @Model.Subcategorytitle </title>
+    <title> Dr Astro Crystals | @Model.CurrentCategoryName </title>
     <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
-    <link rel="canonical" href="@Model.Currenturl" /><a href="c:\users\ac\desktop\asharpinfotech\crystalbyriya_2\crystalbyriya\crystalbyriya\pages\productlist.cshtml.cs">c:\users\ac\desktop\asharpinfotech\crystalbyriya_2\crystalbyriya\crystalbyriya\pages\productlist.cshtml.cs</a>
-    <a href="c:\users\ac\desktop\asharpinfotech\crystalbyriya_2\crystalbyriya\crystalbyriya\pages\productlist.cshtml">c:\users\ac\desktop\asharpinfotech\crystalbyriya_2\crystalbyriya\crystalbyriya\pages\productlist.cshtml</a>
-    <meta property="og:title" content="Crystals By Riya | @Model.Subcategorytitle" />
+    <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Dr Astro Crystals | @Model.CurrentCategoryName" />
     <meta property="og:url" content="@Model.Currenturl" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
-    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+    <meta property="og:site_name" content="https://www.drastrocrystals.com" />
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
-    <meta name="twitter:title" content="Crystals By Riya | @Model.Subcategorytitle">
+    <meta name="twitter:site" content="https://www.drastrocrystals.com">
+    <meta name="twitter:title" content="Dr Astro Crystals | @Model.CurrentCategoryName">
     <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
-    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:creator" content="Dr Astro Crystals">
     <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
-    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+    <meta name="twitter:domain" content="https://www.drastrocrystals.com" />
 }
 
-
 <!-- Page Title -->
-<section class="s-page-title">
+<section class="s-page-title position-relative">
     <div class="container">
-        <div class="content">
-            <h1 class="title-page">@Model.Subcategorytitle</h1>
-            <ul class="breadcrumbs-page">
-                <li>
-                    <a asp-page="/Index" class="h6 link">Home</a>
-                </li>
-                <li class="d-flex"><i class="icon icon-caret-right"></i></li>
-                <li>
-                    <h6 class="current-page fw-normal">@Model.Subcategorytitle</h6>
-                </li>
-            </ul>
+        <div class="content position-relative" style="min-height: 220px;">
+            @if (Model.CategoryBanner != null && !string.IsNullOrEmpty(Model.CategoryBanner.BannerImage))
+            {
+                <img src="~/images/banner/@Model.CategoryBanner.BannerImage"
+                     data-src="/images/banner/@Model.CategoryBanner.BannerImage"
+                     alt="@Model.CategoryBanner.BannerName"
+                     class="category-banner-img w-100"
+                     style="display:block; min-height:220px; object-fit:cover;" />
+                <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; z-index:2;">
+                    <h1 class="title-page mb-0 text-white">@Model.CurrentCategoryName</h1>
+                    <ul class="breadcrumbs-page mb-0">
+                        <li><a asp-page="/Index" class="h6 link text-white">Home</a></li>
+                        <li class="d-flex"><i class="icon icon-caret-right"></i></li>
+                        <li>
+                            <h6 class="current-page fw-normal text-white">@Model.CurrentCategoryName</h6>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <h1 class="title-page">@Model.CurrentCategoryName</h1>
+                <ul class="breadcrumbs-page">
+                    <li><a asp-page="/Index" class="h6 link">Home</a></li>
+                    <li class="d-flex"><i class="icon icon-caret-right"></i></li>
+                    <li>
+                        <h6 class="current-page fw-normal">@Model.CurrentCategoryName</h6>
+                    </li>
+                </ul>
+            }
         </div>
     </div>
 </section>
-
-
+<section class="pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center text-black">
+                <p class="mb-0 h5">@Model.CurrentCategoryDescription</p>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- /Page Title -->
 <!-- Section Product -->
-<div class="flat-spacing">
+<div class="flat-spacing pt-5">
     <div class="container">
         <div class="tf-shop-control">
             <div class="tf-control-filter">
@@ -66,45 +86,29 @@
                     <span class="icon icon-filter"></span><span class="text">Filter</span>
                 </a>
             </div>
-            <ul class="tf-control-layout">
-                <li class="tf-view-layout-switch sw-layout-2" data-value-layout="tf-col-2">
-                    <i class="icon-grid-2"></i>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-3 d-none d-md-flex" data-value-layout="tf-col-3">
-                    <i class="icon-grid-3"></i>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-4 d-none d-xl-flex active" data-value-layout="tf-col-4">
-                    <i class="icon-grid-4"></i>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-5 d-none d-xxl-flex" data-value-layout="tf-col-5">
-                    <i class="icon-grid-5"></i>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-6 d-none d-xxl-flex" data-value-layout="tf-col-6">
-                    <i class="icon-grid-6"></i>
-                </li>
-                <li class="br-line type-vertical"></li>
-                <li class="tf-view-layout-switch sw-layout-list list-layout" data-value-layout="list">
-                    <i class="icon-list"></i>
-                </li>
-            </ul>
             <div class="tf-control-sorting">
                 <p class="h6 d-none d-lg-block">Sort by:</p>
-                <form method="post" asp-page-handler="Filter">
-                    <input type="hidden" name="ascedingprice" id="ascPrice" />
-                    <input type="hidden" name="descendingprice" id="descPrice" />
-
+                <form method="post" asp-page-handler="Filter" asp-route-catname="@catname">
                     <div class="tf-dropdown-sort" data-bs-toggle="dropdown">
                         <div class="btn-select">
                             <span class="text-sort-value">Sort</span>
                             <span class="icon icon-caret-down"></span>
                         </div>
-
                         <div class="dropdown-menu">
-                            <button type="submit" onclick="setSort('asc')" class="select-item">
+                            <button type="submit" name="ascedingprice" value="true" class="select-item">
                                 Price low to high
                             </button>
-                            <button type="submit" onclick="setSort('desc')" class="select-item">
+                            <button type="submit" name="descendingprice" value="true" class="select-item">
                                 Price high to low
+                            </button>
+                            <button type="submit" name="popularity" value="true" class="select-item">
+                                Popularity
+                            </button>
+                            <button type="submit" name="rating" value="true" class="select-item">
+                                Rating
+                            </button>
+                            <button type="submit" name="latest" value="true" class="select-item">
+                                Latest
                             </button>
                         </div>
                     </div>
@@ -113,222 +117,110 @@
         </div>
         <div class="wrapper-control-shop gridLayout-wrapper">
             <div class="meta-filter-shop">
-                <div id="product-count-grid" class="count-text"></div>
-                <div id="product-count-list" class="count-text"></div>
+                <div id="product-count-grid" class="count-text">Showing @productlist.Count result@(productlist.Count == 1 ? string.Empty : "s") of @Model.TotalProductCount total</div>
                 <div id="applied-filters"></div>
                 <button id="remove-all" class="remove-all-filters" style="display: none;"><i class="icon icon-close"></i> Clear all</button>
             </div>
             <div class="tf-list-layout wrapper-shop" id="listLayout" style="display: none;">
-                <!-- Product 1 -->
-                @foreach (var item in Model.PagedProducts)
+                @if (productlist.Any())
                 {
-                    <div class="card-product product-style_list" data-availability="In stock" data-brand="automet">
-                        <div class="card-product_wrapper">
-                            <a asp-page="/productdetail" asp-route-sku="@item.Skucode" class="product-img" >
-                                <img class="lazyload img-product" src="/images/products/@item.Thumbnail" alt="@item.ProductName">
-                                <img class="lazyload img-hover" src="/images/products/@item.Thumbnail" alt="@item.ProductName">
-                            </a>
-                            <ul class="product-action_list">
-                                <li>
-                                    <a href="#compare" data-bs-toggle="offcanvas" class="hover-tooltip tooltip-left box-icon ">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Compare</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#quickView" data-bs-toggle="modal" class="hover-tooltip tooltip-left box-icon">
-                                        <span class="icon icon-view"></span>
-                                        <span class="tooltip">Quick view</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="product-countdown">
-                                <div class="js-countdown cd-has-zero" data-timer="25472" data-labels="d : ,h : ,m : ,s"></div>
+                    @foreach (var item in  productlist)
+                    {
+                        <div class="card-product product-style_list" data-availability="In stock" data-brand="automet">
+                            <div class="card-product_wrapper">
+                                <a asp-page="/detail" asp-route-skucode="@item.Skucode" asp-route-productname="@item.ParentUrl" class="product-img">
+                                    <img class="lazyload img-product" src="~/images/products/@item.Thumbnail" alt="@item.ProductName">
+                                    <img class="lazyload img-hover" src="~/images/products/@item.Thumbnail" alt="@item.ProductName">
+                                </a>
                             </div>
-                            <ul class="product-badge_list">
-                                <li class="product-badge_item h6 hot">Hot</li>
-                            </ul>
+                            <div class="card-product_info">
+                                <div class="product-info_list">
+                                    <a asp-page="/detail" asp-route-skucode="@item.Skucode" asp-route-productname="@item.ParentUrl" class="name-product h3 link">
+                                        @item.ProductName
+                                    </a>
+                                    <span class="price-new">₹@item.Price</span>
+                                </div>
+                                
+                            </div>
                         </div>
-                        <div class="card-product_info">
-                            <div class="product-info_list">
-                                <a asp-page="/productdetail" asp-route-sku="@item.Skucode" class="name-product h3 link">
+                    }
+                }
+                else
+                {
+                    <div class="col-12">
+                        <div class="text-center py-5">
+                            <h3>No products found</h3>
+                            <p class="mb-4">Try another category or explore our latest collection.</p>
+                            <a asp-page="/Index" class="tf-btn animate-btn">Continue Shopping</a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="wrapper-shop tf-grid-layout tf-col-4" id="gridLayout">
+                @if (productlist.Any())
+                {
+                    @foreach (var item in productlist)
+                    {
+                        <div class="card-product grid" data-availability="In stock" data-brand="fisoew">
+                            <div class="card-product_wrapper">
+                                <a asp-page="/detail" asp-route-skucode="@item.Skucode" asp-route-productname="@item.ParentUrl" class="product-img">
+                                    <img class="lazyload img-product" src="~/images/products/@item.Thumbnail" alt="@item.ProductName">
+                                    <img class="lazyload img-hover" src="~/images/products/@item.Thumbnail" alt="@item.ProductName">
+                                </a>
+                                
+                            </div>
+                            <div class="card-product_info">
+                                <a asp-page="/detail" asp-route-skucode="@item.Skucode" asp-route-productname="@item.ParentUrl" class="name-product h4 link">
                                     @item.ProductName
                                 </a>
-
-                                <span class="price-new">₹@item.Price</span>
-                                @* <span class="price-old">$99,99</span>
-                                <span class="price-new">$69,99</span>
-                                <ul class="product-color_list">
-                                    <li class="product-color-item color-swatch hover-tooltip tooltip-bot active">
-                                        <span class="tooltip color-filter">Dark</span>
-                                        <span class="swatch-value bg-dark-charcoal"></span>
-                                        <img src="images/products/@item.Thumbnail" alt="Product">
-
-                                    </li>
-                                </ul> *@
-                                @* <div class="product-desc_list d-none d-sm-grid">
-                                    <p class="product-desc">
-                                        <span class="headline fw-bold">Contents:</span> Super soft and comfy fabric, skin-friendly and breathable.
-                                        Womens
-                                        tops dressy casual,
-                                        round neck
-                                        cute lightweight tops，loose fit basic tees
-                                    </p>
-                                    <p class="product-desc d-none d-md-block">
-                                        <span class="headline fw-bold">Details:</span> Warm up or cool down with this essential 3/4 sleeve t
-                                        shirts,
-                                        featured
-                                        in an loose fit
-                                        and Pleated sleeve design with sew seaming front for a lived-in look.
-                                    </p>
-                                </div> *@
-                            </div>
-                            <div class="product-action_list">
-                                <span class="h6">To buy, select <span class="fw-bold text-black">size</span></span>
-                                <div class="group-btn">
-                                    <form method="post" asp-page-handler="AddToCart">
-                                        <input type="hidden" name="SkuCode" value="@item.Skucode" />
-                                        <input type="hidden" name="Qty" value="1" />
-                                        <input type="hidden" name="Price" value="@item.Price" />
-
-                                        <button type="submit" class="tf-btn animate-btn">
-                                            Add to Cart
-                                            <i class="icon icon-shopping-cart-simple"></i>
-                                        </button>
-                                    </form>
-                                    <!-- WISHLIST -->
-                                    <form method="post" asp-page-handler="AddToWishlist">
-                                        <input type="hidden" name="SkuCode" value="@item.Skucode" />
-                                        <input type="hidden" name="ProductName" value="@item.ProductName" />
-
-                                        <button type="submit" class="tf-btn style-line btn-add-wishlist2">
-                                            <span class="text">Add to List</span>
-                                            <i class="icon icon-heart"></i>
-                                        </button>
-                                    </form>
+                                <div class="price-wrap">
+                                    <span class="price-new h6">₹@item.Price</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-
-                <!-- Pagination -->
-                <div class="wd-full wg-pagination">
-                    @for (int i = 1; i <= Model.TotalPages; i++)
-                    {
-                        <a asp-page="productlist"
-                           asp-route-catname="@Request.RouteValues["catname"]"
-                           asp-route-subcatname="@Request.RouteValues["subcatname"]"
-                           asp-route-currentPage="@i"
-                           class="pagination-item @(i == Model.CurrentPage ? "active" : "")">
-                            @i
-                        </a>
                     }
-                </div>
-            </div>
-            <div class="wrapper-shop tf-grid-layout tf-col-4" id="gridLayout">
-                <!-- Product 1 -->
-                @foreach (var item in Model.PagedProducts)
+                }
+                else
                 {
-                    <div class="card-product grid" data-availability="In stock" data-brand="fisoew">
-                        <div class="card-product_wrapper">
-                            <a asp-page="/productdetail" asp-route-sku="@item.Skucode" class="product-img">
-                                <img class="lazyload img-product" src="/images/products/@item.Thumbnail" alt="@item.ProductName">
-                                <img class="lazyload img-hover" src="/images/products/@item.Thumbnail" alt="@item.ProductName">
-                            </a>
-                            <ul class="product-action_list">
-                                <li>
-                                    <form method="post" asp-page-handler="AddToCart">
-                                        <input type="hidden" name="SkuCode" value="@item.Skucode" />
-                                        <input type="hidden" name="Qty" value="1" />
-                                        <input type="hidden" name="Price" value="@item.Price" />
-
-                                        <button type="submit" class="hover-tooltip tooltip-left box-icon">
-                                            <span class="icon icon-shopping-cart-simple"></span>
-                                        </button>
-                                    </form>
-                                </li>
-                                <li class="wishlist">
-                                    <form method="post" asp-page-handler="AddToWishlist">
-                                        <input type="hidden" name="SkuCode" value="@item.Skucode" />
-                                        <input type="hidden" name="ProductName" value="@item.ProductName" />
-
-                                        <button type="submit" class="hover-tooltip tooltip-left box-icon">
-                                            <span class="icon icon-heart"></span>
-                                        </button>
-                                    </form>
-                                </li>
-                                @* <li>
-                                    <a href="#compare" data-bs-toggle="offcanvas" class="hover-tooltip tooltip-left box-icon ">
-                                        <span class="icon icon-compare"></span>
-                                        <span class="tooltip">Compare</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#quickView" data-bs-toggle="modal" class="hover-tooltip tooltip-left box-icon">
-                                        <span class="icon icon-view"></span>
-                                        <span class="tooltip">Quick view</span>
-                                    </a>
-                                </li> *@
-                            </ul>
-                            <ul class="product-badge_list">
-                                <li class="product-badge_item h6 hot">Hot</li>
-                            </ul>
-                            <div class="product-countdown">
-                                <div class="js-countdown cd-has-zero" data-timer="25472" data-labels="d : ,h : ,m : ,s"></div>
-                            </div>
-                        </div>
-                        <div class="card-product_info">
-                            <a href="/product-detail/@item.Skucode" class="name-product h4 link">
-                                @item.ProductName
-                            </a>
-
-                            <div class="price-wrap">
-                                <span class="price-new h6">₹@item.Price</span>
-                            </div>
-                            @* <ul class="product-color_list">
-                                <li class="product-color-item color-swatch hover-tooltip tooltip-bot active">
-                                    <span class="tooltip color-filter">Beige</span>
-                                    <span class="swatch-value bg-light-beige"></span>
-                                    <img class="lazyload" src="images/products/@item.Thumbnail" alt="Product">
-                                </li>
-                                <li class="product-color-item color-swatch hover-tooltip tooltip-bot">
-                                    <span class="tooltip color-filter">Dark</span>
-                                    <span class="swatch-value bg-dark-charcoal"></span>
-                                    <img class="lazyload" src="images/products/@item.Thumbnail" alt="Product">
-
-                                </li>
-                                <li class="product-color-item color-swatch hover-tooltip tooltip-bot">
-                                    <span class="tooltip color-filter">Sage Green</span>
-                                    <span class="swatch-value bg-sage-green"></span>
-                                    <img class="lazyload" src="images/products/@item.Thumbnail" alt="Product">
-                                </li>
-                            </ul> *@
+                    <div class="col-12">
+                        <div class="text-center py-5">
+                            <h3>No products found</h3>
+                            <p class="mb-4">Try another category or explore our latest collection.</p>
+                            <a asp-page="/Index" class="tf-btn animate-btn">Continue Shopping</a>
                         </div>
                     </div>
                 }
-
-                <div class="wd-full wg-pagination">
-                    @for (int i = 1; i <= Model.TotalPages; i++)
-                    {
-                        <a asp-page="productlist"
-                           asp-route-catname="@Request.RouteValues["catname"]"
-                           asp-route-subcatname="@Request.RouteValues["subcatname"]"
-                           asp-route-currentPage="@i"
-                           class="pagination-item @(i == Model.CurrentPage ? "active" : "")">
-                            @i
-                        </a>
-                    }
-                </div>
             </div>
+            @if (totalPages > 1)
+            {
+                <div class="tf-pagination-wrap d-flex justify-content-center mt-40">
+                    <ul class="tf-pagination-list">
+                        @if (currentPage > 1)
+                        {
+                            <li>
+                                <a asp-page="/productlist" asp-route-catname="@catname" asp-route-currentPage="@(currentPage - 1)" class="pagination-link">
+                                    <i class="icon icon-arrow-left"></i>
+                                </a>
+                            </li>
+                        }
+                        @for (int i = 1; i <= totalPages; i++)
+                        {
+                            <li>
+                                <a asp-page="/productlist" asp-route-catname="@catname" asp-route-currentPage="@i" class="pagination-link @(i == currentPage ? "active" : "")">@i</a>
+                            </li>
+                        }
+                        @if (currentPage < totalPages)
+                        {
+                            <li>
+                                <a asp-page="/productlist" asp-route-catname="@catname" asp-route-currentPage="@(currentPage + 1)" class="pagination-link">
+                                    <i class="icon icon-arrow-right"></i>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 </div>
-
-<script>
-    function setSort(type) {
-        document.getElementById("ascPrice").value = (type === 'asc');
-        document.getElementById("descPrice").value = (type === 'desc');
-    }
-</script>
 <!-- /Section Product -->

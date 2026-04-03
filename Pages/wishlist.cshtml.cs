@@ -90,16 +90,15 @@ namespace CrystalByRiya.Pages
         {
             try
             {
-                var productname = HttpContext.Session.GetString("productname");
                 // Retrieve the wishlist from the session
                 WishlistItems = SessionHelper.GetObjectFromJson<List<AddToWishlist>>(HttpContext.Session, "wishlist") ?? new List<AddToWishlist>();
 
                 // Retrieve the user's email from the session
                 useremail = HttpContext.Session.GetString("UserEmail");
 
-                // Find the item in the database by user email and product name
+                // Find the item in the database by user email and SKU code
                 var dbWishlistItem = await _context.TblWishlist.FirstOrDefaultAsync(e =>
-                    e.UserEmail == useremail && e.ProductName == productname);
+                    e.UserEmail == useremail && e.skucode == id);
 
                 if (dbWishlistItem != null)
                 {

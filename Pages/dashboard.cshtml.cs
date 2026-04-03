@@ -19,30 +19,38 @@ namespace CrystalByRiya.Pages
         {
             _context = context;
         }
-   
+
 
         [BindProperty]
         public TblBillingDetail Detail { get; set; }
-        
+
         public Register Register { get; set; }
 
         public string UserEmail { get; private set; }
         public string Password { get; private set; }
 
         // GET: Load the page and prepopulate the email if available
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            try { 
-            // Retrieve the session value for "UserEmail"
-            UserEmail = HttpContext.Session.GetString("UserEmail");
-            Password = HttpContext.Session.GetString("Password");
+            try
+            {
+                // Retrieve the session value for "UserEmail"
+                UserEmail = HttpContext.Session.GetString("UserEmail");
+                Password = HttpContext.Session.GetString("Password");
+
+                // Check if user is logged in
+                if (string.IsNullOrEmpty(UserEmail))
+                {
+                    // User is not logged in, redirect to login page
+                    return RedirectToPage("/myaccount");
+                }
 
                 // Fetch the most recent billing detail for the user based on Emailid
                 if (!string.IsNullOrEmpty(UserEmail))
                 {
                     Detail = _context.TblBillingDetails
-                                    .Where(b => b.Emailid == UserEmail)
-                               .FirstOrDefault();
+                                        .Where(b => b.Emailid == UserEmail)
+                                   .FirstOrDefault();
                     Register = _context.TblRegisters.FirstOrDefault(c => c.Email == UserEmail);
                     // If no detail is found, initialize a new one with the email
                     if (Detail == null)
@@ -53,11 +61,13 @@ namespace CrystalByRiya.Pages
                         };
                     }
                 }
-              
+
+                return Page();
             }
             catch (Exception ex)
             {
-
+                // Log error if needed
+                return Page();
             }
         }
         // Handle the form submission to update account details
@@ -125,6 +135,19 @@ namespace CrystalByRiya.Pages
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "wishlist", WishlistItems);
                 }
 
+                var userEmail = HttpContext.Session.GetString("UserEmail");
+                if (!string.IsNullOrWhiteSpace(userEmail) && !string.IsNullOrWhiteSpace(productId))
+                {
+                    var dbWishlistItem = _context.TblWishlist.FirstOrDefault(w =>
+                        w.UserEmail == userEmail && w.skucode == productId);
+
+                    if (dbWishlistItem != null)
+                    {
+                        _context.TblWishlist.Remove(dbWishlistItem);
+                        _context.SaveChanges();
+                    }
+                }
+
                 // Redirect back to the wishlist page
                 return RedirectToPage("Wishlist"); // Change to the appropriate page name
             }
@@ -137,28 +160,28 @@ namespace CrystalByRiya.Pages
         }
         public IActionResult OnPostEdit()
         {
-            
-                var userEmail = HttpContext.Session.GetString("UserEmail");
 
-                // Fetch the existing billing details for the user
-                var billingDetails = _context.TblBillingDetails.FirstOrDefault(b => b.Emailid == userEmail);
+            var userEmail = HttpContext.Session.GetString("UserEmail");
 
-                if (billingDetails != null)
-                {
-                    // Update the billing details with the form data
-                    billingDetails.FullName = Detail.FullName;
-                    billingDetails.ContactNumber = Detail.ContactNumber;
-                    billingDetails.Address = Detail.Address;
-                    billingDetails.City = Detail.City;
-                    billingDetails.State = Detail.State;
-                    billingDetails.PinCode = Detail.PinCode;
+            // Fetch the existing billing details for the user
+            var billingDetails = _context.TblBillingDetails.FirstOrDefault(b => b.Emailid == userEmail);
 
-                    // Save the updated details to the database
-                    _context.SaveChanges();
-                }
+            if (billingDetails != null)
+            {
+                // Update the billing details with the form data
+                billingDetails.FullName = Detail.FullName;
+                billingDetails.ContactNumber = Detail.ContactNumber;
+                billingDetails.Address = Detail.Address;
+                billingDetails.City = Detail.City;
+                billingDetails.State = Detail.State;
+                billingDetails.PinCode = Detail.PinCode;
+
+                // Save the updated details to the database
+                _context.SaveChanges();
+            }
             else
             {
-                
+
                 // Create new billing details if none exist
                 billingDetails = new TblBillingDetail
                 {
@@ -169,11 +192,11 @@ namespace CrystalByRiya.Pages
                     City = Detail.City,
                     State = Detail.State,
                     PinCode = Detail.PinCode,
-                    Country="India",
-                    Name="dummy",
-                    LastName="dummy"
-                    
-                    
+                    Country = "India",
+                    Name = "dummy",
+                    LastName = "dummy"
+
+
                 };
 
                 // Add new billing details to the database
@@ -202,21 +225,17 @@ namespace CrystalByRiya.Pages
         {
             try
             {
-                // Clear the session
-                HttpContext.Session.Remove("UserEmail");
-                HttpContext.Session.Remove("Password");
-
-                // Optionally, clear the entire session
-                // HttpContext.Session.Clear();
+                // Clear all session data including cart and wishlist
+                HttpContext.Session.Clear();
 
                 // Redirect to index page (or login page) after logout
                 return RedirectToPage("/Index");
             }
-            catch (Exception ex) {
-                return Page(); 
+            catch (Exception ex)
+            {
+                return Page();
             }
         }
     }
-
-    }
+}
 

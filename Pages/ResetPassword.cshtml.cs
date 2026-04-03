@@ -55,7 +55,7 @@ namespace CrystalByRiya.Pages
                 await _context.SaveChangesAsync();
 
                 TempData["SuccessMessage"] = "Password has been reset successfully.";
-                return RedirectToPage("myaccount");
+                return RedirectToPage("/myaccount");
             }
 
             TempData["ErrorMessage"] = "Failed to reset password. Please try again.";

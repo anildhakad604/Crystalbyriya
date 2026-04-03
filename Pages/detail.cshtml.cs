@@ -56,39 +56,46 @@ namespace CrystalByRiya.Pages
         public string Currenturl1 { get; private set; }
 
         public string Currenturl { get; private set; }
-        public Product Products { get; set; }
+        public Product Products { get; set; } = new Product();
         public List<ChildskuCode> ChildskuCodes { get; set; } = new List<ChildskuCode>();
         public List<Item> Usercart { get; set; } = new List<Item>();
         public Cart CartMarketing { get; set; }
 
 
-        public IList<ProductFaq> ProductFaqs { get; set; }
-        public IList<ProductSizes> ProductSizes { get; set; }
-        public IList<ImageGallery> ImageGallery { get; set; }
-        public IList<TblReviews> Reviews { get; set; }
-        public IList<ReviewGallery> ReviewGallery { get; set; }
-        public IList<Material> Materialname { get; set; }
+        public IList<ProductFaq> ProductFaqs { get; set; } = new List<ProductFaq>();
+        public IList<ProductSizes> ProductSizes { get; set; } = new List<ProductSizes>();
+        public IList<ImageGallery> ImageGallery { get; set; } = new List<ImageGallery>();
+        public IList<TblReviews> Reviews { get; set; } = new List<TblReviews>();
+        public IList<ReviewGallery> ReviewGallery { get; set; } = new List<ReviewGallery>();
+        public IList<Material> Materialname { get; set; } = new List<Material>();
         public string SelectedSize { get; set; }
         public string SelectedMaterial { get; set; }
         public string SelectedAddOn { get; set; }
-        public IList<AddOn> AddOns { get; set; }
-        public IList<Product> RecentlyViewedProducts { get; set; }
+        public IList<AddOn> AddOns { get; set; } = new List<AddOn>();
+        public IList<Product> RecentlyViewedProducts { get; set; } = new List<Product>();
         public IList<CombinedReview> CombinedReviews { get; set; } = new List<CombinedReview>();
 
-        public IList<Product> RelatedProducts { get; set; }
+        public IList<Product> RelatedProducts { get; set; } = new List<Product>();
 
         public async Task OnGet(string skucode, string productname, string size = null, string material = null, string addon = null)
         {
             Currenturl = HttpContext.Request.GetDisplayUrl();
-            productname = productname.Replace('-', ' ');
+            productname = productname?.Replace('-', ' ') ?? string.Empty;
             Currenturl1 = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/detail/{skucode}/{productname}";
             Products = await _context.TblProducts.SingleOrDefaultAsync(e => e.SkuCode == skucode);
+
+            if (Products == null)
+            {
+                return;
+            }
+
             ProductSizes = await _context.TblProductSizes.Where(e => e.ProductID == skucode).ToListAsync();
-            ImageGallery = await _context.TblImageGalleries.Where(e => e.Productid == skucode).ToListAsync();
-            //Reviews = await _context.TblReviews.Where(e => e.Productid == skucode).ToListAsync();
+            ImageGallery = await _context.TblImageGalleries.Where(e => e.Productid == skucode).OrderByDescending(e => e.Id).ToListAsync();
             ProductFaqs = await _context.TblProductFaq.Where(e => e.ProductSku == skucode).ToListAsync();
             Materialname = await _context.Materials.Where(e => e.SkuCode == skucode).ToListAsync();
             AddOns = await _context.TblAddOn.Where(e => e.ProductId == skucode).ToListAsync();
+
+            
             if (!string.IsNullOrEmpty(size))
             {
                 SelectedSize = size;
@@ -158,18 +165,40 @@ namespace CrystalByRiya.Pages
                 .Where(p => skuCodes.Contains(p.SkuCode))
                 .ToListAsync();
 
-
-            // Fetch related SKU codes from RelatedProduct table
+            // Fetch related SKU codes from the mapping table first.
+            // If no explicit mappings exist for this product, fall back to products in the same family/tag.
             var relatedSkuCodes = await _context.Set<RelatedProduct>()
-                .Where(r => r.Skucode == skucode)
+                .Where(r => Products != null && r.BlogId == Products.ID)
                 .Select(r => r.Skucode)
                 .ToListAsync();
 
-            // Fetch actual product details
-            RelatedProducts = await _context.TblProducts
-                .Where(p => relatedSkuCodes.Contains(p.SkuCode) && p.SkuCode != skucode)
-                .ToListAsync();
+            if (relatedSkuCodes.Any())
+            {
+                RelatedProducts = await _context.TblProducts
+                    .Where(p => relatedSkuCodes.Contains(p.SkuCode) && p.SkuCode != skucode)
+                    .ToListAsync();
+            }
+            else
+            {
+                var fallbackQuery = _context.TblProducts
+                    .Where(p => p.SkuCode != skucode);
 
+                if (!string.IsNullOrWhiteSpace(Products.ParentCode))
+                {
+                    RelatedProducts = await fallbackQuery
+                        .Where(p => p.ParentCode == Products.ParentCode)
+                        .Take(8)
+                        .ToListAsync();
+                }
+
+                if (RelatedProducts == null || !RelatedProducts.Any())
+                {
+                    RelatedProducts = await fallbackQuery
+                        .Where(p => !string.IsNullOrWhiteSpace(Products.Tags) && p.Tags == Products.Tags)
+                        .Take(8)
+                        .ToListAsync();
+                }
+            }
 
 
         }
@@ -182,7 +211,8 @@ namespace CrystalByRiya.Pages
                 var phone = HttpContext.Session.GetString("Phone");
                 if (useremail == null && buynow==false)
                 {
-                    string redirectUrl = Url.Page("Index"); // After login, redirect to the wishlist
+                    string redirectUrl = Url.Page("/cart") ?? "/cart"; // After login, redirect straight to cart
+                   
                     return RedirectToPage("/myaccount", new { redirectUrl });
 
                 }
@@ -201,7 +231,7 @@ namespace CrystalByRiya.Pages
 
                    
                    
-                    return RedirectToPage("detail");
+                    return LocalRedirect(GetReturnUrlOrFallback("/Index"));
                 
 
             }
@@ -221,7 +251,7 @@ namespace CrystalByRiya.Pages
                 if (string.IsNullOrEmpty(UserEmail) )
                 {
                     // User is not logged in, redirect to login page
-                    string redirectUrl = Url.Page("/Index"); // After login, redirect to the wishlist
+                    string redirectUrl = GetReturnUrlOrFallback("/Index"); // After login, redirect to the originating page
                     return RedirectToPage("/myaccount", new { redirectUrl });
                 }
                 // Use the AddToWishlist service method to add the product to the wishlist
@@ -231,7 +261,7 @@ namespace CrystalByRiya.Pages
                 if (result is BadRequestResult)
                 {
                     ModelState.AddModelError(string.Empty, "Failed to add product to wishlist.");
-                    return RedirectToPage("/detail");
+                    return LocalRedirect(GetReturnUrlOrFallback("/Index"));
                 }
 
 
@@ -239,13 +269,13 @@ namespace CrystalByRiya.Pages
 
 
                 // If 'buynow' is false, redirect to the wishlist page
-                return RedirectToPage("/detail");
+                return LocalRedirect(GetReturnUrlOrFallback("/Index"));
             }
             catch (Exception ex)
             {
                 // Log the exception and return a generic error message
                 ModelState.AddModelError(string.Empty, "An error occurred while adding the product to the wishlist.");
-                return RedirectToPage("/detail");
+                return LocalRedirect(GetReturnUrlOrFallback("/Index"));
             }
         }
         public async Task<IActionResult> OnPostReview(string ProductId, int Rating, string ReviewText, IList<IFormFile> Images)
@@ -321,6 +351,17 @@ namespace CrystalByRiya.Pages
             {
                 return Page();
             }
+        }
+
+        private string GetReturnUrlOrFallback(string fallbackPage)
+        {
+            var referer = Request.Headers.Referer.ToString();
+            if (!string.IsNullOrWhiteSpace(referer) && Uri.TryCreate(referer, UriKind.Absolute, out var uri))
+            {
+                return uri.PathAndQuery;
+            }
+
+            return Url.Page(fallbackPage) ?? "/";
         }
 
     }

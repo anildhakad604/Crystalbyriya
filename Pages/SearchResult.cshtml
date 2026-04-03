@@ -1,19 +1,26 @@
-﻿@page
+﻿@page "{name?}"
 @model CrystalByRiya.Pages.SearchResultModel
 
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var searchTerm = Request.RouteValues["name"]?.ToString() ?? string.Empty;
+    var resultCount = Model.SelectedProduct?.Count ?? 0;
+}
 
 @section Metatags {
+    <title>Dr Astro Crystals | Search Results</title>
     <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
     <link rel="canonical" href="@Model.Currenturl" />
+    <meta property="og:title" content="Dr Astro Crystals | Search Results" />
     <meta property="og:url" content="@Model.Currenturl" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+    <meta property="og:site_name" content="https://www.drastrocrystals.com" />
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
+    <meta name="twitter:site" content="https://www.drastrocrystals.com">
+    <meta name="twitter:title" content="Dr Astro Crystals | Search Results">
     <meta name="twitter:description" content="Placing our customers at the core of everything we do, understanding their needs, and exceeding their expectations.">
-    <meta name="twitter:creator" content="Crystals by Riya">
-    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+    <meta name="twitter:creator" content="Dr Astro Crystals">
+    <meta name="twitter:domain" content="https://www.drastrocrystals.com" />
 }
 
 
@@ -28,7 +35,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-title-content content-style-2">
-                        <div class="bread-crumbs"><a href="/index">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Search Results</a></div>
+                        <div class="bread-crumbs"><a asp-page="/Index">Home<span class="breadcrumb-sep">&gt;</span></a><a href="javascript:void(0)">Search Results</a></div>
                     </div>
                 </div>
             </div>
@@ -45,58 +52,91 @@
                         
                             <div class="shop-toolbar-right">
                                 <div class="product-showing-status">
-                                    <p class="count-result">Showing @Model.SelectedProduct.Count() results</p>
+                                    <p class="count-result">Showing @resultCount result@(resultCount == 1 ? string.Empty : "s")</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="product-list-item-parent">
                             <div class="row" id="product-container">
-                                @foreach (var product in Model.SelectedProduct)
+                                @if (Model.SelectedProduct != null && Model.SelectedProduct.Any())
                                 {
-                                    <div class="col-6 col-md-4 col-lg-3">
-                                        <!-- Start Product Item -->
-                                        <div class="product-item">
-                                            <div class="product-thumb">
-                                                <a asp-page="/detail" asp-route-skucode="@product.SkuCode" asp-route-productname="@product.ProductName.Replace(' ','-')">
-                                                    <img src=" @Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @product.Thumbnail)" alt="@product.ProductName" class="lazyload">
-                                                    <span class="bg-thumb" data-bg-img="@product.Thumbnail" style="background-image: url(@product.Thumbnail);"></span>
-                                                    <span class="thumb-overlay"></span>
-                                                </a>
-                                                <div class="product-action">
-                                                    <a href="javascript:void(0);" id="@product.SkuCode" class="action-quick-view ht-tooltip quview" data-tippy-content="Quick View">
-                                                        <i class="lastudioicon-eye"></i>
+                                    @foreach (var product in Model.SelectedProduct)
+                                    {
+                                        var productRouteName = string.IsNullOrWhiteSpace(product.ParentUrl) ? product.ProductName : product.ParentUrl;
+                                        <div class="col-6 col-md-4 col-lg-3">
+                                            <!-- Start Product Item -->
+                                            <div class="product-item">
+                                                <div class="product-thumb">
+                                                    <a asp-page="/detail" asp-route-skucode="@product.SkuCode" asp-route-productname="@productRouteName">
+                                                        <img src="/images/products/@product.Thumbnail" alt="@(string.IsNullOrWhiteSpace(product.AltText) ? product.ProductName : product.AltText)" class="lazyload">
+                                                        <span class="bg-thumb" data-bg-img="/images/products/@product.Thumbnail" style="background-image: url(/images/products/@product.Thumbnail);"></span>
+                                                        <span class="thumb-overlay"></span>
                                                     </a>
+                                                    <div class="product-action">
+                                                        <a href="#quickView" data-bs-toggle="modal" class="action-quick-view ht-tooltip quview" id="@product.SkuCode" data-tippy-content="Quick View">
+                                                            <i class="lastudioicon-eye"></i>
+                                                        </a>
 
-                                                    <!-- Add to Wishlist Button -->
-                                                    <a href="javascript:void(0);" class="action-wishlist ht-tooltip" data-tippy-content="Add to wishlist" onclick="HandleAddToWishlist2('@product.SkuCode', '@product.ProductName')">
-                                                        <i class="lastudioicon-heart-2"></i>
-                                                    </a>
+                                                        <!-- Add to Wishlist Form -->
+                                                        <form method="post" asp-page-handler="AddToWishlist" style="display:inline;">
+                                                            <input type="hidden" name="SkuCode" value="@product.SkuCode" />
+                                                            <input type="hidden" name="ProductName" value="@product.ProductName" />
+                                                            <input type="hidden" name="buynow" value="false" />
+                                                            <button type="submit" class="action-wishlist ht-tooltip" data-tippy-content="Add to wishlist">
+                                                                <i class="lastudioicon-heart-2"></i>
+                                                            </button>
+                                                        </form>
 
-                                                    <!-- Hidden Form for Wishlist Submission -->
-                                                    <form id="wishlistForm" method="post" asp-page-handler="AddToWishlist" style="display:none;">
-                                                        @Html.AntiForgeryToken()
-                                                        <input type="hidden" id="SkuCode" name="SkuCode" value="@product.SkuCode" />
-                                                        <input type="hidden" id="ProductName" name="ProductName" value="@product.ProductName" />
-                                                        <input type="hidden" id="buynow" name="buynow" value="false" />
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-footer position-relative">
-                                                <div class="product-info d-block">
-                                                    <div class="content-inner text-center">
-                                                        <h4 class="title"><a asp-page="/detail" asp-route-skucode="@product.SkuCode" asp-route-productname="@product.ProductName.Replace(' ','-')">@product.ProductName</a></h4>
-                                                        <div class="prices">
-                                                            <span class="price">₹ @product.Price</span>
-                                                        </div>
+                                                        <!-- Add to Cart Form -->
+                                                        <form method="post" asp-page-handler="AddToCart" style="display:inline;">
+                                                            <input type="hidden" name="SkuCode" value="@product.SkuCode" />
+                                                            <input type="hidden" name="ProductName" value="@product.ProductName" />
+                                                            <input type="hidden" name="Qty" value="1" />
+                                                            <input type="hidden" name="Price" value="@product.Price" />
+                                                            <button type="submit" class="action-cart ht-tooltip" data-tippy-content="Add to cart">
+                                                                <i class="lastudioicon-bag-3"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
-                                                <div class="product-action-button-parent">
-                                                    <a href="javascript:void(0);" id="@product.SkuCode" class="btn product-action-button quview"><i class="lastudioicon-bag-3 me-1"></i> ADD TO CART</a>
+                                                <div class="product-footer position-relative">
+                                                    <div class="product-info d-block">
+                                                        <div class="content-inner text-center">
+                                                            <h4 class="title">
+                                                                <a asp-page="/detail" asp-route-skucode="@product.SkuCode" asp-route-productname="@productRouteName">
+                                                                    @product.ProductName
+                                                                </a>
+                                                            </h4>
+                                                            <div class="prices">
+                                                                <span class="price">₹@product.Price</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-action-button-parent">
+                                                        <form method="post" asp-page-handler="AddToCart">
+                                                            <input type="hidden" name="SkuCode" value="@product.SkuCode" />
+                                                            <input type="hidden" name="ProductName" value="@product.ProductName" />
+                                                            <input type="hidden" name="Qty" value="1" />
+                                                            <input type="hidden" name="Price" value="@product.Price" />
+                                                            <button type="submit" class="btn product-action-button">
+                                                                <i class="lastudioicon-bag-3 me-1"></i> ADD TO CART
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <!-- End Product Item -->
                                         </div>
-                                        <!-- End Product Item -->
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12">
+                                        <div class="alert alert-info text-center">
+                                            <h4>No products found</h4>
+                                            <p>@(string.IsNullOrWhiteSpace(searchTerm) ? "Try adjusting your search terms or browse our categories." : $"No products matched \"{searchTerm}\". Try adjusting your search terms or browse our categories.")</p>
+                                        </div>
                                     </div>
                                 }
                             </div>

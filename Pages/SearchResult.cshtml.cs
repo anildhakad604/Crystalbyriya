@@ -4,6 +4,7 @@ using CrystalByRiya.Models;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CrystalByRiya.@class;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace CrystalByRiya.Pages
 {
@@ -27,22 +28,23 @@ namespace CrystalByRiya.Pages
         public List<Product> SelectedProduct { get; set; }
         public async Task<IActionResult> OnGetAsync(string name)
         {
+            Currenturl = HttpContext.Request.GetDisplayUrl();
+            
             if (string.IsNullOrEmpty(name))
             {
-                return BadRequest("SkuCode is missing.");
+                // If no search term, return empty results
+                SelectedProduct = new List<Product>();
+                return Page();
             }
 
-            // Find the selected product by SkuCode
+            // Find products matching the search term
             SelectedProduct = await _context.TblProducts
-            .Where(p => p.ProductName.Contains(name)) // Partial match on the product name
-            .ToListAsync();
+                .Where(p => p.ProductName.Contains(name) || 
+                           p.ShortDescription.Contains(name) || 
+                           p.Tags.Contains(name))
+                .ToListAsync();
 
-            if (SelectedProduct == null)
-            {
-                return NotFound();  // If product is not found, return 404
-            }
-
-            // Display the SearchResult page with product details
+            // Display the SearchResult page with search results
             return Page();
         }
         public async Task<IActionResult> OnPostAddToWishlistAsync(string SkuCode, string ProductName, bool buynow)
@@ -55,7 +57,7 @@ namespace CrystalByRiya.Pages
                 if (string.IsNullOrEmpty(UserEmail))
                 {
                     // User is not logged in, redirect to login page
-                    string redirectUrl = Url.Page("/Index"); // After login, redirect to the wishlist
+                    string redirectUrl = GetReturnUrlOrFallback("/Index"); // After login, redirect to the originating page
                     return RedirectToPage("/myaccount", new { redirectUrl });
                 }
                 // Use the AddToWishlist service method to add the product to the wishlist
@@ -65,7 +67,7 @@ namespace CrystalByRiya.Pages
                 if (result is BadRequestResult)
                 {
                     ModelState.AddModelError(string.Empty, "Failed to add product to wishlist.");
-                    return RedirectToPage("/blogdetail");
+                    return LocalRedirect(GetReturnUrlOrFallback("/SearchResult"));
                 }
 
 
@@ -73,13 +75,13 @@ namespace CrystalByRiya.Pages
 
 
                 // If 'buynow' is false, redirect to the wishlist page
-                return RedirectToPage("/SearchResult");
+                return LocalRedirect(GetReturnUrlOrFallback("/SearchResult"));
             }
             catch (Exception ex)
             {
                 // Log the exception and return a generic error message
                 ModelState.AddModelError(string.Empty, "An error occurred while adding the product to the wishlist.");
-                return RedirectToPage("/SearchResult");
+                return LocalRedirect(GetReturnUrlOrFallback("/SearchResult"));
             }
         }
         public async Task<IActionResult> OnPostAddToCart(int Qty, string MaterialName, string Size, string SkuCode, string Price, string AddOn, bool buynow = false)
@@ -92,7 +94,7 @@ namespace CrystalByRiya.Pages
                 string Childsku = await _context.TblProductSizes.Where(e => e.ProductID == SkuCode && e.Size == Size).Select(e => e.SKUCode).FirstOrDefaultAsync();
                 if (useremail == null)
                 {
-                    string redirectUrl = Url.Page("Index"); // After login, redirect to the wishlist
+                    string redirectUrl = GetReturnUrlOrFallback("/Index"); // After login, redirect to the originating page
                     return RedirectToPage("/myaccount", new { redirectUrl });
 
                 }
@@ -104,7 +106,7 @@ namespace CrystalByRiya.Pages
 
 
 
-                return RedirectToPage("SearchResult");
+                return LocalRedirect(GetReturnUrlOrFallback("/SearchResult"));
 
 
             }
@@ -112,6 +114,17 @@ namespace CrystalByRiya.Pages
             {
                 return Page();
             }
+        }
+
+        private string GetReturnUrlOrFallback(string fallbackPage)
+        {
+            var referer = Request.Headers.Referer.ToString();
+            if (!string.IsNullOrWhiteSpace(referer) && Uri.TryCreate(referer, UriKind.Absolute, out var uri))
+            {
+                return uri.PathAndQuery;
+            }
+
+            return Url.Page(fallbackPage) ?? "/";
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CrystalByRiya.Models
         public string Price { get; set; } = "NA";
         public string Thumbnail { get; set; } = "NA";
         public string ProductName { get; set; } = "NA";
-       
+        public string ParentUrl { get; set; } = "NA";
 
     }
 }

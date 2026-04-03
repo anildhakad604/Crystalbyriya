@@ -71,7 +71,14 @@ namespace CrystalByRiya.Pages
 
                 // Prepare for PhonePe API call
                 string merchantId = PhonePeCredientials.Merchantid;
-                string merchantTransactionId = PhonePeCredientials.OrderId;
+                string merchantTransactionId = HttpContext.Session.GetString("PhonePeTransactionId")
+                    ?? PhonePeCredientials.OrderId;
+
+                if (string.IsNullOrWhiteSpace(merchantTransactionId))
+                {
+                    return RedirectToPage("/Error");
+                }
+
                 string sha256 = Sha256Hash($"/pg/v1/status/{merchantId}/{merchantTransactionId}{PhonePeCredientials.SaltKey}") + $"###{PhonePeCredientials.saltIndex}";
            //     string apiEndpoint = "https://api-preprod.phonepe.com/apis/pg-sandbox";
                 var apiEndpoint = "https://api.phonepe.com/apis/hermes";
@@ -105,8 +112,22 @@ namespace CrystalByRiya.Pages
                 Detail = JsonConvert.DeserializeObject<TblBillingDetail>(HttpContext.Session.GetString("BillingDetails"));
                 ShippingDetail = JsonConvert.DeserializeObject<TblShippingDetail>(HttpContext.Session.GetString("ShippingDetails"));
 
-                // Generate Order ID using stored procedure
-                string orderId = await GenerateOrderId(email, comment, paymentMethod, paymentResponse.Code);
+                // Check if Order ID was pre-generated during checkout
+                string preGeneratedOrderId = HttpContext.Session.GetString("PreGeneratedOrderId");
+                string orderId;
+                
+                if (!string.IsNullOrEmpty(preGeneratedOrderId))
+                {
+                    // Use the pre-generated Order ID from checkout
+                    orderId = preGeneratedOrderId;
+                    // Clear the session variable
+                    HttpContext.Session.Remove("PreGeneratedOrderId");
+                }
+                else
+                {
+                    // Generate new Order ID using stored procedure (fallback)
+                    orderId = await GenerateOrderId(email, comment, paymentMethod, paymentResponse.Code);
+                }
 
                 // Save Billing and Shipping Details
                 await SaveBillingAndShippingDetails(orderId, email, isShipToDifferentAddress,Phone);

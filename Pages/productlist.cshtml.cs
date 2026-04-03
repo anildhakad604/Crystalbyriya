@@ -49,26 +49,38 @@ namespace CrystalByRiya.Pages
         public string Currenturl { get; private set; }
         public Subcategory Subcategory { get; set; }
         public TblCategory Category { get; set; }
+        public CategoryBanner CategoryBanner { get; set; }
         public List<Subcategory> SubCategoryList { get; set; }
         public int CurrentPage { get; set; } = 1;
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 12; // Adjust this as needed
-        public List<SearchFilter> PagedProducts { get; set; }
+        public List<SearchFilter> PagedProducts { get; set; } = new List<SearchFilter>();
         public List<BestSeller> SpBestseller { get; set; }
         public List<TblReviews> Reviews { get; set; }
         public List <Product> products { get; set; }
         public List<QuickViews> QuickViews { get; set; }= new List<QuickViews>();
         public string Subcategorytitle { get; set; }
+        public int TotalProductCount { get; set; }
+        public string CurrentCategoryName { get; set; } = "Products";
+        public string CurrentCategoryDescription { get; set; } = "Discover our exclusive collection of high-quality products.";
 
-        public async Task<IActionResult> OnGet(string catname, string subcatname, int currentPage = 1)
+        public async Task<IActionResult> OnGet(string catname , int currentPage = 1)
         {
             try
             {
                 // Get current URL
                 Currenturl = HttpContext.Request.GetDisplayUrl();
 
-                // Replace hyphens with spaces for category name
-                catname = catname.Replace('-', ' ');
+                // Replace hyphens with spaces for category name when a route value exists
+                catname = string.IsNullOrWhiteSpace(catname)
+                    ? string.Empty
+                    : catname.Replace('-', ' ');
+
+                if (string.IsNullOrWhiteSpace(catname))
+                {
+                    ModelState.AddModelError(string.Empty, "Category not found");
+                    return Page();
+                }
 
                 // Fetch category
                 Category = await _context.TblCategory.SingleOrDefaultAsync(e => e.MenuList == catname);
@@ -79,26 +91,19 @@ namespace CrystalByRiya.Pages
                     return Page();
                 }
 
-                // Clean up subcategory name by removing unwanted parts
-                if (subcatname.Contains('-'))
-                {
-                    subcatname = subcatname.Replace("-", " ").Replace("Crystals", "");
-                    Subcategorytitle = subcatname;
+                CurrentCategoryName = Category.MenuList;
+                CurrentCategoryDescription = string.IsNullOrWhiteSpace(Category.Description)
+                    ? "Discover our exclusive collection of high-quality products."
+                    : Category.Description;
 
-                }
+                // Fetch category banner
+                CategoryBanner = await _context.TblCategoryBanner
+                    .FirstOrDefaultAsync(b => b.CategoryId == Category.Id);
 
-                // Fetch subcategory
-                Subcategory = await _context.TblSubcategory.SingleOrDefaultAsync(e => e.SubCategoryname == subcatname.TrimEnd().TrimStart());
-
-                if (Subcategory == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Subcategory not found");
-                    return Page();
-                }
+              
 
                 // Fetch subcategory list (though not clear why based on subcategory id, keeping it as in original code)
-                SubCategoryList = await _context.TblSubcategory.Where(e => e.SubCategoryid == Subcategory.SubCategoryid).ToListAsync();
-       var priceasc=         HttpContext.Session.GetString("priceasc");
+               var priceasc= HttpContext.Session.GetString("priceasc");
                 var pricedesc = HttpContext.Session.GetString("pricedesc");
                 if (priceasc != "True" && pricedesc != "True")
                 {
@@ -106,13 +111,13 @@ namespace CrystalByRiya.Pages
                     var parameters = new[]
                     {
             new SqlParameter("@CategoryId", Category.Id),
-            new SqlParameter("@SubCategory", Subcategory.SubCategoryid)
+            
         };
 
 
                     // Fetch products based on stored procedure
                     SPSubCategoryWiseProduct = await _context.SPSubCategoryWiseProduct
-                        .FromSqlRaw("SPSubCategoryWiseProduct @CategoryId, @SubCategory", parameters)
+                        .FromSqlRaw("SPSubCategoryWiseProduct @CategoryId", parameters)
                        .ToListAsync();
                     PagedProducts = SPSubCategoryWiseProduct.Select(p => new SearchFilter
                     {
@@ -120,11 +125,12 @@ namespace CrystalByRiya.Pages
                         Price = p.Price,
                         Thumbnail = p.Thumbnail,
                         ProductName = p.ProductName,
-
+                        ParentUrl = string.IsNullOrWhiteSpace(p.ParentUrl) ? p.Url : p.ParentUrl
                     }).ToList();
                     CurrentPage = currentPage;
                     int skipCount = (CurrentPage - 1) * PageSize;
                     int totalProducts = SPSubCategoryWiseProduct.Count;
+                    TotalProductCount = totalProducts;
                     TotalPages = (int)Math.Ceiling(totalProducts / (double)PageSize);
                     PagedProducts = PagedProducts.Skip(skipCount).Take(PageSize).ToList();
                 }
@@ -132,11 +138,11 @@ namespace CrystalByRiya.Pages
                 {
                     var parameters = new[]
                     {
-            new SqlParameter("@CategoryId", Category.Id),
-            new SqlParameter("@SubCategory", Subcategory.SubCategoryid)
+            new SqlParameter("@CategoryId", Category.Id)
+            
         };
                     SPSubCategoryWiseProduct = await _context.SPSubCategoryWiseProduct
-    .FromSqlRaw("SPSubCategoryWiseProduct @CategoryId, @SubCategory", parameters)
+    .FromSqlRaw("SPSubCategoryWiseProduct @CategoryId", parameters)
     .ToListAsync();
 
                     // Sort products by the lowest price in ascending order, handling single values and ranges
@@ -157,12 +163,14 @@ namespace CrystalByRiya.Pages
                             Price = p.Price,
                             Thumbnail = p.Thumbnail,
                             ProductName = p.ProductName,
+                            ParentUrl = string.IsNullOrWhiteSpace(p.ParentUrl) ? p.Url : p.ParentUrl
                         }).ToList();
 
                     // Pagination
                     CurrentPage = currentPage;
                     int skipCount = (CurrentPage - 1) * PageSize;
                     int totalProducts = PagedProducts.Count;
+                    TotalProductCount = totalProducts;
                     TotalPages = (int)Math.Ceiling(totalProducts / (double)PageSize);
 
                     // Apply pagination after sorting
@@ -174,11 +182,11 @@ namespace CrystalByRiya.Pages
                 {
                     var parameters = new[]
                     {
-            new SqlParameter("@CategoryId", Category.Id),
-            new SqlParameter("@SubCategory", Subcategory.SubCategoryid)
+            new SqlParameter("@CategoryId", Category.Id)
+            
         };
                     SPSubCategoryWiseProduct = await _context.SPSubCategoryWiseProduct
-    .FromSqlRaw("SPSubCategoryWiseProduct @CategoryId, @SubCategory", parameters)
+    .FromSqlRaw("SPSubCategoryWiseProduct @CategoryId", parameters)
     .ToListAsync();
 
                     // Sort products by the lowest price in ascending order, handling single values and ranges
@@ -199,12 +207,14 @@ namespace CrystalByRiya.Pages
                             Price = p.Price,
                             Thumbnail = p.Thumbnail,
                             ProductName = p.ProductName,
+                            ParentUrl = string.IsNullOrWhiteSpace(p.ParentUrl) ? p.Url : p.ParentUrl
                         }).ToList();
 
                     // Pagination
                     CurrentPage = currentPage;
                     int skipCount = (CurrentPage - 1) * PageSize;
                     int totalProducts = PagedProducts.Count;
+                    TotalProductCount = totalProducts;
                     TotalPages = (int)Math.Ceiling(totalProducts / (double)PageSize);
 
                     // Apply pagination after sorting
@@ -216,6 +226,7 @@ namespace CrystalByRiya.Pages
                 if (SPSubCategoryWiseProduct == null || !SPSubCategoryWiseProduct.Any())
                     {
                         SPSubCategoryWiseProduct = new List<SPSubCategoryWiseProduct>();
+                        TotalProductCount = 0;
                         ModelState.AddModelError(string.Empty, "No products found for the selected category and subcategory.");
                     }
                 
@@ -243,7 +254,7 @@ namespace CrystalByRiya.Pages
                 if (string.IsNullOrEmpty(UserEmail))
                 {
                     // User is not logged in, redirect to login page
-                    string redirectUrl = Url.Page("/Index"); // After login, redirect to the wishlist
+                    string redirectUrl = GetReturnUrlOrFallback("/Index");
                     return RedirectToPage("/myaccount", new { redirectUrl });
                 }
                 // Use the AddToWishlist service method to add the product to the wishlist
@@ -253,7 +264,7 @@ namespace CrystalByRiya.Pages
                 if (result is BadRequestResult)
                 {
                     ModelState.AddModelError(string.Empty, "Failed to add product to wishlist.");
-                    return RedirectToPage("/productlist");
+                    return LocalRedirect(GetReturnUrlOrFallback("/Index"));
                 }
 
 
@@ -261,15 +272,19 @@ namespace CrystalByRiya.Pages
 
 
                 // If 'buynow' is false, redirect to the wishlist page
-                return RedirectToPage("/productlist");
+                return LocalRedirect(GetReturnUrlOrFallback("/Index"));
             }
             catch (Exception ex)
             {
                 // Log the exception and return a generic error message
+                _logger.LogError(ex, "An error occurred while adding the product to the wishlist.");
                 ModelState.AddModelError(string.Empty, "An error occurred while adding the product to the wishlist.");
-                return RedirectToPage("/productlist");
+                return LocalRedirect(GetReturnUrlOrFallback("/Index"));
             }
         }
+
+        
+        [ValidateAntiForgeryToken]
 
         public async Task<IActionResult> OnPostFilter(bool popularity, bool rating, bool ascedingprice, bool descendingprice, bool bydefault, bool latest, int currentPage = 1)
         {
@@ -282,11 +297,12 @@ namespace CrystalByRiya.Pages
                     Price = p.Price,
                     Thumbnail = p.Thumbnail,
                     ProductName = p.ProductName,
-
+                    ParentUrl = p.ParentUrl
                 }).ToList();
                 CurrentPage = currentPage;
                 int skipCount = (CurrentPage - 1) * PageSize;
                 int totalProducts = result.Count;
+                TotalProductCount = totalProducts;
                 TotalPages = (int)Math.Ceiling(totalProducts / (double)PageSize);
                 PagedProducts = PagedProducts.Skip(skipCount).Take(PageSize).ToList();
 
@@ -309,12 +325,12 @@ namespace CrystalByRiya.Pages
                     Price = p.Product.Price.ToString(),
                     Thumbnail = p.Product.Thumbnail,
                     ProductName = p.Product.ProductName,
-
-
+                    ParentUrl = p.Product.ParentUrl
                 }).ToList();
                 CurrentPage = currentPage;
                 int skipCount = (CurrentPage - 1) * PageSize;
                 int totalProducts = result.Count;
+                TotalProductCount = totalProducts;
                 TotalPages = (int)Math.Ceiling(totalProducts / (double)PageSize);
                 PagedProducts = PagedProducts.Skip(skipCount).Take(PageSize).ToList();
                 return Page();
@@ -329,11 +345,12 @@ namespace CrystalByRiya.Pages
                     Price = p.Price,
                     Thumbnail = p.Thumbnail,
                     ProductName = p.ProductName,
-
+                    ParentUrl = p.ParentUrl
                 }).ToList();
                 CurrentPage = currentPage;
                 int skipCount = (CurrentPage - 1) * PageSize;
                 int totalProducts = products.Count;
+                TotalProductCount = totalProducts;
                 TotalPages = (int)Math.Ceiling(totalProducts / (double)PageSize);
                 PagedProducts = PagedProducts.Skip(skipCount).Take(PageSize).ToList();
 
@@ -345,47 +362,73 @@ namespace CrystalByRiya.Pages
             {
                 HttpContext.Session.SetString("priceasc", ascedingprice.ToString());
 
-                return RedirectToPage("productlist");
+                return RedirectToPage("/productlist", new { catname = Request.RouteValues["catname"]?.ToString(), currentPage });
             }
             if (descendingprice)
             {
                 HttpContext.Session.SetString("pricedesc", descendingprice.ToString());
 
-                return RedirectToPage("productlist");
+                return RedirectToPage("/productlist", new { catname = Request.RouteValues["catname"]?.ToString(), currentPage });
             }
-            return RedirectToPage("productlist");
+            return RedirectToPage("/productlist", new { catname = Request.RouteValues["catname"]?.ToString(), currentPage });
 
         }
 
 
-        public async Task<IActionResult> OnPostAddToCart(int Qty, string MaterialName, string Size, string SkuCode,  string Price, string AddOn, bool buynow = false)
+        public async Task<IActionResult> OnPostAddToCart(int Qty, string MaterialName, string Size, string SkuCode, string Price, string AddOn, bool buynow = false)
         {
             try
             {
                 var useremail = HttpContext.Session.GetString("UserEmail");
                 var username = HttpContext.Session.GetString("UserName");
                 var phone = HttpContext.Session.GetString("Phone");
-                string Childsku = await _context.TblProductSizes.Where(e => e.ProductID == SkuCode && e.Size == Size).Select(e => e.SKUCode).FirstOrDefaultAsync();
-                if (useremail == null)
+                
+                // Get Childsku based on Size
+                string Childsku = await _context.TblProductSizes
+                    .Where(e => e.ProductID == SkuCode && e.Size == Size)
+                    .Select(e => e.SKUCode)
+                    .FirstOrDefaultAsync();
+                
+                if (string.IsNullOrEmpty(useremail) && buynow == false)
                 {
-                    string redirectUrl = Url.Page("Index"); // After login, redirect to the wishlist
+                    string redirectUrl = GetReturnUrlOrFallback("/Index");
+                    HttpContext.Session.SetString("PendingCartSkuCode", SkuCode);
+                    HttpContext.Session.SetString("PendingCartQty", Qty.ToString());
+                    HttpContext.Session.SetString("PendingCartPrice", Price);
+                    HttpContext.Session.SetString("PendingCartChildSku", Childsku);
+                    HttpContext.Session.SetString("PendingCartAddOn", AddOn ?? string.Empty);
+                    HttpContext.Session.SetString("PendingCartSize", Size ?? string.Empty);
+                    HttpContext.Session.SetString("PendingCartMaterial", MaterialName ?? string.Empty);
+                    HttpContext.Session.SetString("PendingCartBuyNow", buynow.ToString());
                     return RedirectToPage("/myaccount", new { redirectUrl });
-
                 }
-
-                await _addToCartItems.OnPostAddToCarts(Qty, MaterialName, Size, SkuCode, buynow, Price, Childsku, AddOn, useremail, phone, username);           
-
-
-
-
-                return RedirectToPage("productlist");
-
-
+                
+                await _addToCartItems.OnPostAddToCarts(Qty, MaterialName, Size, SkuCode, buynow, Price, Childsku, AddOn, useremail, phone, username);
+                
+                if (buynow == true)
+                {
+                    return RedirectToPage("/checkout");
+                }
+                
+                return LocalRedirect(GetReturnUrlOrFallback("/Index"));
             }
             catch (Exception ex)
             {
-                return Page();
+                _logger.LogError(ex, "An error occurred while adding product to cart.");
+                ModelState.AddModelError(string.Empty, "An error occurred while adding product to cart.");
+                return LocalRedirect(GetReturnUrlOrFallback("/Index"));
             }
+        }
+
+        private string GetReturnUrlOrFallback(string fallbackPage)
+        {
+            var referer = Request.Headers.Referer.ToString();
+            if (!string.IsNullOrWhiteSpace(referer) && Uri.TryCreate(referer, UriKind.Absolute, out var uri))
+            {
+                return uri.PathAndQuery;
+            }
+
+            return Url.Page(fallbackPage) ?? "/";
         }
     }
 }

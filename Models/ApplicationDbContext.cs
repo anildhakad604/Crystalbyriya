@@ -66,6 +66,9 @@ namespace CrystalByRiya.Models
         public virtual DbSet<AdminLogin> TblAdminLogin { get; set; }
         public virtual DbSet<MailCredentials> TblMailCredentials { get; set; }
 
+        public virtual DbSet<IntentionMaster> TblIntentionMaster { get; set; }
+
+        public virtual DbSet<CategoryBanner> TblCategoryBanner { get; set; }
 
         public DbSet<ExceptionLog> ExceptionLogs { get; set; }
         public DbSet<Employee> TblEmployee { get; set; }

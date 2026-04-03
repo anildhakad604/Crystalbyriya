@@ -1,4 +1,4 @@
-﻿using CrystalByRiya.Models;
+using CrystalByRiya.Models;
 using CrystalByRiya.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +19,10 @@ namespace Viraj.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             Categories = await _context.TblCategory.ToListAsync();
-            SubCategories = await _context.TblSubcategory.OrderBy(sub => sub.SubCategoryname) // Sort SubCategories alphabetically by Name
-                .ToListAsync();
+         
             ChildViewModel model = new ChildViewModel(_context)
             {
-                Categories = Categories,
-                SubCategories = SubCategories
+                Categories = Categories
             };
 
             return View("Category", model);

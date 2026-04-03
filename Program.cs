@@ -23,6 +23,9 @@ builder.Services.AddResponseCompression(options =>
     options.Providers.Add<GzipCompressionProvider>();  // Add GZIP compression
     options.Providers.Add<BrotliCompressionProvider>();  // Add Brotli compression (optional, modern and efficient)
 });
+
+
+
 // Add Razor Pages with runtime compilation for dynamic changes
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
@@ -37,6 +40,10 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;  // Ensure the cookie can't be accessed via client-side script
     options.Cookie.IsEssential = true;  // Mark the session cookie as essential
 });
+
+// Add caching services
+builder.Services.AddMemoryCache();
+builder.Services.AddResponseCaching();
 
 
 // Configure file upload size limits
@@ -83,6 +90,9 @@ else
 }
 
 app.UseHttpsRedirection();
+
+app.UseResponseCompression();
+
 app.UseStaticFiles();
 /*var options = new RewriteOptions();
 options.AddRedirectToHttps();
@@ -91,7 +101,9 @@ app.UseRewriter(options);
 */
 app.UseRouting();
 
-app.UseCors(MyAllowSpecificOrigins);   
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseResponseCaching();
 
 app.UseAuthentication();               
 app.UseAuthorization();

@@ -1,399 +1,266 @@
-﻿@page "{blogid}/{url}"
+@page "{blogid}/{url}"
 @model CrystalByRiya.Pages.blogdetailModel
 @{
+    string shareUrl = Model.Currenturl;
+    string blogTitle = Model.Singleblog?.BlogTitle ?? "Blog Detail";
+    string blogImage = Model.Singleblog?.ThumbnailImage ?? "";
+    string publishDate = Model.Singleblog?.PublishedDate.ToString("MMMM dd, yyyy") ?? "";
+    string keywords = Model.Singleblog?.Keywords ?? "";
 }
 @section Metatags {
-    <title> Crystals By Riya | @Model.Singleblog.BlogTitle</title>
-    <meta name="keywords" content="@Model.Singleblog.Keywords" />
-    <link rel="canonical" href="@Model.Currenturl" />
-    <meta property="og:title" content="@Model.Singleblog.BlogTitle" />
-    <meta property="og:url" content="@Model.Currenturl" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="@Model.Singleblog.ThumbnailImage" />
-    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
-
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
-    <meta name="twitter:title" content="@Model.Singleblog.BlogTitle">
-    <meta name="twitter:description" content="@Model.Singleblog.BlogTitle">
-    <meta name="twitter:creator" content="Crystals by Riya">
-    <meta name="twitter:image" content="@Model.Singleblog.ThumbnailImage">
-    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+    <title>@blogTitle | Dr Astro Crystals</title>
+    <meta name="description" content="@(Model.Singleblog?.ShortDescription ?? blogTitle)" />
+    <meta name="keywords" content="@keywords" />
+    <link rel="canonical" href="@shareUrl" />
+    <meta property="og:title" content="@blogTitle" />
+    <meta property="og:url" content="@shareUrl" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="/images/blog/@blogImage" />
+    <meta property="og:site_name" content="https://www.drastrocrystals.com" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="https://www.drastrocrystals.com">
+    <meta name="twitter:title" content="@blogTitle">
+    <meta name="twitter:description" content="@(Model.Singleblog?.ShortDescription ?? blogTitle)">
+    <meta name="twitter:creator" content="Dr Astro Crystals">
+    <meta name="twitter:image" content="/images/blog/@blogImage">
+    <meta name="twitter:domain" content="https://www.drastrocrystals.com" />
 }
 
-<!-- Page Title -->
-<section class="page-title-blog">
-    <div class="bg-image">
-        <div class="parallaxie" style='background-image: url("images/section/blog-2.jpg")'></div>
-    </div>
-    <div class="container position-relative z-5">
-        <div class="content">
-            <div class="entry_tag name-tag h6">Elegance</div>
-            <h1 class="heading">
-                Experience the 90s style of <br class="d-none d-sm-block">
-                mixing and matching
-            </h1>
-            <div class="entry_author">
-                <span class="h6">Written by:</span>
-                <h6 class="name-author">Ronald Richards</h6>
+@if (Model.Singleblog == null)
+{
+    <section class="s-page-title">
+        <div class="container">
+            <div class="content text-center py-5">
+                <h1 class="title-page">Blog Not Found</h1>
+                <p class="h6 mt-3">The article you are looking for could not be found.</p>
+                <a asp-page="/blog" class="tf-btn animate-btn mt-4">View All Blogs</a>
             </div>
         </div>
-    </div>
-</section>
-<!-- /Page Title -->
-<!-- Blog Detail -->
-<section class="s-blog-detail flat-spacing">
-    <div class="container">
-        <div class="row flex-wrap-reverse">
-            <div class="col-xl-3">
-                <div class="blog-detail_info mt-xl-0 sticky-top">
-                    <div class="date-post">
-                        <p class="title-label h6">Date</p>
-                        <h6 class="entry_date">April 8, 2025</h6>
-                    </div>
-                    <div class="share-post">
-                        <p class="title-label h6">Share</p>
-                        <ul class="tf-social-icon">
-                            <li>
-                                <a href="https://www.facebook.com/" target="_blank" class="social-facebook">
-                                    <span class="icon"><i class="icon-fb"></i></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.instagram.com/" target="_blank" class="social-instagram">
-                                    <span class="icon"><i class="icon-instagram-logo"></i></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://x.com/" target="_blank" class="social-x">
-                                    <span class="icon"><i class="icon-x"></i></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.tiktok.com/" target="_blank" class="social-tiktok">
-                                    <span class="icon"><i class="icon-tiktok"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tag-post">
-                        <p class="title-label">Tags</p>
-                        <ul class="tag-list">
-                            <li><a href="#" class="link">#Accessories</a></li>
-                            <li><a href="#" class="link">#Layering</a></li>
-                            <li><a href="#" class="link">#Style</a></li>
-                            <li><a href="#" class="link">#Layering</a></li>
-                            <li><a href="#" class="link">#Vintage</a></li>
-                            <li><a href="#" class="link">#Denim</a></li>
-                        </ul>
-                    </div>
+    </section>
+}
+else
+{
+    <section class="page-title-blog">
+        <div class="bg-image">
+            <div class="parallaxie" style='background-image: url("/images/blog/@Model.BlogImage")'></div>
+        </div>
+        <div class="container position-relative z-5">
+            <div class="content">
+                <div class="entry_tag name-tag h6">@Model.BlogCategory</div>
+                <h1 class="heading">@Model.BlogTitle</h1>
+                <div class="entry_author">
+                    <span class="h6">Written by:</span>
+                    <h6 class="name-author">@Model.BlogAuthor</h6>
                 </div>
             </div>
-            <div class="col-xl-9">
-                <div class="blog-detail_content tf-grid-layout">
-                    <div class="box-text">
-                        <p class="h4 text-black">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta purus scelerisque felis condimentum, a
-                            lobortis mauris viverra. Sed et nisl maximus, gravida purus et, condimentum libero. Aenean sollicitudin mauris ac
-                            dolor ullamcorper, vel ornare enim mollis. Mauris congue augue felis, ac scelerisque augue fringilla at.
-                        </p>
-                        <p class="h6">
-                            Cras tincidunt lectus orci, vitae consequat nibh porttitor sed. Quisque sapien odio, scelerisque et ipsum ac,
-                            hendrerit scelerisque eros. Suspendisse congue id felis eget auctor. Praesent nec augue rutrum, posuere tellus in,
-                            aliquet enim. In quis justo rutrum, faucibus sem tristique, feugiat sapien. Pellentesque felis enim, iaculis vitae
-                            sem in, rhoncus congue urna. Cras vitae tortor posuere lorem consectetur tempor id id eros. Proin sed eleifend
-                            nisl, eu faucibus purus. Duis faucibus ac nibh venenatis posuere. Proin vel tellus id ex commodo ultricies vitae a
-                            augue. Mauris mattis blandit enim nec cursus. Quisque placerat felis eget dui cursus, non fringilla lacus
-                            lobortis.
-                        </p>
-                    </div>
-                    <div>
-                        <div class="entry_image">
-                            <img src="images/blog/single-1.jpg" data-src="images/blog/single-1.jpg" alt="Blog" class="lazyload">
+        </div>
+    </section>
+
+    <section class="s-blog-detail flat-spacing">
+        <div class="container">
+            <div class="row flex-wrap-reverse">
+                <div class="col-xl-3">
+                    <div class="blog-detail_info mt-xl-0 sticky-top">
+                        <div class="date-post">
+                            <p class="title-label h6">Date</p>
+                            <h6 class="entry_date">@Model.BlogFormattedDate</h6>
                         </div>
-                        <div class="quote-blog">
-                            <div class="icon">
-                                <i class="icon-quote-2"></i>
-                            </div>
-                            <p class="quote h4">
-                                Nam auctor ante id lorem sodales venenatis. Cras vitae felis a erat dapibus dignissim nec ac
-                                mi. Sed scelerisque vestibulum tortor, et luctus nisi hendrerit mattis.
-                            </p>
+                        <div class="share-post">
+                            <p class="title-label h6">Share</p>
+                            <ul class="tf-social-icon">
+                                <li>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=@Uri.EscapeDataString(Model.ShareUrl)" target="_blank" class="social-facebook">
+                                        <span class="icon"><i class="icon-fb"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/drastrocrystals" target="_blank" class="social-instagram">
+                                        <span class="icon"><i class="icon-instagram-logo"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/intent/tweet?url=@Uri.EscapeDataString(Model.ShareUrl)&text=@Uri.EscapeDataString(Model.BlogTitle)" target="_blank" class="social-x">
+                                        <span class="icon"><i class="icon-x"></i></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://wa.me/?text=@Uri.EscapeDataString(Model.BlogTitle + " " + Model.ShareUrl)" target="_blank" class="social-whatsapp">
+                                        <span class="icon"><i class="icon-whatsapp"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="box-text">
-                        <p class="h6">
-                            Integer molestie dolor in tellus ultricies rhoncus. Aenean venenatis tincidunt diam, condimentum sagittis nibh
-                            cursus vel. Aliquam sed nisi egestas, pharetra quam eu, feugiat ex. Phasellus consequat, mauris eu sodales
-                            lacinia, est tellus vehicula dui, quis iaculis nisl nulla non turpis.
-                        </p>
-                        <p class="h6">
-                            Nam auctor ante id lorem sodales venenatis. Cras vitae felis a erat dapibus dignissim nec ac mi. Sed scelerisque
-                            vestibulum tortor, et luctus nisi hendrerit mattis. Donec at dignissim erat, et tempor nulla. Cras suscipit, lacus
-                            quis pharetra congue, nisl diam congue nisl, sed fermentum tellus ipsum non mi. Donec eget mauris fringilla,
-                            dignissim dui id, blandit erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                        </p>
-                        <p class="h6">
-                            Suspendisse id leo vestibulum, tempus massa lobortis, laoreet risus. Nullam dui lorem, porttitor non pellentesque
-                            sed, laoreet sit amet sem. Nam fermentum ipsum ac enim fringilla fermentum
-                        </p>
-                    </div>
-                    <div class="entry_image tf-grid-layout sm-col-2">
-                        <div class="image">
-                            <img src="images/blog/single-2.jpg" data-src="images/blog/single-2.jpg" alt="Blog" class="lazyload">
-                        </div>
-                        <div class="image">
-                            <img src="images/blog/single-3.jpg" data-src="images/blog/single-3.jpg" alt="Blog" class="lazyload">
-                        </div>
-                    </div>
-                    <div class="box-text">
-                        <p class="h6">
-                            Integer molestie dolor in tellus ultricies rhoncus. Aenean venenatis tincidunt diam, condimentum sagittis nibh
-                            cursus vel. Aliquam sed nisi egestas, pharetra quam eu, feugiat ex. Phasellus consequat, mauris eu sodales
-                            lacinia, est tellus vehicula dui, quis iaculis nisl nulla non turpis.
-                        </p>
-                        <p class="h6">
-                            Nam auctor ante id lorem sodales venenatis. Cras vitae felis a erat dapibus dignissim nec ac mi. Sed scelerisque
-                            vestibulum tortor, et luctus nisi hendrerit mattis. Donec at dignissim erat, et tempor nulla. Cras suscipit, lacus
-                            quis pharetra congue, nisl diam congue nisl, sed fermentum tellus ipsum non mi. Donec eget mauris fringilla,
-                            dignissim dui id, blandit erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                        </p>
-                        <p class="h6">
-                            Suspendisse id leo vestibulum, tempus massa lobortis, laoreet risus. Nullam dui lorem, porttitor non pellentesque
-                            sed, laoreet sit amet sem. Nam fermentum ipsum ac enim fringilla fermentum
-                        </p>
-                    </div>
-                    <span class="br-line"></span>
-                    <div class="group-direc">
-                        <a href="#" class="btn-direc prev link">
-                            <img src="images/blog/direc-1.jpg" data-src="images/blog/direc-1.jpg" alt="" class="lazyload">
-                            <div class="content">
-                                <p class="fw-medium text-uppercase">Previous post</p>
-                                <p class="name-post h6">April 4th the biggest sale of the year</p>
-                            </div>
-                        </a>
-                        <span class="br-line"></span>
-                        <a href="#" class="btn-direc next link">
-                            <div class="content">
-                                <p class="fw-medium text-uppercase">Previous post</p>
-                                <p class="name-post h6">April 4th the biggest sale of the year</p>
-                            </div>
-                            <img src="images/blog/direc-2.jpg" data-src="images/blog/direc-2.jpg" alt="" class="lazyload">
-                        </a>
-                    </div>
-                    <span class="br-line"></span>
-                </div>
-                <div class="blog-detail_comment">
-                    <h2 class="title">Comments</h2>
-                    <ul class="comment-list">
-                        <li class="comment-item">
-                            <div class="cmt_image">
-                                <img loading="lazy" width="60" height="60" src="images/avatar/avatar-5.jpg" alt="avatar">
-                            </div>
-                            <div class="cmt_content">
-                                <div class="head">
-                                    <div class="cmt__infor">
-                                        <h5 class="author_name">Devon Lane</h5>
-                                        <p class="text-small text-main-2">August 13, 2025</p>
-                                    </div>
-                                    <div class="rate_wrap">
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                    </div>
-                                </div>
-                                <h6 class="cmt__text fw-normal text-main">
-                                    It's really easy to use and it is exactly what I am looking for. A lot of good looking templates &
-                                    it's highly customizable. Live support is helpful, solved my issue in no time.
-                                </h6>
-                                <ul class="image-cmt-list">
-                                    <li class="image-cmt-item">
-                                        <img loading="lazy" width="141" height="206" src="images/products/comment/comment-1.jpg" alt="Review">
-                                    </li>
-                                    <li class="image-cmt-item">
-                                        <img loading="lazy" width="141" height="206" src="images/products/comment/comment-2.jpg" alt="Review">
-                                    </li>
-                                    <li class="image-cmt-item">
-                                        <img loading="lazy" width="141" height="206" src="images/products/comment/comment-3.jpg" alt="Review">
-                                    </li>
+                        @if (Model.BlogTags.Any())
+                        {
+                            <div class="tag-post">
+                                <p class="title-label">Tags</p>
+                                <ul class="tag-list">
+                                    @foreach (var tag in Model.BlogTags)
+                                    {
+                                        <li><a href="#" class="link">#@tag</a></li>
+                                    }
                                 </ul>
-                                <div class="feel-action-group">
-                                    <a href="#" class="btn-feel text-small text-main-2 link">
-                                        <i class="icon icon-like"></i>
-                                        Useful
-                                    </a>
-                                    <a href="#" class="btn-feel text-small text-main-2 link">
-                                        <i class="icon icon-unlike"></i>
-                                        Not helpful
-                                    </a>
-                                </div>
                             </div>
-                        </li>
-                        <li class="comment-item">
-                            <div class="cmt_image">
-                                <img loading="lazy" width="60" height="60" src="images/avatar/avatar-6.jpg" alt="avatar">
-                            </div>
-                            <div class="cmt_content">
-                                <div class="head">
-                                    <div class="cmt__infor">
-                                        <h5 class="author_name">Theresa Webb</h5>
-                                        <p class="text-small text-main-2">August 13, 2025</p>
-                                    </div>
-                                    <div class="rate_wrap">
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                    </div>
-                                </div>
-                                <h6 class="cmt__text fw-normal text-main">
-                                    It's really easy to use and it is exactly what I am looking for. A lot of good looking templates &
-                                    it's highly customizable. Live support is helpful, solved my issue in no time.
-                                </h6>
-                                <div class="feel-action-group">
-                                    <a href="#" class="btn-feel text-small text-main-2 link">
-                                        <i class="icon icon-like"></i>
-                                        Useful
-                                    </a>
-                                    <a href="#" class="btn-feel text-small text-main-2 link">
-                                        <i class="icon icon-unlike"></i>
-                                        Not helpful
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="comment-item">
-                            <div class="cmt_image">
-                                <img loading="lazy" width="60" height="60" src="images/avatar/avatar-7.jpg" alt="avatar">
-                            </div>
-                            <div class="cmt_content">
-                                <div class="head">
-                                    <div class="cmt__infor">
-                                        <h5 class="author_name">Albert Flores</h5>
-                                        <p class="text-small text-main-2">August 13, 2025</p>
-                                    </div>
-                                    <div class="rate_wrap">
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                        <i class="icon-star text-star"></i>
-                                    </div>
-                                </div>
-                                <h6 class="cmt__text fw-normal text-main">
-                                    It's really easy to use and it is exactly what I am looking for. A lot of good looking templates &
-                                    it's highly customizable. Live support is helpful, solved my issue in no time.
-                                </h6>
-                                <div class="feel-action-group">
-                                    <a href="#" class="btn-feel text-small text-main-2 link">
-                                        <i class="icon icon-like"></i>
-                                        Useful
-                                    </a>
-                                    <a href="#" class="btn-feel text-small text-main-2 link">
-                                        <i class="icon icon-unlike"></i>
-                                        Not helpful
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="btn-view-all">
-                        <a href="#" class="tf-btn style-line w-100">
-                            View all reivew
-                        </a>
-                    </div>
-                </div>
-                <div class="blog-detail_add_review">
-                    <h2 class="title">Add Review</h2>
-                    <p class="sub-title">
-                        Your email address will not be published
-                    </p>
-                    <form action="#" class="form-add_review">
-                        <div class="form-content">
-                            <div class="tf-grid-layout sm-col-2">
-                                <fieldset>
-                                    <input type="text" placeholder="Your name" required="">
-                                </fieldset>
-                                <fieldset>
-                                    <input type="number" placeholder="Your phone number" required="">
-                                </fieldset>
-                            </div>
-                            <textarea placeholder="Review"></textarea>
-                        </div>
-                        <div class="form-action">
-                            <button type="submit" class="h6 tf-btn animate-btn">
-                                Post comment
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /Blog Detail -->
-<!-- Relate -->
-<section class="flat-spacing pt-0">
-    <div class="container">
-        <div class="sect-title">
-            <h1>Related Articles</h1>
-        </div>
-        <div dir="ltr" class="swiper tf-swiper" data-preview="3" data-tablet="3" data-mobile-sm="2" data-mobile="1" data-space-lg="48" data-space-md="30" data-space="15" data-pagination="1" data-pagination-sm="2" data-pagination-md="3" data-pagination-lg="3">
-            <div class="swiper-wrapper">
-                <!-- item 1 -->
-                <div class="swiper-slide">
-                    <div class="article-blog hover-img4">
-                        <div class="blog-image">
-                            <a href="blog-detail.html" class="entry_image img-style4">
-                                <img src="images/blog/article-13.jpg" data-src="images/blog/article-13.jpg" alt="" class=" lazyload">
-                            </a>
-                        </div>
-                        <div class="blog-content p-0">
-                            <a href="blog-detail.html" class="entry_name link h4">
-                                Nike Sportswear Tee Shirts
-                            </a>
-                            <p class="entry_date">March 25, 2025</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- item 2 -->
-                <div class="swiper-slide">
-                    <div class="article-blog hover-img4">
-                        <div class="blog-image">
-                            <a href="blog-detail.html" class="entry_image img-style4">
-                                <img src="images/blog/article-5.jpg" data-src="images/blog/article-5.jpg" alt="" class=" lazyload">
-                            </a>
-                        </div>
-                        <div class="blog-content p-0">
-                            <a href="blog-detail.html" class="entry_name link h4">
-                                Nike Sportswear Tee Shirts
-                            </a>
-                            <p class="entry_date">March 25, 2025</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- item 3 -->
-                <div class="swiper-slide">
-                    <div class="article-blog hover-img4">
-                        <div class="blog-image">
-                            <a href="blog-detail.html" class="entry_image img-style4">
-                                <img src="images/blog/article-4.jpg" data-src="images/blog/article-4.jpg" alt="" class=" lazyload">
-                            </a>
-                        </div>
-                        <div class="blog-content p-0">
-                            <a href="blog-detail.html" class="entry_name link h4">
-                                Nike Sportswear Tee Shirts
-                            </a>
-                            <p class="entry_date">March 25, 2025</p>
-                        </div>
+                        }
                     </div>
                 </div>
 
+                <div class="col-xl-9">
+                    <div class="blog-detail_content tf-grid-layout">
+                        @if (!string.IsNullOrEmpty(Model.Singleblog.ShortDescription))
+                        {
+                            <div class="box-text">
+                                <p class="h4 text-black">@Model.Singleblog.ShortDescription</p>
+                            </div>
+                        }
+                        
+                        @if (!string.IsNullOrEmpty(Model.BlogImage))
+                        {
+                            <div class="entry_image">
+                                <img src="/images/blog/@Model.BlogImage" data-src="/images/blog/@Model.BlogImage" alt="@Model.BlogTitle" class="lazyload">
+                            </div>
+                        }
+                        
+                        <div class="box-text">
+                            @Html.Raw(Model.Singleblog.Blogdescription)
+                        </div>
+
+                        <span class="br-line"></span>
+
+                        <div class="group-direc">
+                            <a asp-page="/blog" class="btn-direc prev link">
+                                <div class="content">
+                                    <p class="fw-medium text-uppercase">Back to Blog</p>
+                                    <p class="name-post h6">View all articles</p>
+                                </div>
+                            </a>
+                        </div>
+                        <span class="br-line"></span>
+                    </div>
+
+                    <div class="blog-detail_comment">
+                        <h2 class="title">Comments (@Model.ApprovedCommentsCount)</h2>
+                        @if (Model.ApprovedComments.Any())
+                        {
+                            <ul class="comment-list">
+                                @foreach (var comment in Model.ApprovedComments)
+                                {
+                                    <li class="comment-item">
+                                        <div class="cmt_image">
+                                            <img loading="lazy" width="60" height="60" src="/images/avatar/default-avatar.png" alt="@comment.Name">
+                                        </div>
+                                        <div class="cmt_content">
+                                            <div class="head">
+                                                <div class="cmt__infor">
+                                                    <h5 class="author_name">@comment.Name</h5>
+                                                    <p class="text-small text-main-2">@comment.Date.ToString("MMMM dd, yyyy")</p>
+                                                </div>
+                                            </div>
+                                            <h6 class="cmt__text fw-normal text-main">@comment.Comment</h6>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-main-2 h6">No comments yet. Be the first to share your thoughts!</p>
+                        }
+                    </div>
+
+                    <div class="blog-detail_add_review">
+                        <h2 class="title">Leave a Comment</h2>
+                        <p class="sub-title">Your email address will not be published</p>
+                        @if (!string.IsNullOrWhiteSpace(Model.CommentStatusMessage))
+                        {
+                            <div class="alert alert-success" role="alert">
+                                @Model.CommentStatusMessage
+                            </div>
+                        }
+                        <form method="post" asp-page-handler="AddComment" asp-route-blogid="@Model.Singleblog.Blogid"
+                              asp-route-title="@Model.BlogTitle" class="form-add_review">
+                            <div class="form-content">
+                                <div class="tf-grid-layout sm-col-2">
+                                    <fieldset>
+                                        <input type="text" name="Name" placeholder="Your name *" required>
+                                    </fieldset>
+                                    <fieldset>
+                                        <input type="email" name="Email" placeholder="Your email *" required>
+                                    </fieldset>
+                                </div>
+                                <textarea name="Comment" placeholder="Write your comment here..." required></textarea>
+                            </div>
+                            <div class="form-action">
+                                <button type="submit" class="h6 tf-btn animate-btn">
+                                    Post Comment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="sw-dot-default tf-sw-pagination"></div>
         </div>
-    </div>
-</section>
+    </section>
+
+    @if (Model.Products != null && Model.Products.Any())
+    {
+        <section class="flat-spacing pt-0">
+            <div class="container">
+                <div class="sect-title">
+                    <h2 class="h1">Featured Products</h2>
+                </div>
+                <div dir="ltr" class="swiper tf-swiper" data-preview="4" data-tablet="3" data-mobile-sm="2" data-mobile="2"
+                     data-space-lg="24" data-space-md="15" data-space="10"
+                     data-pagination="2" data-pagination-sm="2" data-pagination-md="3" data-pagination-lg="4">
+                    <div class="swiper-wrapper">
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="swiper-slide">
+                                <div class="card-product">
+                                    <div class="card-product_wrapper">
+                                        <a asp-page="/detail" asp-route-skucode="@product.SkuCode" asp-route-productname="@product.ParentUrl" class="product-img">
+                                            <img class="lazyload img-product" src="/images/products/@product.Thumbnail" data-src="/images/products/@product.Thumbnail" alt="@product.ProductName">
+                                        </a>
+                                        <ul class="product-action_list">
+                                            <li>
+                                                <form method="post" asp-page-handler="AddToCart">
+                                                    <input type="hidden" name="SkuCode" value="@product.SkuCode" />
+                                                    <input type="hidden" name="ProductName" value="@product.ProductName" />
+                                                    <input type="hidden" name="Image" value="@product.Thumbnail" />
+                                                    <input type="hidden" name="Qty" value="1" />
+                                                    <input type="hidden" name="Price" value="@product.Price" />
+                                                    <button type="submit" class="hover-tooltip tooltip-left box-icon">
+                                                        <span class="icon icon-shopping-cart-simple"></span>
+                                                        <span class="tooltip">Add to cart</span>
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form method="post" asp-page-handler="AddToWishlist">
+                                                    <input type="hidden" name="SkuCode" value="@product.SkuCode" />
+                                                    <input type="hidden" name="ProductName" value="@product.ProductName" />
+                                                    <input type="hidden" name="buynow" value="false" />
+                                                    <button type="submit" class="hover-tooltip tooltip-left box-icon">
+                                                        <span class="icon icon-heart"></span>
+                                                        <span class="tooltip">Add to Wishlist</span>
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-product_info">
+                                        <a asp-page="/detail" asp-route-skucode="@product.SkuCode" asp-route-productname="@product.ParentUrl" class="name-product h4 link">@product.ProductName</a>
+                                        <div class="price-wrap">
+                                            <span class="price-new h6">₹@product.Price</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="sw-dot-default tf-sw-pagination"></div>
+                </div>
+            </div>
+        </section>
+    }
+}

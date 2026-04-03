@@ -48,6 +48,19 @@ namespace CrystalByRiya.Pages
         [BindProperty]
         public List<Product>    Products { get; set; }
         public List<string> TblRelatedProducts { get; set; }
+        [TempData]
+        public string CommentStatusMessage { get; set; }
+
+        // Simplified properties for UI
+        public string BlogCategory => string.IsNullOrEmpty(Singleblog?.Category) ? "Crystal Insights" : Singleblog.Category;
+        public string BlogAuthor => string.IsNullOrEmpty(Singleblog?.Author) ? "Dr Astro Crystals Team" : Singleblog.Author;
+        public string BlogFormattedDate => Singleblog?.PublishedDate.ToString("MMMM dd, yyyy") ?? "";
+        public string ShareUrl => Currenturl ?? "";
+        public string BlogTitle => Singleblog?.BlogTitle ?? "";
+        public string BlogImage => Singleblog?.Image ?? "";
+        public int ApprovedCommentsCount => ReplyList?.Count(r => r.IsApproved == true) ?? 0;
+        public List<CommentReply> ApprovedComments => ReplyList?.Where(r => r.IsApproved == true).ToList() ?? new List<CommentReply>();
+        public List<string> BlogTags => string.IsNullOrEmpty(Singleblog?.Keywords) ? new List<string>() : Singleblog.Keywords.Split(',').Take(6).Select(t => t.Trim()).ToList();
 
         public async Task<IActionResult> OnGet(int blogid)
         {
@@ -58,6 +71,7 @@ namespace CrystalByRiya.Pages
                 BlogFaqs = await _context.TblBlogsFaq.Where(e => e.BlogId == blogid).ToListAsync();
                 ReplyList = await _context.TblCommentReply.Where(e => e.BlogId == blogid).ToListAsync();
                 TblRelatedProducts= await _context.RelatedProducts.Where(e => e.BlogId == blogid).Select(e=>e.Skucode).ToListAsync();
+
                 if(TblRelatedProducts.Count > 0)
                 {
                     Products = await _context.TblProducts
@@ -75,6 +89,12 @@ namespace CrystalByRiya.Pages
         public async Task<IActionResult> OnPostAddComment(int blogid,string title)
         {
             Currenturl = HttpContext.Request.GetDisplayUrl();
+            var blog = await _context.TblBlogs.FirstOrDefaultAsync(b => b.Blogid == blogid);
+            if (blog == null)
+            {
+                return RedirectToPage("/blog");
+            }
+
             var newComment = new CommentReply
                 {
                     BlogId = blogid,
@@ -88,7 +108,9 @@ namespace CrystalByRiya.Pages
                 _context.TblCommentReply.Add(newComment);
                 await _context.SaveChangesAsync();
 
-            return RedirectToPage(null, new { blogid, url=title});
+            CommentStatusMessage = "Your comment is awaiting approval.";
+            var blogUrl = string.IsNullOrWhiteSpace(blog.CustomUrl) ? blog.BlogTitle : blog.CustomUrl;
+            return RedirectToPage("/blogdetail", new { blogid = blog.Blogid, url = blogUrl });
 
 
 

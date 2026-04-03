@@ -1,26 +1,26 @@
 ﻿  @page "{Url}"
 @model CrystalByRiya.Pages.categoryModel
 @{
-
+}
 }
 @section Metatags {
-    <title> Crystals By Riya | @Model.Category.MenuList</title>
+    <title> Dr Astro Crystals | @Model.Category.MenuList</title>
     <meta name="keywords" content="Healing stones,Crystals and Gemstones,Healing crystals,Natural stones,Authentic crystals,Original crystals,Crystal jewellery,Sterling Silver Jewellery,Silver jewellery crystals,Silver jewellery" />
     <link rel="canonical" href="@Model.Currenturl" />
-    <meta property="og:title" content="Crystals By Riya | @Model.Category.MenuList" />
+    <meta property="og:title" content="Dr Astro Crystals | @Model.Category.MenuList" />
     <meta property="og:url" content="@Model.Currenturl" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png" />
-    <meta property="og:site_name" content="https://www.crystalsbyriya.com" />
+    <meta property="og:site_name" content="https://www.drastrocrystals.com" />
     <meta property="og:description" content="@Model.Category.Description" />
 
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://www.crystalsbyriya.com">
-    <meta name="twitter:title" content="Crystals By Riya | @Model.Category.MenuList">
-    <meta name="twitter:creator" content="Crystals by Riya">
+    <meta name="twitter:site" content="https://www.drastrocrystals.com">
+    <meta name="twitter:title" content="Dr Astro Crystals | @Model.Category.MenuList">
+    <meta name="twitter:creator" content="Dr Astro Crystals">
     <meta name="twitter:image" content="https://djelgxoby50a9.cloudfront.net/logo/logo.png">
-    <meta name="twitter:domain" content="https://www.crystalsbyriya.com" />
+    <meta name="twitter:domain" content="https://www.drastrocrystals.com" />
 }
 
 <main class="main-content">
@@ -32,7 +32,7 @@
                     <div class="page-title-content content-style-2">
                         @if (Model.Category != null)
                         {
-                            <div class="bread-crumbs"><a asp-page="/">Home<span class="breadcrumb-sep">&gt;</span></a><a asp-page="/category/@Model.Category.Url">@Model.Category.MenuList</a></div>
+                            <div class="bread-crumbs"><a asp-page="/Index">Home<span class="breadcrumb-sep">&gt;</span></a><a asp-page="/category" asp-route-Url="@Model.Category.Url">@Model.Category.MenuList</a></div>
                         }
                         else
                         {
@@ -53,6 +53,19 @@
                             <h2 class="title">No Title</h2>
                         }
                     </div>
+                    <!-- Category Banner Section -->
+                    @if (!string.IsNullOrEmpty(Model.Category?.Image))
+                    {
+                        <div class="category-banner-section">
+                            <div class="container-fluid p-0">
+                                <div class="category-banner-wrapper">
+                                    <img src="https://djelgxoby50a9.cloudfront.net/Images/@Model.Category.Image" 
+                                         alt="@Model.Category.MenuList" 
+                                         class="category-banner-img w-100" />
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div class="col-12 d-flex justify-content-center">
                     <div class="product-category-desc text-center">
@@ -82,7 +95,7 @@
                         <div class="col-6 col-md-3">
                             <div class="category-item">
                                 <div class="category-thumb">
-                                    <a asp-page="/productlist" asp-route-subcatname="@item.SubCategoryname.Replace(' ', '-')">
+                                    <a asp-page="/productlist" asp-route-catname="@Model.Catname">
                                         <img src="@item.Categoryimage" alt="Shop" class="lazyload">
                                         <span class="bg-thumb" data-bg-img=" @Url.Content("https://djelgxoby50a9.cloudfront.net/Images/" + @item.ThumbnailImage)"></span>
                                         <span class="thumb-overlay"></span>
@@ -91,7 +104,7 @@
                                 <div class="category-footer position-relative">
                                     <div class="category-info d-block">
                                         <div class="content-inner text-center">
-                                            <h4 class="title"><a asp-page="/productlist" asp-route-subcatname="@item.SubCategoryname.Replace(' ', '-')">@item.SubCategoryname.ToUpperInvariant()</a></h4>
+                                            <h4 class="title"><a asp-page="/productlist" asp-route-catname="@Model.Catname">@item.SubCategoryname.ToUpperInvariant()</a></h4>
                                             <div class="numbers">
                                                 <!-- Ensure the SubCategoryName exists in the dictionary before accessing it -->
                                                 @if (Model.SubcategoryProductCounts.ContainsKey(item.SubCategoryname))
@@ -106,7 +119,29 @@
                                         </div>
                                     </div>
                                     <div class="category-action-button-parent">
-                                        <a asp-page="/productlist" asp-route-catname="@Model.Catname" asp-route-subcatname="@item.SubCategoryname.Replace(' ', '-')" class="btn category-action-button">View Products</a>
+                                        <a asp-page="/productlist" asp-route-catname="@Model.Catname" class="btn category-action-button">View Products</a>
+                                    </div>
+                                    <!-- Add to Cart and Wishlist Actions -->
+                                    <div class="category-cart-actions">
+                                        <form method="post" asp-page="/productlist" asp-page-handler="AddToCart" class="d-inline-block me-2">
+                                            <input type="hidden" name="SkuCode" value="@item.Categoryimage" />
+                                            <input type="hidden" name="ProductName" value="@item.SubCategoryname" />
+                                            <input type="hidden" name="Qty" value="1" />
+                                            <input type="hidden" name="Price" value="0" />
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="icon icon-shopping-cart-simple"></i>
+                                                Add to Cart
+                                            </button>
+                                        </form>
+                                        <form method="post" asp-page="/productlist" asp-page-handler="AddToWishlist" class="d-inline-block">
+                                            <input type="hidden" name="SkuCode" value="@item.Categoryimage" />
+                                            <input type="hidden" name="ProductName" value="@item.SubCategoryname" />
+                                            <input type="hidden" name="buynow" value="false" />
+                                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                                <i class="icon icon-heart"></i>
+                                                Add to Wishlist
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

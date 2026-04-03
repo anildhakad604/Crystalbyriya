@@ -2,7 +2,8 @@ using CrystalByRiya.Models;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace CrystalByRiya.Pages
@@ -28,23 +29,38 @@ namespace CrystalByRiya.Pages
         }
 
         public async Task<IActionResult> OnPostAsync()
-        { try
+        {
+            try
             {
                 if (!ModelState.IsValid)
                 {
                     return Page();
                 }
 
-                await _context.TblContactUs.AddAsync(contactus);
+                // Set creation date
+                contactus.Id = 0; // Let database generate ID
 
+                await _context.TblContactUs.AddAsync(contactus);
                 await _context.SaveChangesAsync();
 
-                return RedirectToPage("/Index");
-            }
-            catch (Exception ex) { 
+                // Add success message
+                TempData["SuccessMessage"] = "Thank you for contacting us! We will get back to you soon.";
+
+                // Clear form fields
+                contactus = new ContactUs();
+
                 return Page();
             }
-
+            catch (DbUpdateException dbEx)
+            {
+                ModelState.AddModelError("", "Database error: Unable to save your message. Please try again.");
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "An error occurred while sending your message. Please try again.");
+                return Page();
+            }
         }
 
     }

@@ -11,8 +11,6 @@
         public string ParentCode { get; set; }
         public DateTime AddedOn { get; set; }
         public int CategoryId { get; set; }
-        public int SubCategoryId { get; set; }
         public string Url { get; set; }
-        public string SubCategoryname { get; set; }
     }
 }
