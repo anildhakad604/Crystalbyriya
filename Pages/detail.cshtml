@@ -238,22 +238,31 @@
                                 @Model.Products?.ProductName
                             </h2>
 
-                            <!-- STATIC PART (UNCHANGED) -->
+                            @{
+                                var publishedReviews = Model.Reviews?.Where(r => r.IsApproved == true).ToList() ?? new List<TblReviews>();
+                                var reviewCount = publishedReviews.Count;
+                                var avgRating = reviewCount > 0 ? publishedReviews.Average(r => r.Rating) : 0;
+                            }
+
                             <div class="product-info-meta">
                                 <div class="rating">
                                     <div class="d-flex gap-4">
-                                        @for (int i = 0; i < 5; i++)
+                                        @for (int i = 1; i <= 5; i++)
                                         {
                                             <svg width="14" height="14">
-                                                <path d="M14 5.4091L8.913 5.07466L6.99721 0.261719L5.08143 5.07466L0 5.4091L3.89741 8.7184L2.61849 13.7384L6.99721 10.9707L11.376 13.7384L10.097 8.7184L14 5.4091Z" fill="#EF9122"></path>
+                                                <path d="M14 5.4091L8.913 5.07466L6.99721 0.261719L5.08143 5.07466L0 5.4091L3.89741 8.7184L2.61849 13.7384L6.99721 10.9707L11.376 13.7384L10.097 8.7184L14 5.4091Z"
+                                                      fill="@(i <= Math.Round(avgRating) ? "#EF9122" : "#DDDDDD")"></path>
                                             </svg>
                                         }
                                     </div>
+
                                     <div class="reviews text-main">
-                                        (@Model.Reviews?.Count() ?? 0 review)
+                                        (@reviewCount @(reviewCount == 1 ? "review" : "reviews"))
                                     </div>
                                 </div>
                             </div>
+
+
 
                             <!-- PRICE -->
                             <div class="tf-product-heading">
