@@ -150,7 +150,7 @@
                                             </div>
                                         </form>
                                     </td>
-                                    <td class="cart_total h6">
+                                    <td class="cart_total h6 each-subtotal-price">
                                         &#8377;@itemTotal.ToString("F2")
                                     </td>
                                     <td class="cart_remove link" data-cart-title="Remove">
@@ -261,7 +261,7 @@
                         </div>
                         <h5 class="total-order d-flex justify-content-between align-items-center">
                             <span>Total</span>
-                                <span class="total each-total-price">&#8377;@Model.Total.ToString("F2")</span>
+                            <span class="total each-total-price" id="cart-grand-total">&#8377;@Model.Total.ToString("F2")</span>
                         </h5>
                         <div class="list-ver">
                             <a asp-page="/checkout" class="tf-btn w-100 animate-btn">
@@ -279,6 +279,44 @@
         </div>
     </div>
 </div>
+<script>
+    (function () {
+        function parseMoney(text) {
+            if (!text) return 0;
+            var cleaned = text.replace(/[^\d.]/g, "");
+            var value = parseFloat(cleaned);
+            return isNaN(value) ? 0 : value;
+        }
+
+        function refreshCartGrandTotal() {
+            var subtotal = parseMoney(document.querySelector(".box-order-summary .subtotal .total")?.textContent);
+            var discountText = document.querySelector(".box-order-summary .discount .total")?.textContent || "";
+            var shippingText = document.querySelector(".box-order-summary .ship .price")?.textContent || "";
+
+            var discount = parseMoney(discountText);
+            var shipping = parseMoney(shippingText);
+            var total = subtotal - discount + shipping;
+
+            var totalEl = document.getElementById("cart-grand-total");
+            if (totalEl) {
+                totalEl.textContent = "₹" + total.toFixed(2);
+            }
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", refreshCartGrandTotal);
+        } else {
+            refreshCartGrandTotal();
+        }
+        setTimeout(refreshCartGrandTotal, 100);
+
+        document.addEventListener("click", function (e) {
+            if (e.target.closest(".cart-minus") || e.target.closest(".cart-plus")) {
+                setTimeout(refreshCartGrandTotal, 100);
+            }
+        });
+    })();
+</script>
     <script>
         function updateQty(btn, change) {
             let input = btn.parentElement.querySelector("input");

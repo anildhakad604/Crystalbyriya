@@ -151,14 +151,15 @@
         var priceText = $(this)
           .find(".each-subtotal-price")
           .text()
-          .replace("$", "")
+          .replace("₹", "")
+          .replace("Rs.", "")
+          .replace("Rs", "")
           .replace(",", "")
           .trim();
-        var price = parseFloat(priceText);
-        var quantity = parseInt($(this).find(".quantity-product").val(), 10);
+        var subtotal = parseFloat(priceText);
 
-        if (!isNaN(price) && !isNaN(quantity)) {
-          total += price * quantity;
+        if (!isNaN(subtotal)) {
+          total += subtotal;
         }
       });
 

@@ -2728,7 +2728,6 @@ C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\o
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\CrystalByRiya.pdb
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\CrystalByRiya.genruntimeconfig.cache
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\ref\CrystalByRiya.dll
-C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\compressed\i91il72kgp-25rdwoysdf.gz
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\compressed\zuc1aup17y-qdwtaol1yn.gz
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\bin\Debug\net9.0\CrystalByRiya.exe
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\.buildcheck\appsettings.Development.json
@@ -5603,3 +5602,4 @@ C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\.
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\.buildcheck5\runtimes\win\lib\net9.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\compressed\r8vmhctfr6-mo92ouiv91.gz
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\compressed\i91il72kgp-0t10b51efv.gz
