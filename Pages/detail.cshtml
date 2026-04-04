@@ -210,11 +210,11 @@
                                         @foreach (var item in Model.ImageGallery)
                                         {
                                             <div class="swiper-slide">
-                                                <a href="/images/products/@item.Url" target="_blank" class="item">
+                                                <a href="/images/products/@item.Productid" target="_blank" class="item">
                                                     <img class="tf-image-zoom lazyload"
-                                                         data-zoom="/images/products/@item.Url"
-                                                         data-src="/images/products/@item.Url"
-                                                         src="/images/products/@item.Url"
+                                                         data-zoom="/images/products/@item.Productid"
+                                                         data-src="/images/products/@item.Productid"
+                                                         src="/images/products/@item.Productid"
                                                          alt="@item.AltText">
                                                 </a>
                                             </div>
