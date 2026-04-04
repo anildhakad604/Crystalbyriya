@@ -35,9 +35,6 @@ namespace CrystalByRiya.Pages
         {
             try
             {
-                var productID = HttpContext.Session.GetString("productid");
-                var quantity = HttpContext.Session.GetInt32("quantity");
-                var childsku = HttpContext.Session.GetString("childsku");
                 // Get the current URL
                 Currenturl = HttpContext.Request.GetDisplayUrl();
                 var useremail = HttpContext.Session.GetString("UserEmail");
@@ -95,18 +92,6 @@ namespace CrystalByRiya.Pages
                 }
                 // If user is not logged in, keep session cart as is (or empty)
                 // No database query needed for logged-out users
-                if (!string.IsNullOrEmpty(productID) && quantity.HasValue)
-                {
-                    // Find the item in the cart based on ProductID
-                    var cartItem = Carts.FirstOrDefault(i => i.ProductId == productID);
-
-                    if (cartItem != null)
-                    {
-                        // Update the quantity and SKU code
-                        cartItem.Qty = quantity.Value;
-                    }
-                }
-
                 var now = DateTime.Now;
                 AvailableCoupons = await _context.CouponCodes
                     .AsNoTracking()
@@ -246,49 +231,83 @@ namespace CrystalByRiya.Pages
         }
 
 
-        public async Task<IActionResult> OnPostUpdateQuantity(string productID, int quantity, string size)
+        public async Task<IActionResult> OnPostUpdateQuantity(string productID, int delta, string size)
         {
             try
             {
+                var normalizedSize = string.IsNullOrWhiteSpace(size) ? "NA" : size.Trim();
+
                 // Get the cart from the session
                 var Usercart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                var userEmail = HttpContext.Session.GetString("UserEmail");
 
                 if (Usercart == null || !Usercart.Any())
                 {
-                    return BadRequest("Cart is empty.");
+                    if (!string.IsNullOrWhiteSpace(userEmail))
+                    {
+                        var dbCart = await _context.TblCarts
+                            .Where(c => c.UserEmail == userEmail)
+                            .ToListAsync();
+
+                        Usercart = dbCart.Select(cart => new Item
+                        {
+                            ProductName = cart.ProductName,
+                            ProductId = cart.ProductId,
+                            Qty = cart.Qty,
+                            skucode = cart.ProductId,
+                            Price = cart.Price,
+                            Gst = cart.Gst,
+                            MaterialName = cart.material,
+                            Size = cart.size,
+                            Image = cart.Image,
+                            Addon = cart.addon
+                        }).ToList();
+
+                        SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Usercart);
+                    }
+                }
+
+                if (Usercart == null || !Usercart.Any())
+                {
+                    return RedirectToPage("Cart");
                 }
 
                 // Find the item in the session cart using ProductID and size
-                var cartItem = Usercart.FirstOrDefault(i => i.ProductId == productID && i.Size == size);
+                var cartItem = Usercart.FirstOrDefault(i =>
+                    i.ProductId == productID &&
+                    string.Equals(string.IsNullOrWhiteSpace(i.Size) ? "NA" : i.Size, normalizedSize, StringComparison.OrdinalIgnoreCase));
 
                 if (cartItem != null)
                 {
+                    var newQuantity = cartItem.Qty + delta;
+                    if (newQuantity < 1)
+                    {
+                        newQuantity = 1;
+                    }
+
                     // Update the quantity in the session cart
-                    cartItem.Qty = quantity;
+                    cartItem.Qty = newQuantity;
 
                     // Update the cart in the session
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Usercart);
-
-                    // Get the user's email from the session
-                    var userEmail = HttpContext.Session.GetString("UserEmail");
 
                     // Find the corresponding item in the TblCarts table
                     var dbCartItem = await _context.TblCarts.FirstOrDefaultAsync(c =>
                         c.UserEmail == userEmail &&
                         c.ProductId == productID &&
-                        c.size == size);
+                        (string.IsNullOrWhiteSpace(c.size) ? "NA" : c.size) == normalizedSize);
 
                     if (dbCartItem != null)
                     {
                         // Update the quantity in the database
-                        dbCartItem.Qty = quantity;
+                        dbCartItem.Qty = newQuantity;
 
                         // Save changes to the database
                         await _context.SaveChangesAsync();
                     }
 
                     // Redirect to the Cart page to prevent form re-submission issues
-                    return RedirectToPage("Cart");
+                    return RedirectToPage("cart");
                 }
                 else
                 {

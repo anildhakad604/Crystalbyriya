@@ -3114,6 +3114,13 @@ wwwroot\images\intention\3.png
 wwwroot\images\intention\4.png
 wwwroot\images\intention\5.png
 wwwroot\images\intention\6.png
+wwwroot\images\intention\img_68c014fa354a53.59542585.webp
+wwwroot\images\intention\img_68ef391c931dc6.10700418.webp
+wwwroot\images\intention\img_6900b397ba5091.84922554.webp
+wwwroot\images\intention\img_6926952c547740.54523850.webp
+wwwroot\images\intention\img_6926be6d82df32.52992969.webp
+wwwroot\images\intention\img_6936c280f1c732.53126732.webp
+wwwroot\images\intention\img_6936c29ef3fdb6.98571506.webp
 wwwroot\images\logo\favicon.svg
 wwwroot\images\logo\logo-2.svg
 wwwroot\images\logo\logo-3.svg
