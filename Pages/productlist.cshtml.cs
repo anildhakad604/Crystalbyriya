@@ -78,7 +78,33 @@ namespace CrystalByRiya.Pages
 
                 if (string.IsNullOrWhiteSpace(catname))
                 {
-                    ModelState.AddModelError(string.Empty, "Category not found");
+                    CurrentCategoryName = "Products";
+                    CurrentCategoryDescription = "Discover our exclusive collection of high-quality products.";
+                    Category = null;
+                    CategoryBanner = null;
+
+                    // Load all products when no category is specified
+                    var allProducts = await _context.TblProducts
+                        .AsNoTracking()
+                        .ToListAsync();
+
+                    // Convert to SearchFilter format
+                    PagedProducts = allProducts.Select(p => new SearchFilter
+                    {
+                        Skucode = p.SkuCode,
+                        Price = p.Price,
+                        Thumbnail = p.Thumbnail,
+                        ProductName = p.ProductName,
+                        ParentUrl = p.ParentUrl ?? p.ProductName.Replace(" ", "-").ToLower()
+                    }).ToList();
+
+                    // Apply pagination
+                    CurrentPage = currentPage;
+                    int skipCount = (CurrentPage - 1) * PageSize;
+                    TotalProductCount = PagedProducts.Count;
+                    TotalPages = (int)Math.Ceiling(TotalProductCount / (double)PageSize);
+                    PagedProducts = PagedProducts.Skip(skipCount).Take(PageSize).ToList();
+
                     return Page();
                 }
 
