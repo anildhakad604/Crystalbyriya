@@ -775,6 +775,15 @@ wwwroot\Admin\plugins\bootstrap\scss\_tables.scss
 wwwroot\Admin\plugins\bootstrap\scss\_tooltip.scss
 wwwroot\Admin\plugins\bootstrap\scss\_transitions.scss
 wwwroot\Admin\plugins\bootstrap\scss\_type.scss
+wwwroot\Admin\plugins\bootstrap\scss\_utilities.scss
+wwwroot\Admin\plugins\bootstrap\scss\_variables.scss
+wwwroot\Admin\plugins\c3\css\c3.min.css
+wwwroot\Admin\plugins\c3\js\c3.min.js
+wwwroot\Admin\plugins\chart.js\Chart.bundle.min.js
+wwwroot\Admin\plugins\chartist-plugin-tooltips\css\chartist-plugin-tooltip.css
+wwwroot\Admin\plugins\chartist-plugin-tooltips\js\chartist-plugin-tooltip.min.js
+wwwroot\Admin\plugins\chartist\css\chartist.min.css
+wwwroot\Admin\plugins\chartist\js\chartist.min.js
 wwwroot\Admin\plugins\chartjs-plugin-datalabels\chartjs-plugin-datalabels.min.js
 wwwroot\Admin\plugins\chartjs-plugin-streaming\chartjs-plugin-streaming.min.js
 wwwroot\Admin\plugins\circle-progress\circle-progress.min.js
@@ -2782,8 +2791,11 @@ wwwroot\images\banner\0.png
 wwwroot\images\banner\1 - Copy.png
 wwwroot\images\banner\1.jpg
 wwwroot\images\banner\1.png
+wwwroot\images\banner\1771564164_WhatsApp Image 2026-02-20 at 10.39.04 AM.webp
+wwwroot\images\banner\1771564193_WhatsApp Image 2026-02-20 at 10.39.04 AM (1).webp
 wwwroot\images\banner\2.jpg
 wwwroot\images\banner\ab.jpg
+wwwroot\images\banner\about1.webp
 wwwroot\images\banner\banner-1.jpg
 wwwroot\images\banner\banner-2.jpg
 wwwroot\images\banner\banner-3.jpg
@@ -2806,6 +2818,7 @@ wwwroot\images\banner\bannerV05.jpg
 wwwroot\images\banner\bg-parallax-1.jpg
 wwwroot\images\banner\bg-parallax-2.jpg
 wwwroot\images\banner\page-banner.jpg
+wwwroot\images\blog\1771564164_WhatsApp Image 2026-02-20 at 10.39.04 AM (1).webp
 wwwroot\images\blog\article-1.jpg
 wwwroot\images\blog\article-10.jpg
 wwwroot\images\blog\article-11.jpg
@@ -3101,6 +3114,13 @@ wwwroot\images\intention\3.png
 wwwroot\images\intention\4.png
 wwwroot\images\intention\5.png
 wwwroot\images\intention\6.png
+wwwroot\images\intention\img_68c014fa354a53.59542585.webp
+wwwroot\images\intention\img_68ef391c931dc6.10700418.webp
+wwwroot\images\intention\img_6900b397ba5091.84922554.webp
+wwwroot\images\intention\img_6926952c547740.54523850.webp
+wwwroot\images\intention\img_6926be6d82df32.52992969.webp
+wwwroot\images\intention\img_6936c280f1c732.53126732.webp
+wwwroot\images\intention\img_6936c29ef3fdb6.98571506.webp
 wwwroot\images\logo\favicon.svg
 wwwroot\images\logo\logo-2.svg
 wwwroot\images\logo\logo-3.svg
@@ -3131,6 +3151,13 @@ wwwroot\images\payment\visa-2.svg
 wwwroot\images\payment\visa-3.svg
 wwwroot\images\payment\visa-pay.svg
 wwwroot\images\payment\visa.png
+wwwroot\images\products\1764422977_Untitled design (33).webp
+wwwroot\images\products\1764510421_From KlickPin CF Angelite Pyramid - Angelic Connection & Harmony in 2025 _ Harmony Angelite Crystal therapy.webp
+wwwroot\images\products\1764569442_Untitled design (54).webp
+wwwroot\images\products\1764569855_Untitled design (56).webp
+wwwroot\images\products\1765198944_Untitled design (9) (1).webp
+wwwroot\images\products\1765198944_Untitled design (9) (2).webp
+wwwroot\images\products\1765198944_Untitled design (9).webp
 wwwroot\images\products\1765199005_Untitled design (8).webp
 wwwroot\images\products\1765199074_Untitled design (7).webp
 wwwroot\images\products\1765199135_Untitled design (6).webp
@@ -3916,33 +3943,6 @@ wwwroot\s\sora\v17\xMQOuFFYT72X5wkB_18qmnndmSe1mX-K.ttf
 wwwroot\s\sora\v17\xMQOuFFYT72X5wkB_18qmnndmSeMmX-K.ttf
 wwwroot\s\sora\v17\xMQOuFFYT72X5wkB_18qmnndmSfSmX-K.ttf
 wwwroot\s\sora\v17\xMQOuFFYT72X5wkB_18qmnndmSfSnn-K.ttf
-wwwroot\Admin\plugins\chartist\js\chartist.min.js
-wwwroot\Admin\plugins\chartist\css\chartist.min.css
-wwwroot\Admin\plugins\chartist-plugin-tooltips\js\chartist-plugin-tooltip.min.js
-wwwroot\Admin\plugins\chartist-plugin-tooltips\css\chartist-plugin-tooltip.css
-wwwroot\Admin\plugins\chart.js\Chart.bundle.min.js
-wwwroot\Admin\plugins\c3\js\c3.min.js
-wwwroot\Admin\plugins\c3\css\c3.min.css
-wwwroot\Admin\plugins\bootstrap\scss\_variables.scss
-wwwroot\Admin\plugins\bootstrap\scss\_utilities.scss
-wwwroot\images\products\1765198944_Untitled design (9).webp
-wwwroot\images\products\1765198944_Untitled design (9) (1).webp
-wwwroot\images\products\1765198944_Untitled design (9) (2).webp
-wwwroot\images\products\1764422977_Untitled design (33).webp
-wwwroot\images\products\1764569855_Untitled design (56).webp
-wwwroot\images\products\1764569442_Untitled design (54).webp
-wwwroot\images\products\1764510421_From KlickPin CF Angelite Pyramid - Angelic Connection & Harmony in 2025 _ Harmony Angelite Crystal therapy.webp
-wwwroot\images\banner\about1.webp
-wwwroot\images\banner\1771564164_WhatsApp Image 2026-02-20 at 10.39.04 AM.webp
-wwwroot\images\banner\1771564193_WhatsApp Image 2026-02-20 at 10.39.04 AM (1).webp
-wwwroot\images\blog\1771564164_WhatsApp Image 2026-02-20 at 10.39.04 AM (1).webp
-wwwroot\images\intention\img_6936c29ef3fdb6.98571506.webp
-wwwroot\images\intention\img_6936c280f1c732.53126732.webp
-wwwroot\images\intention\img_6926be6d82df32.52992969.webp
-wwwroot\images\intention\img_6926952c547740.54523850.webp
-wwwroot\images\intention\img_68ef391c931dc6.10700418.webp
-wwwroot\images\intention\img_6900b397ba5091.84922554.webp
-wwwroot\images\intention\img_68c014fa354a53.59542585.webp
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\wwwroot\js\zoom.js
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\wwwroot\js\wow.min.js
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\wwwroot\js\swiper-bundle.min.js
