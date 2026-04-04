@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CrystalByRiya")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a3580d6545a3a2403472eb650062921a8d31257")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39f558531d0fb47d47caef52935deb9b3063913d")]
 [assembly: System.Reflection.AssemblyProductAttribute("CrystalByRiya")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CrystalByRiya")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

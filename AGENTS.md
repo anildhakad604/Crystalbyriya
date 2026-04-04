@@ -1,6 +1,6 @@
 # AGENTS.md - CrystalByRiya Project Guide
 
-Purpose: this file is the working guide for anyone editing this repository. It is based on the code that is actually present in the project as of April 3, 2026, not just the intended architecture.
+Purpose: this file is the working guide for anyone editing this repository. It is based on the code that is actually present in the project as of April 4, 2026, not just the intended architecture.
 
 Read this file before making changes.
 
@@ -26,8 +26,8 @@ It contains:
 
 | Area | Count |
 |------|-------|
-| Customer page files (`Pages/`, `.cshtml` + `.cshtml.cs` pairs) | 55 files (28 pairs + statics) |
-| Admin page files (`Areas/Admin/Pages/`) | 200+ files across 24 subdirectories |
+| Customer page files (`Pages/`, `.cshtml` + `.cshtml.cs` pairs) | 55 top-level files under `Pages/` |
+| Admin page files (`Areas/Admin/Pages/`) | 227 files across 24 subdirectories |
 | API controllers (`Api/`) | 15 |
 | MVC controllers (`Controllers/`) | 2 (`HomeController.cs`, `ReturnController.cs`) |
 | Service/helper classes (`class/`) | 17 |
@@ -35,6 +35,8 @@ It contains:
 | StoredProcedure result classes (`StoredProcedure/`) | 4 |
 | ViewComponents | 1 (`ProductsViewComponent.cs` registered as `"Category"`) |
 | Helpers | 1 (`SessionHelper.cs`) |
+
+The category ViewComponent also has its Razor view under `Pages/Components/Category/Category.cshtml(.cs)`. That folder is easy to miss because it sits outside the usual `Pages/Shared/Components/` convention.
 
 ---
 
@@ -59,10 +61,10 @@ Verified from `CrystalByRiya.csproj` and source:
 
 **Build status:**
 
-- `dotnet build` succeeds as of April 3, 2026
+- `dotnet build` succeeds as of April 4, 2026
 - Build emits many nullable/analyzer warnings
 - Known `MimeKit` 4.12.0 vulnerability warning (`NU1902`)
-- `using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;` is imported in `myaccount.cshtml.cs` but not needed — leftover
+- `using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;` is imported in `myaccount.cshtml.cs` but not needed; it is a leftover import
 
 ---
 
@@ -97,6 +99,7 @@ builder.Services.AddCors(...)                  // AllowAnyOrigin / AllowAnyHeade
 
 ```
 UseExceptionHandler("/Error")   [non-dev only]
+UseHsts()                       [non-dev only]
 UseDeveloperExceptionPage()     [dev only]
 UseHttpsRedirection()
 UseResponseCompression()
@@ -192,9 +195,9 @@ Admin login is in `Pages/adminlogin.cshtml.cs`.
   - If user logged in AND session cart has items → reload from `TblCarts` (DB always wins)
   - If user not logged in → keep session cart as-is
   - Loads active `CouponCodes` for display
-  - Calls `CalculateTotals()` — shipping is ₹80 if subtotal < ₹3000, else free
+  - Calls `CalculateTotals()` — shipping is calculated after coupon discount, and is ₹80 if the discounted subtotal is below ₹3000, else free
 - `OnPostCouponCode(string coupon_code)` — validates coupon, sets `AppliedCoupon` + `Discount` in session
-- `OnPostUpdateQuantity(string productID, int quantity, string size)` — updates both session and `TblCarts`
+- `OnPostUpdateQuantity(string productID, int delta, string size)` — increments/decrements quantity, clamps the minimum to 1, and updates both session and `TblCarts`
 - `OnGetDelete(string id, string size, string addon, string material)` — removes from `TblCarts` AND session; must match all four fields exactly
 
 **Known cart edge cases:**
@@ -237,6 +240,7 @@ Admin login is in `Pages/adminlogin.cshtml.cs`.
   5. Manually assembles PhonePe payload (base64 + SHA256 + `X-VERIFY` header)
   6. Posts to `https://api.phonepe.com/apis/hermes/pg/v1/pay`
   7. Redirects browser to PhonePe payment URL
+  8. `OnGetVerifyPaymentAsync` calls `PhonePePaymentService.VerifyPaymentAsync(...)`, but that is separate from the manual payment initiation path
 
 **PhonePe credentials (hardcoded in `class/PhonePeCredientials.cs`):**
 
@@ -266,12 +270,12 @@ Admin login is in `Pages/adminlogin.cshtml.cs`.
 
 **Shipping thresholds (hardcoded in both checkout and cart):**
 
-- Subtotal < ₹3000 → ₹80 shipping
-- Subtotal ≥ ₹3000 → free shipping
+- Effective subtotal after coupon discount below ₹3000 → ₹80 shipping
+- Effective subtotal after coupon discount at or above ₹3000 → free shipping
 
 **Cart vs checkout subtotal mismatch:** the two pages calculate totals independently; totals can differ unless logic is aligned.
 
-**Country/state data:** hardcoded dictionary in `checkout.cshtml.cs` covering 18 countries with their states.
+**Country/state data:** hardcoded dictionary in `checkout.cshtml.cs` for India only, with a fixed list of Indian states and union territories.
 
 ---
 
@@ -288,6 +292,7 @@ Admin login is in `Pages/adminlogin.cshtml.cs`.
 - Called in `_Layout.cshtml` as `@await Component.InvokeAsync("Category")`
 - Fetches all `TblCategory` rows
 - Passes `ChildViewModel` (which holds `List<TblCategory>`) to view `"Category"`
+- The Razor view for that component lives in `Pages/Components/Category/Category.cshtml`
 - `ChildViewModel` is in `Models/ViewModel/ChildViewModel.cs`; only contains `Categories` property (no `CategoryBanners` despite earlier docs)
 - Navigation renders via the three-column-menu CSS class: `.three-column-menu`
 
@@ -362,16 +367,20 @@ Use this structure when adding code.
 | `class/` | Business logic, DTO-like classes, services |
 | `Helpers/` | Session helper extensions (`SessionHelper.cs`) |
 | `ViewComponents/` | Razor view components (`ProductsViewComponent.cs`) |
+| `Pages/Components/` | Razor view files for the category ViewComponent (`Pages/Components/Category/`) |
+| `Pages/Components/NewFolder/` | Empty placeholder folder tracked in the project file |
 | `wwwroot/` | Static assets |
+| `wwwroot/ProductImage/` | Empty/tracked placeholder folder in the project file |
 | `Scripts/` | Empty / utility scripts folder |
 | `NewFolder/` | Empty placeholder folder |
 
 ### Important Layout and Shared Files
 
-- `Pages/Shared/_Layout.cshtml` — customer layout (2760 lines, contains DB + session logic)
+- `Pages/Shared/_Layout.cshtml` — customer layout (1418 lines, contains DB + session logic)
 - `Pages/Shared/_Layout.cshtml.css` — scoped CSS for layout
 - `Pages/Shared/_ValidationScriptsPartial.cshtml`
 - `Areas/Admin/Shared/_Layout.cshtml` — admin layout
+- `Pages/Components/Category/Category.cshtml(.cs)` — category ViewComponent view pair
 - `Pages/_ViewImports.cshtml`
 - `Pages/_ViewStart.cshtml`
 - `Areas/Admin/_ViewStart.cshtml`
@@ -709,9 +718,9 @@ Areas/Admin/Pages/
 
 ### 8.3 Storefront UI Notes
 
-- `_Layout.cshtml` is 2760 lines and stateful — treat carefully
+- `_Layout.cshtml` is 1418 lines and stateful — treat carefully
 - `Pages/productlist.cshtml` renders the category banner inside the page-title hero area; CSS lives in `wwwroot/css/styles.css`
-- `Pages/cart.cshtml` delete link must use a class distinct from `.remove` (which `main.js` intercepts)
+- `Pages/cart.cshtml` delete link must use a class distinct from `.remove` (which `main.js` intercepts); the current page uses `cart_remove`, which is the safe pattern to follow
 - Before touching cart/wishlist remove buttons, read `wwwroot/js/main.js`
 - The mobile toolbar "Account" link goes to `/adminlogin` — this appears to be a bug/leftover that should route to `/myaccount`
 - Quick-view modal in `_Layout.cshtml` still has placeholder/hardcoded product images (not dynamic)
@@ -762,6 +771,7 @@ This project does not follow one clean architectural style. Optimize for safe, l
 - Business logic lives in page models AND in services under `class/`
 - `AddToCartItems` is a scoped service but acts like a page model helper
 - Direct `HttpClient` creation in `checkout.cshtml.cs` (not `IHttpClientFactory`)
+- `CartModel.OnPostUpdateQuantity` uses `delta`, not an absolute quantity value; the UI increments and decrements from the current value
 - Mixed naming conventions (`TblXxx` vs simplified)
 - Mixed namespace conventions (`CrystalByRiya.*`, `Astaberry.Helpers`, `Viraj.ViewComponents`)
 - Broad try/catch blocks with swallowed exceptions
@@ -769,6 +779,8 @@ This project does not follow one clean architectural style. Optimize for safe, l
 - Registration welcome email code is commented out in `myaccount.cshtml.cs`
 - `Production()` method in `checkout.cshtml.cs` is dead code (hardcoded placeholder strings)
 - Duplicate `ChildskuCode` class in both `cart.cshtml.cs` and `AddToCartItems.cs`
+- `checkout.cshtml.cs` only exposes India as a country choice; the state list is hardcoded for India only
+- Shipping is calculated after coupon discount in both cart and checkout when a coupon is active
 
 **When contributing:**
 
@@ -804,6 +816,7 @@ This project does not follow one clean architectural style. Optimize for safe, l
 - Manually edit EF migration history unless explicitly required
 - Reuse the `.remove` CSS class on cart page delete links
 - Assume the `ChildskuCode` class in `cart.cshtml.cs` and the one in `AddToCartItems.cs` are the same type
+- Assume checkout has a multi-country selector; it is hardcoded to India only
 
 ---
 
@@ -833,6 +846,7 @@ This project does not follow one clean architectural style. Optimize for safe, l
 | `MimeKit` 4.12.0 known vulnerability (`NU1902`) | `CrystalByRiya.csproj` |
 | Shipping threshold hardcoded independently in cart AND checkout | `cart.cshtml.cs`, `checkout.cshtml.cs` |
 | Subtotal formula not shared between cart and checkout | `cart.cshtml.cs`, `checkout.cshtml.cs` |
+| Placeholder folders tracked in the project file (`Pages/Components/NewFolder`, `wwwroot/ProductImage`) | `CrystalByRiya.csproj` |
 
 ---
 
@@ -880,6 +894,7 @@ dotnet ef migrations remove
 | `Pages/dashboard.cshtml.cs` | Customer dashboard, logout |
 | `Pages/productlist.cshtml.cs` | Product listing with banners |
 | `Pages/detail.cshtml.cs` | Product detail page |
+| `Pages/Components/Category/Category.cshtml(.cs)` | Razor view used by the category ViewComponent |
 | `Pages/Index1.cshtml.cs` | Legacy PhonePe demo (treat as legacy) |
 | `class/AddToCartItems.cs` | Cart + buy-now add helper |
 | `class/AddtoWishlist.cs` | Wishlist add helper |
