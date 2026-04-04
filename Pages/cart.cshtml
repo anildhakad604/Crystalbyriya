@@ -132,19 +132,17 @@
                                         <form method="post" asp-page="/cart" asp-page-handler="UpdateQuantity">
                                             @Html.AntiForgeryToken()
                                             <input type="hidden" name="productID" value="@item.ProductId" />
-                                            <input type="hidden" name="size" value="@item.Size" />
+                                            <input type="hidden" name="size" value="@(string.IsNullOrWhiteSpace(item.Size) ? "NA" : item.Size)" />
                                             <div class="wg-quantity">
-                                                <button class="btn-quantity minus-quantity" type="button"
-                                                            onclick="updateQty(this, -1)">
+                                                <button class="btn-quantity cart-minus" type="submit" name="delta" value="-1">
                                                     <i class="icon-minus fs-14"></i>
                                                 </button>
                                                 <input class="quantity-product"
                                                            type="number"
-                                                           name="quantity"
                                                            value="@item.Qty"
+                                                           readonly
                                                            min="1" max="999" required />
-                                                <button class="btn-quantity plus-quantity" type="button"
-                                                            onclick="updateQty(this, 1)">
+                                                <button class="btn-quantity cart-plus" type="submit" name="delta" value="1">
                                                     <i class="icon-plus fs-14"></i>
                                                 </button>
                                             </div>
@@ -310,26 +308,5 @@
         }
         setTimeout(refreshCartGrandTotal, 100);
 
-        document.addEventListener("click", function (e) {
-            if (e.target.closest(".cart-minus") || e.target.closest(".cart-plus")) {
-                setTimeout(refreshCartGrandTotal, 100);
-            }
-        });
     })();
 </script>
-    <script>
-        function updateQty(btn, change) {
-            let input = btn.parentElement.querySelector("input");
-            let value = parseInt(input.value) || 1;
-
-            value += change;
-            if (value < 1) value = 1;
-
-            input.value = value;
-
-            // Auto-submit form with small delay to ensure the value is set
-            setTimeout(() => {
-                btn.closest("form").submit();
-            }, 100);
-        }
-    </script>
