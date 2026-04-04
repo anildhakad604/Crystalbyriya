@@ -240,6 +240,11 @@ namespace CrystalByRiya.Pages
 
         private async Task SaveOrderDetails(string orderId, string email, bool isBuyNow)
         {
+            if (await _context.TblCustomerOrderDetails.AnyAsync(x => x.OrderCode == orderId))
+            {
+                return;
+            }
+
             if (isBuyNow)
             {
                 foreach (var item in childskuCodes)

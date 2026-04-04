@@ -711,6 +711,9 @@ namespace CrystalByRiya.Pages
             PhonePeCredientials.OrderId = order_id;
             HttpContext.Session.SetString("PhonePeTransactionId", order_id);
             HttpContext.Session.SetString("PreGeneratedOrderId", order_id); // Store for thank you page
+
+            await SavePendingOrderDetails(order_id, email, isBuyNow);
+
             Random rnd = new Random();
             int newMerchantId = rnd.Next(111111, 999999);
             string NewMid = "UM" + newMerchantId; // Use or remove as per requirement
@@ -853,6 +856,56 @@ namespace CrystalByRiya.Pages
             return orderId;
         }
 
+        private async Task SavePendingOrderDetails(string orderId, string email, bool isBuyNow)
+        {
+            if (isBuyNow)
+            {
+                foreach (var item in childskuCodes)
+                {
+                    var orderDetail = new TblCustomerOrderDetails
+                    {
+                        OrderCode = orderId,
+                        SkuCode = item.SKUCode ?? "NA",
+                        Qty = item.Quantity,
+                        Price = item.Price,
+                        Status = "Pending",
+                        Gst = item.Gst,
+                        Material = item.Material ?? "NA",
+                        Size = item.Size ?? "NA",
+                        ProductId = item.ProductID ?? "NA",
+                        AddOn = item.Addon ?? "NA",
+                        Email = email ?? "NA"
+                    };
+
+                    await _context.TblCustomerOrderDetails.AddAsync(orderDetail);
+                }
+            }
+            else
+            {
+                foreach (var item in Carts)
+                {
+                    var orderDetail = new TblCustomerOrderDetails
+                    {
+                        OrderCode = orderId,
+                        SkuCode = item.skucode ?? "NA",
+                        Qty = item.Qty,
+                        Price = item.Price,
+                        Status = "Pending",
+                        Gst = item.Gst,
+                        Material = item.MaterialName ?? "NA",
+                        Size = item.Size ?? "NA",
+                        ProductId = item.ProductId ?? "NA",
+                        AddOn = item.Addon ?? "NA",
+                        Email = email ?? "NA"
+                    };
+
+                    await _context.TblCustomerOrderDetails.AddAsync(orderDetail);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
         private static string Sha256Hash(string value)
         {
             using (var sha256 = System.Security.Cryptography.SHA256.Create())
@@ -903,4 +956,3 @@ namespace CrystalByRiya.Pages
     }
 
 }
-
