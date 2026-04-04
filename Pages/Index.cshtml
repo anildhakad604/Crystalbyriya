@@ -443,6 +443,9 @@
 <!-- Gallery -->
 <section class="flat-spacing pt-0">
     <div class="container">
+        @{
+            var instagramProfileUrl = "https://www.instagram.com/drastrocrystals";
+        }
         <div class="sect-title text-center wow fadeInUp">
             <h2 class="h1 title mb-16">Follow Us On Instagram</h2>
             <h6>
@@ -465,7 +468,7 @@
                                             <img class="lazyload" src="@(string.IsNullOrEmpty(item.InstagramUrl) ? "/images/gallery/default.jpg" : "/images/gallery/" + item.InstagramUrl)" data-src="@(string.IsNullOrEmpty(item.InstagramUrl) ? "/images/gallery/default.jpg" : "/images/gallery/" + item.InstagramUrl)"
                                 alt="Image">
                             </div>
-                                        <a href="@(string.IsNullOrEmpty(item.InstagramUrl) ? "https://www.instagram.com/drastrocrystals" : item.InstagramUrl)" target="_blank" class="box-icon hover-tooltip">
+                                        <a href="@instagramProfileUrl" target="_blank" class="box-icon hover-tooltip">
                                 <span class="icon icon-instagram-logo"></span>
                                 <span class="tooltip">View on Instagram</span>
                             </a>

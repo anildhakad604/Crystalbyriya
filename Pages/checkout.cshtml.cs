@@ -616,7 +616,6 @@ namespace CrystalByRiya.Pages
 
             double subtotal = 0;
             double shipping = 0;
-            double Total = 0;
             bool isBuyNow = HttpContext.Session.GetString("isBuyNow") == "True";
             var Discount = HttpContext.Session.GetInt32("Discount");
             var checkvalue = HttpContext.Session.GetString("AppliedCoupon");
@@ -708,7 +707,7 @@ namespace CrystalByRiya.Pages
             double integerAmount = Convert.ToDouble(Math.Round(amount, 2) * 100);
             
             // Generate proper Order ID using stored procedure before payment
-            string order_id = await GenerateOrderIdForPayment(email, comment, paymentMethod);
+            string order_id = await GenerateOrderIdForPayment(email, comment, paymentMethod, Total);
             PhonePeCredientials.OrderId = order_id;
             HttpContext.Session.SetString("PhonePeTransactionId", order_id);
             HttpContext.Session.SetString("PreGeneratedOrderId", order_id); // Store for thank you page
@@ -717,17 +716,17 @@ namespace CrystalByRiya.Pages
             string NewMid = "UM" + newMerchantId; // Use or remove as per requirement
 
             var data = new Dictionary<string, object>
-{
-    { "merchantId", PhonePeCredientials.Merchantid },
-    { "merchantTransactionId", PhonePeCredientials.OrderId },
-    { "merchantUserId", "Muid" + PhonePeCredientials.OrderId },
-    { "amount", integerAmount.ToString() },
-    { "redirectUrl", PhonePeCredientials.RedirectUrl },
-    { "redirectMode", "REDIRECT" },
-    { "callbackUrl", PhonePeCredientials.CallbackUrl },
-    { "mobileNumber", Phone },
-    { "paymentInstrument", new Dictionary<string, string> { { "type", "PAY_PAGE" } } }
-};
+            {
+                { "merchantId", PhonePeCredientials.Merchantid },
+                { "merchantTransactionId", PhonePeCredientials.OrderId },
+                { "merchantUserId", "Muid" + PhonePeCredientials.OrderId },
+                { "amount", integerAmount.ToString() },
+                { "redirectUrl", PhonePeCredientials.RedirectUrl },
+                { "redirectMode", "REDIRECT" },
+                { "callbackUrl", PhonePeCredientials.CallbackUrl },
+                { "mobileNumber", Phone },
+                { "paymentInstrument", new Dictionary<string, string> { { "type", "PAY_PAGE" } } }
+            };
 
             var encode = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data)));
             var stringToHash = encode + "/pg/v1/pay" + PhonePeCredientials.SaltKey;
@@ -789,12 +788,11 @@ namespace CrystalByRiya.Pages
             }
         }
 
-        private async Task<string> GenerateOrderIdForPayment(string email, string comment, string paymentMethod)
+        private async Task<string> GenerateOrderIdForPayment(string email, string comment, string paymentMethod, double totalAmount)
         {
             var date = DateTime.Now;
             var couponCodeValue = HttpContext.Session.GetInt32("Discount") ?? 0; // Get discount as integer
             var status = "PENDING";
-            var totalAmount = (decimal)(Total);
             var paymentFrom = paymentMethod;
             var paymentStatus = "PENDING";
             var orderNotes = comment ?? "NA";
@@ -905,5 +903,4 @@ namespace CrystalByRiya.Pages
     }
 
 }
-
 

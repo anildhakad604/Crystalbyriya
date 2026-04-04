@@ -2792,6 +2792,7 @@ wwwroot\images\banner\1 - Copy.png
 wwwroot\images\banner\1.jpg
 wwwroot\images\banner\1.png
 wwwroot\images\banner\1771564164_WhatsApp Image 2026-02-20 at 10.39.04 AM.webp
+wwwroot\images\banner\1771564193_WhatsApp Image 2026-02-20 at 10.39.04 AM (1).webp
 wwwroot\images\banner\2.jpg
 wwwroot\images\banner\ab.jpg
 wwwroot\images\banner\about1.webp
@@ -2817,6 +2818,7 @@ wwwroot\images\banner\bannerV05.jpg
 wwwroot\images\banner\bg-parallax-1.jpg
 wwwroot\images\banner\bg-parallax-2.jpg
 wwwroot\images\banner\page-banner.jpg
+wwwroot\images\blog\1771564164_WhatsApp Image 2026-02-20 at 10.39.04 AM (1).webp
 wwwroot\images\blog\article-1.jpg
 wwwroot\images\blog\article-10.jpg
 wwwroot\images\blog\article-11.jpg
