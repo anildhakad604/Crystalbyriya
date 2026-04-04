@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CrystalByRiya")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20430fde0826b270092aaa7cf80768921cc69ad8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7084c1581d43fc01aabf7e42d0e4d17d0144b431")]
 [assembly: System.Reflection.AssemblyProductAttribute("CrystalByRiya")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CrystalByRiya")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

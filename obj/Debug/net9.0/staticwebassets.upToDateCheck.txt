@@ -2791,8 +2791,10 @@ wwwroot\images\banner\0.png
 wwwroot\images\banner\1 - Copy.png
 wwwroot\images\banner\1.jpg
 wwwroot\images\banner\1.png
+wwwroot\images\banner\1771564164_WhatsApp Image 2026-02-20 at 10.39.04 AM.webp
 wwwroot\images\banner\2.jpg
 wwwroot\images\banner\ab.jpg
+wwwroot\images\banner\about1.webp
 wwwroot\images\banner\banner-1.jpg
 wwwroot\images\banner\banner-2.jpg
 wwwroot\images\banner\banner-3.jpg
