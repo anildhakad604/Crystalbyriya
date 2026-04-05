@@ -323,7 +323,7 @@
 
                             <li class="d-none d-md-flex">
 
-                                <a class="nav-icon-item link" asp-page="/SearchResult" data-bs-toggle="modal">
+                                <a class="nav-icon-item link" href="#search" data-bs-toggle="modal">
 
                                     <i class="icon icon-magnifying-glass"></i>
 
@@ -1141,7 +1141,7 @@
 
     <!-- Search -->
 
-    @* <div class="modal modalCentered fade modal-search" id="search">
+    <div class="modal modalCentered fade modal-search" id="search">
 
         <div class="modal-dialog modal-dialog-centered">
 
@@ -1167,33 +1167,33 @@
 
                     <ul class="quick-link-list">
 
-                        <li><a href="shop-default.html" class="link-item text-main h6 link">Graphic tees</a></li>
+                        <li><a asp-page="/SearchResult" asp-route-name="crystal bracelet" class="link-item text-main h6 link">Crystal Bracelets</a></li>
 
-                        <li><a href="shop-default.html" class="link-item text-main h6 link">Plain t-shirts</a></li>
+                        <li><a asp-page="/SearchResult" asp-route-name="healing crystal" class="link-item text-main h6 link">Healing Crystals</a></li>
 
                         <li>
 
-                            <a href="shop-default.html" class="link-item text-main h6 link">Vintage t-shirts</a>
+                            <a asp-page="/SearchResult" asp-route-name="silver jewellery" class="link-item text-main h6 link">Silver Jewellery</a>
 
                         </li>
 
-                        <li><a href="shop-default.html" class="link-item text-main h6 link">Band tees</a></li>
+                        <li><a asp-page="/SearchResult" asp-route-name="gemstone" class="link-item text-main h6 link">Gemstones</a></li>
 
                         <li>
 
-                            <a href="shop-default.html" class="link-item text-main h6 link">Custom t-shirts</a>
-
-                        </li>
-
-                        <li>
-
-                            <a href="shop-default.html" class="link-item text-main h6 link">Oversized t-shirts</a>
+                            <a asp-page="/SearchResult" asp-route-name="pendant" class="link-item text-main h6 link">Pendants</a>
 
                         </li>
 
                         <li>
 
-                            <a href="shop-default.html" class="link-item text-main h6 link">Crew neck t-shirts</a>
+                            <a asp-page="/SearchResult" asp-route-name="ring" class="link-item text-main h6 link">Rings</a>
+
+                        </li>
+
+                        <li>
+
+                            <a asp-page="/SearchResult" asp-route-name="bracelet" class="link-item text-main h6 link">Bracelets</a>
 
                         </li>
 
@@ -1207,7 +1207,7 @@
 
                     <div class="view-history-list">
 
-                        <a class="item text-main link h6" href="shop-default.html">
+                        <a class="item text-main link h6" asp-page="/SearchResult" asp-route-name="crystal bracelet">
 
                             <span>High Visibility T Shirt Short Sleeve Reflective</span>
 
@@ -1215,7 +1215,7 @@
 
                         </a>
 
-                        <a class="item text-main link h6" href="shop-default.html">
+                        <a class="item text-main link h6" asp-page="/SearchResult" asp-route-name="healing crystal">
 
                             <span>Short sleeve round neck t-shirt</span>
 
@@ -1223,7 +1223,7 @@
 
                         </a>
 
-                        <a class="item text-main link h6" href="shop-default.html">
+                        <a class="item text-main link h6" asp-page="/SearchResult" asp-route-name="pendant">
 
                             <span>Fashionable oversized hoodie for women</span>
 
@@ -1231,7 +1231,7 @@
 
                         </a>
 
-                        <a class="item text-main link h6" href="shop-default.html">
+                        <a class="item text-main link h6" asp-page="/SearchResult" asp-route-name="ring">
 
                             <span>Queen fashion long sleeve shirt, basic t-shirt</span>
 
@@ -1239,7 +1239,7 @@
 
                         </a>
 
-                        <a class="item text-main link h6" href="shop-default.html">
+                        <a class="item text-main link h6" asp-page="/SearchResult" asp-route-name="bracelet">
 
                             <span>Lee Women's Wrinkle Free Relaxed Fit Straight Leg Pant</span>
 
@@ -1247,7 +1247,7 @@
 
                         </a>
 
-                        <a class="item text-main link h6" href="shop-default.html">
+                        <a class="item text-main link h6" asp-page="/SearchResult" asp-route-name="silver jewellery">
 
                             <span>Women's Summer Oversized T-Shirt Casual Office Fashion</span>
 
@@ -1259,175 +1259,11 @@
 
                 </div>
 
-                <div class="trend-product-wrap">
-
-                    <div class="heading">
-
-                        <h4 class="title flex-grow-1">Trending product</h4>
-
-                        <a href="#" class="tf-btn-line has-icon none-line fw-medium fs-18 text-normal">
-
-                            View All Product
-
-                            <i class="icon icon-caret-circle-right"></i>
-
-                        </a>
-
-                    </div>
-
-                    <div class="trend-product-inner">
-
-                        <div class="trend-product-list">
-
-                            <div class="trend-product-item">
-
-                                <div class="image">
-
-                                    <img class="lazyload" src="~/images/products/product-1.jpg"
-
-                                         data-src="~/images/products/product-1.jpg" alt="Product">
-
-                                </div>
-
-                                <div class="content">
-
-                                    <div class="text-small text-main-2 sub">T-shirt</div>
-
-                                    <h6 class="title">
-
-                                        <a href="product-detail.html" class="link">
-
-                                            Queen fashion long sleeve shirt,
-
-                                            basic t-shirt
-
-                                        </a>
-
-                                    </h6>
-
-                                    <div class="price-wrap">
-
-                                        <span class="price-old h6 fw-normal">$99,99</span>
-
-                                        <span class="price-new h6">$69,99</span>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="trend-product-item">
-
-                                <div class="image">
-
-                                    <img class="lazyload" src="~/images/products/product-7.jpg"
-
-                                         data-src="~/images/products/product-7.jpg" alt="Product">
-
-                                </div>
-
-                                <div class="content">
-
-                                    <div class="text-small text-main-2 sub">Hoodie</div>
-
-                                    <h6 class="title">
-
-                                        <a href="product-detail.html" class="link">Champion Reverse Weave Pullover</a>
-
-                                    </h6>
-
-                                    <div class="price-wrap">
-
-                                        <span class="price-old h6 fw-normal">$149.99</span>
-
-                                        <span class="price-new h6">$109.99</span>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="trend-product-list">
-
-                            <div class="trend-product-item">
-
-                                <div class="image">
-
-                                    <img class="lazyload" src="~/images/products/product-5.jpg"
-
-                                         data-src="~/images/products/product-5.jpg" alt="Product">
-
-                                </div>
-
-                                <div class="content">
-
-                                    <div class="text-small text-main-2 sub">Shorts</div>
-
-                                    <h6 class="title">
-
-                                        <a href="product-detail.html" class="link">Columbia PFG Fishing Shirt</a>
-
-                                    </h6>
-
-                                    <div class="price-wrap">
-
-                                        <span class="price-old h6 fw-normal">$109.99</span>
-
-                                        <span class="price-new h6">$74.99</span>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="trend-product-item">
-
-                                <div class="image">
-
-                                    <img class="lazyload" src="~/images/products/product-9.jpg"
-
-                                         data-src="~/images/products/product-9.jpg" alt="Product">
-
-                                </div>
-
-                                <div class="content">
-
-                                    <div class="text-small text-main-2 sub">Sweatshirt</div>
-
-                                    <h6 class="title">
-
-                                        <a href="product-detail.html" class="link">Puma Essentials Graphic Tee</a>
-
-                                    </h6>
-
-                                    <div class="price-wrap">
-
-                                        <span class="price-old h6 fw-normal">$69.99</span>
-
-                                        <span class="price-new h6">$49.99</span>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
 
         </div>
 
-    </div> *@
+    </div>
 
     <!-- /Search -->
 
