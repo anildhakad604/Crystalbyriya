@@ -7324,4 +7324,3 @@ C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\b
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\bin\_verify_forgetpw_redirect\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\bin\_verify_forgetpw_redirect\runtimes\win\lib\net9.0\System.Diagnostics.EventLog.dll
 C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\bin\_verify_forgetpw_redirect\runtimes\win\lib\net9.0\System.Security.Cryptography.Pkcs.dll
-C:\Users\AC\Desktop\AsharpInfoTech\CrystalByRiya_2\CrystalByRiya\CrystalByRiya\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
