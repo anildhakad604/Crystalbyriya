@@ -3114,6 +3114,10 @@ wwwroot\images\gallery\gallery-6.jpg
 wwwroot\images\gallery\gallery-7.jpg
 wwwroot\images\gallery\gallery-8.jpg
 wwwroot\images\gallery\gallery-9.jpg
+wwwroot\images\gallery\pexels-andreas-ebner-246992646-18586146.jpg
+wwwroot\images\gallery\pexels-k3ithvision-7107053.jpg
+wwwroot\images\gallery\pexels-leticiacurveloph-13630706.jpg
+wwwroot\images\gallery\pexels-mohammadabbasi-31432419.jpg
 wwwroot\images\intention\0.png
 wwwroot\images\intention\1.png
 wwwroot\images\intention\2.png

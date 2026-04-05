@@ -60,15 +60,16 @@ public class ForgetPasswordModel : PageModel
                 };
                 email.Body = builder.ToMessageBody();
 
-                using (var smtp = new MailKit.Net.Smtp.SmtpClient())
-                {
-                    smtp.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
-                    smtp.Authenticate("Info@crystalsbyriya.com", "iilq qomm ojyw zgdp");
-                    smtp.Send(email);
-                    smtp.Disconnect(true);
-                }
+                //using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                //{
+                //    smtp.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                //    smtp.Authenticate("Info@crystalsbyriya.com", "iilq qomm ojyw zgdp");
+                //    smtp.Send(email);
+                //    smtp.Disconnect(true);
+                //}
 
                 TempData["SuccessMessage"] = "Password reset link has been sent to your email.";
+                return RedirectToPage("/ResetPassword", new { token = token });
             }
             catch (Exception ex)
             {
@@ -80,6 +81,6 @@ public class ForgetPasswordModel : PageModel
             TempData["ErrorMessage"] = "No account found with this email.";
         }
 
-        return Page();
+        return RedirectToPage("/ForgetPassword");
     }
 }
