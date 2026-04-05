@@ -245,7 +245,7 @@
                             @foreach (var item in Model.IntentionsItem)
                             {
                                 <div class="swiper-slide">
-                                    <a asp-page="/productlist" asp-route-catname="@item.IntentionName.Replace(' ', '-')" class="widget-collection style-circle hover-img">
+                                    <a asp-page="/productlist" asp-route-catname="@item.IntentionImageUrl.Replace(' ', '-')" class="widget-collection style-circle hover-img">
                                         <div class="collection_image img-style">
                                     <img class="lazyload" src="~/images/intention/@item.IntentionImageUrl" data-src="./images/intention/@item.IntentionImageUrl"
                                                 alt="@item.IntentionName">
@@ -272,14 +272,14 @@
         <div class="row">
             <div class="col-xl-4">
                 <div class="box-image_V01 lookbook hover-img mb-xl-0 wow fadeInUp">
-                    <a class="box-image_image img-style" href="/productlist">
+                    <a class="box-image_image img-style" asp-page="/productlist">
                         <img src="images/section/1.jpg" data-src="images/section/1.jpg" alt="Image"
                              class="lazyload">
                     </a>
                     <div class="box-image_content">
-                        <a class="title text-display fw-semibold text-white link" href="/productlist">Lookbook</a>
+                        <a class="title text-display fw-semibold text-white link" asp-page="/productlist">Lookbook</a>
                         <span class="sub-title h5 text-white">@(Model.Products?.Count() ?? 0) product</span>
-                        <a class="tf-btn-line style-white" href="/productlist"> EXPLORE NOW </a>
+                        <a class="tf-btn-line style-white" asp-page="/productlist"> EXPLORE NOW </a>
                     </div>
                 </div>
             </div>

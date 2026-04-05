@@ -23,14 +23,16 @@ namespace CrystalByRiya.Pages
             _addToCartItems = addToCartItems;
         }
         public string Currenturl { get; private set; }
+        public string SearchTerm { get; private set; } = string.Empty;
         // Property to hold the selected product details
         [BindProperty]
         public List<Product> SelectedProduct { get; set; }
         public async Task<IActionResult> OnGetAsync(string name)
         {
             Currenturl = HttpContext.Request.GetDisplayUrl();
+            SearchTerm = name?.Trim() ?? string.Empty;
             
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(SearchTerm))
             {
                 // If no search term, return empty results
                 SelectedProduct = new List<Product>();
@@ -39,9 +41,9 @@ namespace CrystalByRiya.Pages
 
             // Find products matching the search term
             SelectedProduct = await _context.TblProducts
-                .Where(p => p.ProductName.Contains(name) || 
-                           p.ShortDescription.Contains(name) || 
-                           p.Tags.Contains(name))
+                .Where(p => p.ProductName.Contains(SearchTerm) || 
+                           p.ShortDescription.Contains(SearchTerm) || 
+                           p.Tags.Contains(SearchTerm))
                 .ToListAsync();
 
             // Display the SearchResult page with search results

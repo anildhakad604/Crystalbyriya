@@ -3,7 +3,7 @@
 
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
-    var searchTerm = Request.RouteValues["name"]?.ToString() ?? string.Empty;
+    var searchTerm = Model.SearchTerm;
     var resultCount = Model.SelectedProduct?.Count ?? 0;
 }
 

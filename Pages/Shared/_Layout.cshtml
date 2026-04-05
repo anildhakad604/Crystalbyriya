@@ -268,11 +268,11 @@
 
                                 </li>
 
-                                <li class="menu-item">
+                                @* <li class="menu-item">
 
                                     <a asp-page="productlist" class="item-link">Products</a>
 
-                                </li>
+                                </li> *@
 
                                 <li class="menu-item">
 
@@ -323,7 +323,7 @@
 
                             <li class="d-none d-md-flex">
 
-                                <a class="nav-icon-item link" href="#search" data-bs-toggle="modal">
+                                <a class="nav-icon-item link" asp-page="/SearchResult" data-bs-toggle="modal">
 
                                     <i class="icon icon-magnifying-glass"></i>
 
@@ -663,7 +663,7 @@
 
         <div class="toolbar-item">
 
-            <a asp-page="/viewcart">
+            <a asp-page="/cart">
 
                 <span class="toolbar-icon">
 
@@ -1141,7 +1141,7 @@
 
     <!-- Search -->
 
-    <div class="modal modalCentered fade modal-search" id="search">
+    @* <div class="modal modalCentered fade modal-search" id="search">
 
         <div class="modal-dialog modal-dialog-centered">
 
@@ -1427,13 +1427,13 @@
 
         </div>
 
-    </div>
+    </div> *@
 
     <!-- /Search -->
 
     <!-- Shopping Cart -->
 
-    <div class="offcanvas offcanvas-end popup-shopping-cart" id="shoppingCart">
+    @* <div class="offcanvas offcanvas-end popup-shopping-cart" id="shoppingCart">
 
         <div class="canvas-wrapper">
 
@@ -2013,7 +2013,7 @@
 
         </div>
 
-    </div>
+    </div> *@
 
     <!-- /Shopping Cart -->
 
