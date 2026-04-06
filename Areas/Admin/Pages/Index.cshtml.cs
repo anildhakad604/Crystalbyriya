@@ -39,12 +39,12 @@ namespace CrystalByRiya.Areas.Admin.Pages
             string time = cstTime.ToString("HH:mm");
             string logedin = HttpContext.Session.GetString("Login");
 
-            if (string.IsNullOrEmpty(logedin))
-            {
-                return RedirectToPage("Login");
-            }
-            else
-            {
+            //if (string.IsNullOrEmpty(logedin))
+            //{
+            //    return RedirectToPage("Login");
+            //}
+            //else
+            //{
 
 
                 //var empRecord = _context.SPTOTALSALES.FromSqlRaw("SPTOTALSALES").ToList();
@@ -67,7 +67,7 @@ namespace CrystalByRiya.Areas.Admin.Pages
       .SumAsync(order => order.TotalAmount), 2);
                 
                 return Page();
-            }
+            
 
         }
 

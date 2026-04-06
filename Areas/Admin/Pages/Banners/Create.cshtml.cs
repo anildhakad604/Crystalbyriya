@@ -17,11 +17,13 @@ namespace CrystalByRiya.Areas.Admin.Pages.Banners
         private readonly CrystalByRiya.Models.ApplicationDbContext _context;
         private readonly AwsCredentials _awsCredentials;
         private readonly AmazonS3 _amazonS3;
-        public CreateModel(CrystalByRiya.Models.ApplicationDbContext context,AwsCredentials awsCredentials,AmazonS3 amazonS3) 
+        IWebHostEnvironment _Env;
+        public CreateModel(CrystalByRiya.Models.ApplicationDbContext context,AwsCredentials awsCredentials,AmazonS3 amazonS3,IWebHostEnvironment Env) 
         {
             _context = context;
             _awsCredentials = awsCredentials;
             _amazonS3 = amazonS3;
+            _Env = Env;
         }
 
         public IActionResult OnGet()
@@ -36,23 +38,24 @@ namespace CrystalByRiya.Areas.Admin.Pages.Banners
         public async Task<IActionResult> OnPostAsync(IFormFile MobileImage, IFormFile DekstopImage)
         {
            
-            if (MobileImage != null)
-            {
-                Banners.MobileImageName = await _amazonS3.UploadFileToS3(MobileImage, _awsCredentials.BannerFoldername);
-            }
-            else
-            {
-                Banners.MobileImageName = "NA";
-            }
-            if (DekstopImage != null)
-            {
-                Banners.DesktopImageName = await _amazonS3.UploadFileToS3(DekstopImage, _awsCredentials.BannerFoldername);
-            }
-            else
-            {
-                Banners.DesktopImageName = "NA";
-            }
+            //if (MobileImage != null)
+            //{
+            //    Banners.MobileImageName = await _amazonS3.UploadFileToS3(MobileImage, _awsCredentials.BannerFoldername);
+            //}
+            //else
+            //{
+            //    Banners.MobileImageName = "NA";
+            //}
+            //if (DekstopImage != null)
+            //{
+            //    Banners.DesktopImageName = await _amazonS3.UploadFileToS3(DekstopImage, _awsCredentials.BannerFoldername);
+            //}
+            //else
+            //{
+            //    Banners.DesktopImageName = "NA";
+            //}
             
+
 
 
             _context.TblBanners.Add(Banners);
