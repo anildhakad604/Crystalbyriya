@@ -81,17 +81,44 @@ namespace CrystalByRiya.Pages
                 // Get the current URL
                 Currenturl = HttpContext.Request.GetDisplayUrl();
 
-                // Load wishlist items from session
-                WishlistItems = SessionHelper.GetObjectFromJson<List<AddToWishlist>>(HttpContext.Session, "wishlist");
+                // Load wishlist items from session first so existing client-side state stays intact.
+                WishlistItems = SessionHelper.GetObjectFromJson<List<AddToWishlist>>(HttpContext.Session, "wishlist") ?? new List<AddToWishlist>();
 
-                // If the wishlist is empty, create an empty list
-                if (WishlistItems == null)
+                // If the session has items, return those immediately.
+                if (WishlistItems.Any())
                 {
-                    WishlistItems = new List<AddToWishlist>();
+                    var sessionResult = JsonSerializer.Serialize(WishlistItems);
+                    return new ContentResult
+                    {
+                        Content = sessionResult,
+                        ContentType = "application/json",
+                        StatusCode = 200
+                    };
+                }
+
+                // Fall back to database wishlist for logged-in users if session is empty.
+                var userEmail = HttpContext.Session.GetString("UserEmail");
+                if (!string.IsNullOrWhiteSpace(userEmail))
+                {
+                    var dbWishlist = _context.TblWishlist
+                        .Where(w => w.UserEmail == userEmail)
+                        .Select(w => new AddToWishlist
+                        {
+                            ProductId = w.skucode ?? string.Empty,
+                            ProductName = w.ProductName ?? string.Empty,
+                            Price = w.Price ?? string.Empty,
+                            Image = w.Image ?? string.Empty
+                        })
+                        .ToList();
+
+                    WishlistItems = dbWishlist;
                 }
 
                 // Serialize the wishlist items to JSON format
                 var jsonResult = JsonSerializer.Serialize(WishlistItems);
+
+                // Keep session synchronized with whichever data source we used.
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "wishlist", WishlistItems);
 
                 // Return the JSON result as a ContentResult
                 return new ContentResult

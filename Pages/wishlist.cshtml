@@ -43,7 +43,7 @@
                                 <img class="lazyload img-product" src="~/images/products/@item.Image" data-src="/images/products/@item.Image" alt="@item.ProductName">
                                 <img class="lazyload img-hover" src="~/images/products/@item.Image" data-src="/images/products/@item.Image" alt="@item.ProductName">
                             </a>
-                            <a asp-page="/wishlist" asp-page-handler="DeleteFromWishlist" asp-route-id="@item.ProductId" class="remove box-icon">
+                            <a asp-page="/wishlist" asp-page-handler="DeleteFromWishlist" asp-route-id="@item.ProductId" class="wishlist-remove box-icon">
                                 <i class="icon icon-trash"></i>
                             </a>
                             <ul class="product-action_list">

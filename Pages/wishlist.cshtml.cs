@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
-
 using System.Collections.Generic;
 using Astaberry.Helpers;
 using CrystalByRiya.Models;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
 
 namespace CrystalByRiya.Pages
@@ -32,57 +29,37 @@ namespace CrystalByRiya.Pages
             // Get the current URL
             Currenturl = HttpContext.Request.GetDisplayUrl();
 
-            // Load wishlist items from session
-            WishlistItems = SessionHelper.GetObjectFromJson<List<AddToWishlist>>(HttpContext.Session, "wishlist");
+            // Load wishlist items from session first so guest wishlists stay intact.
+            var sessionWishlist = SessionHelper.GetObjectFromJson<List<AddToWishlist>>(HttpContext.Session, "wishlist") ?? new List<AddToWishlist>();
+            WishlistItems = sessionWishlist;
             checkwishlist = HttpContext.Session.GetString("WishlistStatus");
-          useremail=  HttpContext.Session.GetString("UserEmail");
-            if (useremail != null && WishlistItems == null)
+            useremail = HttpContext.Session.GetString("UserEmail");
+
+            if (!string.IsNullOrWhiteSpace(useremail))
             {
-                Tblwishlist = await _context.TblWishlist.Where(e => e.UserEmail == useremail).ToListAsync();
+                Tblwishlist = await _context.TblWishlist
+                    .Where(e => e.UserEmail == useremail)
+                    .Select(e => new AddingWishlist
+                    {
+                        skucode = e.skucode,
+                        ProductName = e.ProductName,
+                        Price = e.Price,
+                        Image = e.Image
+                    })
+                    .ToListAsync();
                 if (Tblwishlist != null && Tblwishlist.Any())
                 {
-
-
                     WishlistItems = Tblwishlist.Select(item => new AddToWishlist
                     {
-                        ProductId = item.skucode,
-                        ProductName = item.ProductName,
-                        Price = item.Price,
-                        Image = item.Image
+                        ProductId = item.skucode ?? string.Empty,
+                        ProductName = item.ProductName ?? string.Empty,
+                        Price = item.Price ?? string.Empty,
+                        Image = item.Image ?? string.Empty
                     }).ToList();
-
-
-
-                }
-                else
-                {
-                    WishlistItems = new List<AddToWishlist>();
                 }
             }
-            else
-            {
-                Tblwishlist = await _context.TblWishlist.Where(e => e.UserEmail == useremail).ToListAsync();
-                if (Tblwishlist != null && Tblwishlist.Any())
-                {
 
-
-                    WishlistItems = Tblwishlist.Select(item => new AddToWishlist
-                    {
-                        ProductId = item.skucode,
-                        ProductName = item.ProductName,
-                        Price = item.Price,
-                        Image = item.Image
-                    }).ToList();
-
-                   
-
-                }
-                else
-                {
-                    WishlistItems = new List<AddToWishlist>();
-                }
-            }
-           SessionHelper.SetObjectAsJson(HttpContext.Session, "wishlist",WishlistItems);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "wishlist", WishlistItems);
 
             return Page();
         }

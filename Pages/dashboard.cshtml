@@ -59,7 +59,7 @@
                             <a class="list-group-item list-group-item-action" id="list-orders-list" data-bs-toggle="list" href="#list-orders" role="tab" aria-controls="list-orders">
                                 <i class="lni lni-shopping-basket"></i> Your Orders
                             </a>
-                            <a class="list-group-item list-group-item-action" id="list-wishlist-list" data-bs-toggle="list" href="#list-wishlist" onclick="getWishlist()"  role="tab" aria-controls="list-wishlist"><i class="lni lni-heart"></i> Your Wishlist</a>
+                            <a class="list-group-item list-group-item-action" id="list-wishlist-list" data-bs-toggle="list" href="#list-wishlist" role="tab" aria-controls="list-wishlist"><i class="lni lni-heart"></i> Your Wishlist</a>
                             <a href="javascript:void(0)" class="list-group-item list-group-item-action" id="list-logout-list" onclick="document.getElementById('logoutForm').submit();" style="cursor: pointer;">
                                 <i class="lni lni-exit"></i> Logout
                             </a>
@@ -227,57 +227,48 @@
                                 <div class="wishlist-table-wrap">
                                     <div class="wishlist-table table-responsive">
                                         <table>
-                                            <thead>
-                                                <tr>
-                                                    <th class="pro-thumbnail"> </th>
-                                                    <th class="pro-name">Product</th>
-                                                    <th class="pro-stock-status">Stock Status</th>
-                                                    <th class="pro-price">Price</th>
-                                                    <th class="pro-action"> </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (Model.WishlistItems != null && Model.WishlistItems.Count > 0)
-                                                {
-                                                    foreach (var item in Model.WishlistItems)
-                                                    {
-                                                        <tr>
-                                                            <td class="pro-remove">
-                                                                <a href="javascript:void(0);" onclick="removeFromWishlist('@item.ProductId')">
-                                                                    <i class="lastudioicon-e-remove"></i>
-                                                                </a>
-                                                            </td>
-                                                            <td class="pro-thumbnail">
-                                                                <div class="pro-info">
-                                                                    <div class="pro-img">
-                                                                        <a href="#">
-                                                                            <img src="@item.Image" alt="product-thumb">
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="pro-name">
-                                                                <span class="ms-1">@item.ProductName</span>
-                                                            </td>
-                                                            <td class="pro-stock-status">
-                                                                
-                                                            </td>
-                                                            <td class="pro-price">&#8377;@item.Price</td>
-                                                            <td class="pro-action">
-                                                                <a class="btn-theme btn-black" href="#">Add to cart</a>
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <tr>
-                                                        <td colspan="6" class="text-center">
-                                                            Your wishlist is empty.
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </tbody>
+                                           <thead>
+    <tr>
+        <th class="pro-remove"> </th>
+        <th class="pro-thumbnail"> </th>
+        <th class="pro-name">Product</th>
+        <th class="pro-stock-status">Stock Status</th>
+        <th class="pro-price">Price</th>
+        <th class="pro-action"> </th>
+    </tr>
+</thead>
+<tbody>
+    @if (Model.WishlistItems != null && Model.WishlistItems.Count > 0)
+    {
+        foreach (var item in Model.WishlistItems)
+        {
+            <tr>
+                <td class="pro-remove">
+                    <a href="javascript:void(0);" onclick="removeFromWishlist('@item.ProductId')">
+                        <i class="lastudioicon-e-remove"></i>
+                    </a>
+                </td>
+                <td class="pro-thumbnail">
+                    <div class="pro-info">
+                        <div class="pro-img">
+                            <a href="#">
+                                <img src="/images/@item.Image" alt="product-thumb">
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td class="pro-name">
+                    <span class="ms-1">@item.ProductName</span>
+                </td>
+                <td class="pro-stock-status">In Stock</td>
+                <td class="pro-price">&#8377;@item.Price</td>
+                <td class="pro-action">
+                    <a class="btn-theme btn-black" href="#">Add to cart</a>
+                </td>
+            </tr>
+        }
+    }
+
                                         </table>
                                     </div>
                                 </div>
@@ -336,4 +327,114 @@
 
     </style>
 </main>
-<script src="https://djelgxoby50a9.cloudfront.net/assetsv2/js/DashboardPage.js"></script>
+<script>
+    (function () {
+        const wishlistTab = document.getElementById("list-wishlist-list");
+        let wishlistLoaded = false;
+
+        async function loadWishlist() {
+            try {
+                const response = await fetch("/dashboard?handler=Wishlist", {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to load wishlist.");
+                }
+
+                const data = await response.json();
+                const wishlistTableBody = document.querySelector("#list-wishlist .wishlist-table tbody");
+                if (!wishlistTableBody) {
+                    return;
+                }
+
+                let rows = "";
+                if (Array.isArray(data) && data.length > 0) {
+                    data.forEach((item) => {
+                        const productName = item.productName || item.ProductName || "";
+                        const productId = item.productId || item.ProductId || "";
+                        const image = item.image || item.Image || "";
+                        const price = item.price || item.Price || "";
+                        const productRouteName = productName.replace(/ /g, "-");
+                        const detailUrl = `/detail/${productId}/${productRouteName}`;
+
+                        rows += `
+                            <tr>
+                                <td class="pro-remove">
+                                    <a href="javascript:void(0);" onclick="removeFromWishlist('${productId}')">
+                                        <i class="lastudioicon-e-remove"></i>
+                                    </a>
+                                </td>
+                                <td class="pro-thumbnail">
+                                    <div class="pro-info">
+                                        <div class="pro-img">
+                                            <a href="${detailUrl}">
+                                                <img src="/images/${image}" alt="product-thumb">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="pro-name">
+                                    <span class="ms-1">${productName}</span>
+                                </td>
+                                <td class="pro-stock-status">In Stock</td>
+                                <td class="pro-price">&#8377;${price}</td>
+                                <td class="pro-action">
+                                    <a class="btn-theme btn-black" href="${detailUrl}">Add to cart</a>
+                                </td>
+                            </tr>`;
+                    });
+                } else {
+                    rows = `
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                Your wishlist is empty.
+                            </td>
+                        </tr>`;
+                }
+
+                wishlistTableBody.innerHTML = rows;
+                wishlistLoaded = true;
+            } catch (error) {
+                console.error("Error loading wishlist:", error);
+            }
+        }
+
+        window.getWishlist = function () {
+            if (!wishlistLoaded) {
+                loadWishlist();
+            }
+        };
+
+        window.removeFromWishlist = async function (productId) {
+            try {
+                const token = document.querySelector('#logoutForm input[name="__RequestVerificationToken"]')?.value || "";
+                const response = await fetch("/dashboard?handler=RemoveFromWishlist", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                        "RequestVerificationToken": token
+                    },
+                    body: new URLSearchParams({ productId: productId })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to remove wishlist item.");
+                }
+
+                wishlistLoaded = false;
+                loadWishlist();
+            } catch (error) {
+                console.error("Error removing item from wishlist:", error);
+            }
+        };
+
+        if (wishlistTab) {
+            wishlistTab.addEventListener("shown.bs.tab", function () {
+                loadWishlist();
+            });
+        }
+    })();
+</script>
