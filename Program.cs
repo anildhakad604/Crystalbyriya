@@ -110,6 +110,18 @@ app.UseAuthorization();
 
 app.UseSession();                     
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/Admin") &&
+        string.IsNullOrEmpty(context.Session.GetString("Login")))
+    {
+        context.Response.Redirect("/adminlogin");
+        return;
+    }
+
+    await next();
+});
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

@@ -63,6 +63,7 @@ namespace CrystalByRiya.Models
 
         public virtual DbSet<TblCustomerOrderDetails> TblCustomerOrderDetails { get; set; }
 
+        public virtual DbSet<TblAdmin> TblAdmin { get; set; }
         public virtual DbSet<AdminLogin> TblAdminLogin { get; set; }
         public virtual DbSet<MailCredentials> TblMailCredentials { get; set; }
 
