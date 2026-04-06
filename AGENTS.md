@@ -1,6 +1,6 @@
 # AGENTS.md - CrystalByRiya Project Guide
 
-Purpose: this file is the working guide for anyone editing this repository. It is based on the code that is actually present in the project as of April 4, 2026, not just the intended architecture.
+Purpose: this file is the working guide for anyone editing this repository. It is based on the code that is actually present in the project as of April 6, 2026, not just the intended architecture.
 
 Read this file before making changes.
 
@@ -61,7 +61,7 @@ Verified from `CrystalByRiya.csproj` and source:
 
 **Build status:**
 
-- `dotnet build` succeeds as of April 4, 2026
+- `dotnet build` succeeds when no running process is locking `bin\Debug\net9.0\CrystalByRiya.dll`
 - Build emits many nullable/analyzer warnings
 - Known `MimeKit` 4.12.0 vulnerability warning (`NU1902`)
 - `using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;` is imported in `myaccount.cshtml.cs` but not needed; it is a leftover import
@@ -158,8 +158,10 @@ Logout is session removal, implemented in `dashboard.cshtml.cs`.
 
 Admin login is in `Pages/adminlogin.cshtml.cs`.
 
-- Credentials checked against `TblEmployee` (via `Employee` DbSet)
-- On success, session key `Login` is set
+- Credentials are checked against `TblAdmin` using `EmailId` + `Password`
+- On success, session key `Login` is set to the admin email
+- `TblAdminLogin` still exists in the model, but the active page login does not use it
+- `TblEmployee` is still present for admin/staff data elsewhere in the app, but it is not the current admin-login source of truth
 - Admin access guarded by checking `HttpContext.Session.GetString("Login")` per-page
 - Admin layout also contains client-side redirect to `/adminlogin`
 
@@ -174,6 +176,8 @@ Admin login is in `Pages/adminlogin.cshtml.cs`.
 - `class/AddToCartItems.cs` — cart add/buy-now helper (namespace: `CrystalByRiya.@class`)
 - `class/AddtoWishlist.cs` — wishlist add helper
 - `class/AddToWishlists.cs` — wishlist DTO/model class (**do not confuse** the two)
+- `Pages/wishlist.cshtml(.cs)` — wishlist page that loads session data first, then falls back to `TblWishlist` for logged-in users using a projected query
+- `Pages/dashboard.cshtml(.cs)` — dashboard wishlist tab that serves wishlist data through `?handler=Wishlist` and removes items through `?handler=RemoveFromWishlist`
 
 **Session keys used:**
 
@@ -206,6 +210,7 @@ Admin login is in `Pages/adminlogin.cshtml.cs`.
 - `wwwroot/js/main.js` binds `.remove` class for mini-cart; if main cart rows reuse `.remove`, `OnGetDelete` is intercepted by JS and never fires
 - DB always overrides session for logged-in users on every `OnGet` → any session-only edits are lost on page refresh
 - `ChildskuCode` class is defined inline in `cart.cshtml.cs` (not shared with `AddToCartItems.cs` which has its own copy)
+- Wishlist remove buttons need their own class names or handler wiring; reusing `.remove` on wishlist/dashboard markup can get intercepted by shared JS and stop the Razor handler from firing
 
 **Add to cart (`AddToCartItems.cs`):**
 
@@ -310,6 +315,14 @@ Admin login is in `Pages/adminlogin.cshtml.cs`.
 - Mobile toolbar bottom bar links: Shop, Search, Account (links to `/adminlogin` ⚠️ should be customer account), Wishlist, Cart
 
 **Warning:** moving logic out of the layout must be done carefully — it is tightly coupled to session and DB.
+
+#### 3.6.4 Dashboard Wishlist Tab
+
+- `Pages/dashboard.cshtml` currently contains page-local JavaScript for the wishlist tab instead of relying on the external `DashboardPage.js` bundle for wishlist rendering
+- The wishlist tab calls `GET /dashboard?handler=Wishlist` and re-renders rows client-side
+- Remove actions post to `POST /dashboard?handler=RemoveFromWishlist`
+- The dashboard wishlist endpoint prefers session data first, then falls back to `TblWishlist` when the session is empty and `UserEmail` is present
+- Keep the anti-forgery token available to the dashboard script if the remove flow is changed
 
 ---
 
@@ -448,7 +461,8 @@ Areas/Admin/Pages/
 | `TblShippingDetails` | `TblShippingDetail` | shipping info |
 | `CouponCodes` | `CouponCodes` | coupons |
 | `TblCustomerOrderDetails` | `TblCustomerOrderDetails` | order line items |
-| `TblAdminLogin` | `AdminLogin` | (legacy?) |
+| `TblAdmin` | `TblAdmin` | active admin login source of truth (`EmailId` + `Password`) |
+| `TblAdminLogin` | `AdminLogin` | legacy/alternate admin login table, not used by the active login page |
 | `TblMailCredentials` | `MailCredentials` | SMTP credentials |
 | `TblIntentionMaster` | `IntentionMaster` | crystal intentions |
 | `TblCategoryBanner` | `CategoryBanner` | category banner images |
@@ -781,6 +795,7 @@ This project does not follow one clean architectural style. Optimize for safe, l
 - Duplicate `ChildskuCode` class in both `cart.cshtml.cs` and `AddToCartItems.cs`
 - `checkout.cshtml.cs` only exposes India as a country choice; the state list is hardcoded for India only
 - Shipping is calculated after coupon discount in both cart and checkout when a coupon is active
+- Wishlist behavior is split between a session-first page (`Pages/wishlist.cshtml`) and a dashboard AJAX tab (`Pages/dashboard.cshtml`); keep both in sync when changing wishlist storage or rendering
 
 **When contributing:**
 
@@ -804,6 +819,7 @@ This project does not follow one clean architectural style. Optimize for safe, l
 - Keep anti-forgery in mind for POST forms and AJAX
 - Verify with `dotnet build` after meaningful changes
 - Check whether a feature already has a legacy controller or alternate page-model path before refactoring only one half
+- For wishlist changes, inspect both `Pages/wishlist.cshtml(.cs)` and `Pages/dashboard.cshtml(.cs)` because they use different render paths for the same data
 
 ### Do Not
 
@@ -833,7 +849,7 @@ This project does not follow one clean architectural style. Optimize for safe, l
 | Exception middleware exists but not in pipeline | `class/ExceptionHandlingMiddleware.cs` |
 | Exception logging filter not wired globally | `class/ExceptionLoggingFilter.cs` |
 | Frontend layout contains DB access + session parsing | `Pages/Shared/_Layout.cshtml` |
-| Admin auth is session/manual only | `Pages/adminlogin.cshtml.cs` + all admin pages |
+| Admin auth is session/manual only, and the active login page reads `TblAdmin` | `Pages/adminlogin.cshtml.cs` + all admin pages |
 | `.remove` JS handler intercepts cart delete links | `wwwroot/js/main.js` |
 | `AddtoWishlist.cs` vs `AddToWishlists.cs` naming confusion | `class/` directory |
 | `ChildskuCode` class duplicated | `cart.cshtml.cs` and `AddToCartItems.cs` |
@@ -846,6 +862,7 @@ This project does not follow one clean architectural style. Optimize for safe, l
 | `MimeKit` 4.12.0 known vulnerability (`NU1902`) | `CrystalByRiya.csproj` |
 | Shipping threshold hardcoded independently in cart AND checkout | `cart.cshtml.cs`, `checkout.cshtml.cs` |
 | Subtotal formula not shared between cart and checkout | `cart.cshtml.cs`, `checkout.cshtml.cs` |
+| Wishlist is split between session-first listing and dashboard AJAX rendering | `Pages/wishlist.cshtml(.cs)`, `Pages/dashboard.cshtml(.cs)` |
 | Placeholder folders tracked in the project file (`Pages/Components/NewFolder`, `wwwroot/ProductImage`) | `CrystalByRiya.csproj` |
 
 ---
@@ -885,7 +902,7 @@ dotnet ef migrations remove
 | `Pages/_ViewImports.cshtml` | Global namespace imports |
 | `Pages/Index.cshtml(.cs)` | Homepage |
 | `Pages/myaccount.cshtml.cs` | Customer registration + login |
-| `Pages/adminlogin.cshtml.cs` | Admin login |
+| `Pages/adminlogin.cshtml.cs` | Admin login (`TblAdmin`, `EmailId` + `Password`) |
 | `Pages/ForgetPassword.cshtml.cs` | Password reset email/token request |
 | `Pages/ResetPassword.cshtml.cs` | Password reset completion |
 | `Pages/cart.cshtml.cs` | Cart display, coupon, delete, quantity update |
@@ -948,4 +965,4 @@ If you need to document or refactor:
 
 ---
 
-**Last verified against source:** April 3, 2026
+**Last verified against source:** April 6, 2026
