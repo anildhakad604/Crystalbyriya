@@ -11,6 +11,14 @@
     <Content Remove="wwwroot\assets\img\shop-by-intentions\**" />
     <EmbeddedResource Remove="wwwroot\assets\img\shop-by-intentions\**" />
     <None Remove="wwwroot\assets\img\shop-by-intentions\**" />
+    <Compile Remove="obj_temp\**\*" />
+    <Content Remove="obj_temp\**\*" />
+    <EmbeddedResource Remove="obj_temp\**\*" />
+    <None Remove="obj_temp\**\*" />
+    <Compile Remove="bin_temp\**\*" />
+    <Content Remove="bin_temp\**\*" />
+    <EmbeddedResource Remove="bin_temp\**\*" />
+    <None Remove="bin_temp\**\*" />
   </ItemGroup>
 
   <ItemGroup>

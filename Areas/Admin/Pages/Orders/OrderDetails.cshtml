@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model CrystalByRiya.Areas.Admin.Pages.Orders.OrderDetailsModel
 @functions {
     int i = 1;
@@ -31,119 +31,159 @@
     <div class="row">
         <div class="col-md-12">
             <h4 class="tittle-w3-agileits mb-12">
-                Order #@Model.OrderId.Orderid
-                Payment detail as on @Model.OrderId.Date
+                @if (Model.OrderId != null)
+                {
+                    <text>Order #@Model.OrderId.Orderid Payment detail as on @Model.OrderId.Date</text>
+                }
+                else
+                {
+                    <text>Order details</text>
+                }
             </h4>
-
         </div>
     </div>
+
+    @if (Model.DetailsNotFound)
+    {
+        <div class="alert alert-warning">
+            Order details were not found for this order id.
+        </div>
+    }
+
     <div class="row">
         <div class="col-md-4">
             <h4 class="tittle-w3-agileits mb-4">Billing</h4>
             <div class="address">
-                <p>
-                    @Model.BillingDetail.FullName &nbsp; @*  @Model.BillingDetail.LastName<br> *@
-                    @Model.BillingDetail.Apartment
-                    @Model.BillingDetail.Address<br />
-                    @Model.BillingDetail.City- @Model.BillingDetail.PinCode<br>
-                    @Model.BillingDetail.State<br />
-                    @Model.BillingDetail.Country
-                </p>
-                <p>
-                    <strong><i class="mdi mdi-email"></i></strong>
-                    <a href="mailto:@Model.BillingDetail.Emailid"> @Model.BillingDetail.Emailid</a>
-                </p>
-                <p><strong><i class="mdi mdi-cellphone-android"></i></strong> <a href="tel:@Model.BillingDetail.ContactNumber">@Model.BillingDetail.ContactNumber</a></p>
+                @if (Model.BillingDetail != null)
+                {
+                    <p>
+                        @Model.BillingDetail.FullName &nbsp;
+                        @Model.BillingDetail.Apartment
+                        @Model.BillingDetail.Address<br />
+                        @Model.BillingDetail.City- @Model.BillingDetail.PinCode<br>
+                        @Model.BillingDetail.State<br />
+                        @Model.BillingDetail.Country
+                    </p>
+                    <p>
+                        <strong><i class="mdi mdi-email"></i></strong>
+                        <a href="mailto:@Model.BillingDetail.Emailid"> @Model.BillingDetail.Emailid</a>
+                    </p>
+                    <p><strong><i class="mdi mdi-cellphone-android"></i></strong> <a href="tel:@Model.BillingDetail.ContactNumber">@Model.BillingDetail.ContactNumber</a></p>
+                }
+                else
+                {
+                    <p>No billing details available for this order.</p>
+                }
             </div>
         </div>
+
         <div class="col-md-4">
             <h4 class="tittle-w3-agileits mb-4">Shipping</h4>
             <div class="address">
-                <p>
-                    @Model.ShippingDetail.Name &nbsp;  @Model.ShippingDetail.LastName<br>
-                    @Model.ShippingDetail.Address<br />
-                    @Model.ShippingDetail.City- @Model.ShippingDetail.PinCode<br>
-                    @Model.ShippingDetail.State<br />
-                    @Model.ShippingDetail.Country
-                </p>
-                <p>
-                    <strong><i class="mdi mdi-email"></i></strong>
-                    <a href="mailto:@Model.ShippingDetail.Emailid"> @Model.ShippingDetail.Emailid</a>
-                </p>
-                <p><strong><i class="mdi mdi-cellphone-android"></i></strong> <a href="tel:@Model.ShippingDetail.ContactNumber">@Model.ShippingDetail.ContactNumber</a></p>
+                @if (Model.ShippingDetail != null)
+                {
+                    <p>
+                        @Model.ShippingDetail.Name &nbsp; @Model.ShippingDetail.LastName<br>
+                        @Model.ShippingDetail.Address<br />
+                        @Model.ShippingDetail.City- @Model.ShippingDetail.PinCode<br>
+                        @Model.ShippingDetail.State<br />
+                        @Model.ShippingDetail.Country
+                    </p>
+                    <p>
+                        <strong><i class="mdi mdi-email"></i></strong>
+                        <a href="mailto:@Model.ShippingDetail.Emailid"> @Model.ShippingDetail.Emailid</a>
+                    </p>
+                    <p><strong><i class="mdi mdi-cellphone-android"></i></strong> <a href="tel:@Model.ShippingDetail.ContactNumber">@Model.ShippingDetail.ContactNumber</a></p>
+                }
+                else
+                {
+                    <p>No shipping details available for this order.</p>
+                }
             </div>
         </div>
+
         <div class="col-md-4">
             <h4 class="tittle-w3-agileits mb-4">Status</h4>
-            <form asp-page-handler="Update" method="post">
-                <input type="hidden" value="@Model.OrderId.Orderid" name="orderid" />
-                <select class="form-control" name="Status"><option>Select</option><option>Pending</option><option>Completed</option><option>Dispatched</option></select><br />
-                <input type="submit" value="Update" class="btn btn-primary" />
-            </form>
+            @if (Model.OrderId != null)
+            {
+                <form asp-page-handler="Update" method="post">
+                    <input type="hidden" value="@Model.OrderId.Orderid" name="orderid" />
+                    <select class="form-control" name="Status">
+                        <option>Select</option>
+                        <option>Pending</option>
+                        <option>Completed</option>
+                        <option>Dispatched</option>
+                    </select><br />
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </form>
+            }
+            else
+            {
+                <p>Status cannot be updated because the order record is missing.</p>
+            }
         </div>
     </div>
 
     <hr />
     <div class="table-responsive">
         <table class="table table-bordered" align="center">
-            <tr><td><b> S No.</b></td><td><b> Product name</b></td><td><b> Product id</b></td><td><b>Childskucode</b></td><td><b>Gst(%)</b></td><td><b>Size</b></td><td><b>Material</b></td><td><b>AddOn</b></td><td><b>Price</b></td><td><b>Qty</b></td><td><b>Total</b></td></tr>
-            @foreach (var detail in Model.CustomerdetailsDTOs)
+            <tr>
+                <td><b>S No.</b></td>
+                <td><b>Product name</b></td>
+                <td><b>Product id</b></td>
+                <td><b>Childskucode</b></td>
+                <td><b>Gst(%)</b></td>
+                <td><b>Size</b></td>
+                <td><b>Material</b></td>
+                <td><b>AddOn</b></td>
+                <td><b>Price</b></td>
+                <td><b>Qty</b></td>
+                <td><b>Total</b></td>
+            </tr>
+
+            @if (Model.CustomerdetailsDTOs != null && Model.CustomerdetailsDTOs.Any())
             {
-                double total = Convert.ToDouble(detail.Qty * detail.Price);
-                totalamount += total;
-                TotalGST += detail.Gst;
+                foreach (var detail in Model.CustomerdetailsDTOs)
+                {
+                    double total = Convert.ToDouble(detail.Qty * detail.Price);
+                    totalamount += total;
+                    TotalGST += detail.Gst;
 
-                <tr>
-                    <td>
-                        @i
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => detail.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => detail.ProductId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => detail.SkuCode)
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => detail.Gst)</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => detail.Size)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => detail.Material)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => detail.AddOn)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => detail.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => detail.Qty)
-                    </td>
-
-                    <td>
-                        @total
-                    </td>
-                    <td>
-                        <form asp-page-handler="UpdateStatus" method="post">
-                            <input type="hidden" name="SkuCode" value="@detail.SkuCode" />
-                            <input type="hidden" value="@Model.OrderId.Orderid" name="orderId" />
-                            <select name="Status" class="form-control">
-                                <option>Select</option>
-                                <option>Pending</option>
-                                <option>Completed</option>
-                                <option>Dispatched</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary mt-2">Update</button>
-                        </form>
-                    </td>
-                </tr>
-                i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@Html.DisplayFor(modelItem => detail.ProductName)</td>
+                        <td>@Html.DisplayFor(modelItem => detail.ProductId)</td>
+                        <td>@Html.DisplayFor(modelItem => detail.SkuCode)</td>
+                        <td>@Html.DisplayFor(modelItem => detail.Gst)</td>
+                        <td>@Html.DisplayFor(modelItem => detail.Size)</td>
+                        <td>@Html.DisplayFor(modelItem => detail.Material)</td>
+                        <td>@Html.DisplayFor(modelItem => detail.AddOn)</td>
+                        <td>@Html.DisplayFor(modelItem => detail.Price)</td>
+                        <td>@Html.DisplayFor(modelItem => detail.Qty)</td>
+                        <td>@total</td>
+                        <td>
+                            <form asp-page-handler="UpdateStatus" method="post">
+                                <input type="hidden" name="SkuCode" value="@detail.SkuCode" />
+                                <input type="hidden" value="@Model.OrderId?.Orderid" name="orderId" />
+                                <select name="Status" class="form-control">
+                                    <option>Select</option>
+                                    <option>Pending</option>
+                                    <option>Completed</option>
+                                    <option>Dispatched</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary mt-2">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                    i++;
+                }
             }
-
-
+            else
+            {
+                <tr>
+                    <td colspan="12">No line items found for this order.</td>
+                </tr>
+            }
         </table>
 
         <table class="wc-order-totals text-right mr-5">
@@ -153,9 +193,9 @@
                     <td width="1%"></td>
                     <td class="total">
                         @{
-                            SubTotal = @totalamount - @TotalGST;
+                            SubTotal = totalamount - TotalGST;
                         }
-                        <span><bdi><span class="woocommerce-Price-currencySymbol"><i class="fa fa-rupee"></i> </span>@Model.SubTotal</bdi></span>
+                        <span><bdi><span class="woocommerce-Price-currencySymbol"><i class="fa fa-rupee"></i> </span>@SubTotal</bdi></span>
                     </td>
                 </tr>
                 <tr>
@@ -165,43 +205,44 @@
                         @{
                             GST = TotalGST;
                         }
-                        <span><bdi><span class="woocommerce-Price-currencySymbol"><i class="fa fa-rupee"></i> </span> 3%</bdi></span>
+                        <span><bdi><span class="woocommerce-Price-currencySymbol"><i class="fa fa-rupee"></i> </span>3%</bdi></span>
                     </td>
                 </tr>
                 <tr>
                     <td class="label">Shipping:</td>
                     <td width="1%"></td>
                     <td class="total align-right">
-
                         @{
                             if (totalamount >= 3000)
                             {
                                 Shipping = 0;
                             }
-                            else if (totalamount < 3000 && @Model.OrderId.PaymentFrom == "cod")
+                            else if (totalamount < 3000 && string.Equals(Model.OrderId?.PaymentFrom, "cod", StringComparison.OrdinalIgnoreCase))
                             {
                                 Shipping = 200;
                                 Model.Total -= 80;
                             }
-                            else{
+                            else
+                            {
                                 Shipping = 80;
                             }
                         }
                         <span><bdi style="text-align:right;"><span class="woocommerce-Price-currencySymbol"><i class="fa fa-rupee"></i> </span>@Shipping</bdi></span>
                     </td>
                 </tr>
-         
+
                 <tr>
                     <td class="label">After Discount:</td>
                     <td width="1%"></td>
                     <td class="total">
                         @{
-                            Discount = Convert.ToDouble(@Model.OrderId.CouponCodeapplied);
+                            Discount = Model.OrderId != null ? Convert.ToDouble(Model.OrderId.CouponCodeapplied) : 0;
                         }
                         <span><bdi><span class="woocommerce-Price-currencySymbol"><i class="fa fa-rupee"></i> </span>@Model.AfterDiscount</bdi></span>
                     </td>
                 </tr>
-                @if (@Model.OrderId.PaymentFrom == "COD")
+
+                @if (string.Equals(Model.OrderId?.PaymentFrom, "COD", StringComparison.OrdinalIgnoreCase))
                 {
                     codcharge = 42.37;
                     codchargesgst = 7.63;
@@ -209,7 +250,6 @@
                         <td class="label">COD:</td>
                         <td width="1%"></td>
                         <td class="total">
-
                             <span><bdi><span class="woocommerce-Price-currencySymbol"><i class="fa fa-rupee"></i> </span>@codcharge</bdi></span>
                         </td>
                     </tr>
@@ -218,7 +258,6 @@
                         <td class="label">COD GST:</td>
                         <td width="1%"></td>
                         <td class="total">
-
                             <span><bdi><span class="woocommerce-Price-currencySymbol"><i class="fa fa-rupee"></i> </span>@codchargesgst</bdi></span>
                         </td>
                     </tr>
@@ -237,13 +276,13 @@
                 </tr>
             </tbody>
         </table>
-
     </div>
 </div>
+
 <div class="outer-w3-agile mt-4">
     <h4 class="tittle-w3-agileits mb-3">Order Notes</h4>
     <div class="order-notes">
-        @if (!string.IsNullOrEmpty(Model.OrderId.OrderNotes))
+        @if (Model.OrderId != null && !string.IsNullOrEmpty(Model.OrderId.OrderNotes))
         {
             <p>@Model.OrderId.OrderNotes</p>
         }
@@ -253,8 +292,14 @@
         }
     </div>
 </div>
+
 <div>
-    <a asp-page="./PrintInvoice" asp-route-Orderid="@Model.OrderId.Orderid" asp-route-Email="@Model.OrderId.Emailid"><i class="fa fa-print"></i> Print Invoice</a> |
-    <a asp-page="./ShipRocket" asp-route-Orderid="@Model.OrderId.Orderid" asp-route-Email="@Model.OrderId.Emailid"><i class="fa fa-forward"></i> ShipRocket</a> |
+    @if (Model.OrderId != null)
+    {
+        <a asp-page="./PrintInvoice" asp-route-Orderid="@Model.OrderId.Orderid" asp-route-Email="@Model.OrderId.Emailid"><i class="fa fa-print"></i> Print Invoice</a>
+        <text> | </text>
+        <a asp-page="./ShipRocket" asp-route-Orderid="@Model.OrderId.Orderid" asp-route-Email="@Model.OrderId.Emailid"><i class="fa fa-forward"></i> ShipRocket</a>
+        <text> | </text>
+    }
     <a asp-page="./BillingDetails">Back to List</a>
 </div>

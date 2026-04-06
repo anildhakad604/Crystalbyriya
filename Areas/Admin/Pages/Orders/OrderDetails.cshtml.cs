@@ -17,8 +17,8 @@ namespace CrystalByRiya.Areas.Admin.Pages.Orders
         [BindProperty]
         public TblBillingDetail BillingDetail { get; set; }
         public TblCustomerOrderDetails CustomerOrderDetails { get; set; }
-              [BindProperty]
-        public List<CustomerdetailsDTO> CustomerdetailsDTOs { get; set; }
+        [BindProperty]
+        public List<CustomerdetailsDTO> CustomerdetailsDTOs { get; set; } = new();
         public List<Product> Products { get; set; }
         public TblOrderId OrderId { get; set; }
         public bool DetailsNotFound { get; set; }
@@ -58,6 +58,7 @@ namespace CrystalByRiya.Areas.Admin.Pages.Orders
                 return RedirectToPage("./BillingDetails");
             }
 
+            OrderId = await _context.TblOrderIds.FirstOrDefaultAsync(e => e.Orderid == orderid);
             ShippingDetail = await _context.TblShippingDetails
                 .FirstOrDefaultAsync(s => s.Orderid == orderid);
 
@@ -85,12 +86,13 @@ namespace CrystalByRiya.Areas.Admin.Pages.Orders
                                          }).ToListAsync();
 
 
-            if (CustomerdetailsDTOs != null && CustomerdetailsDTOs.Any())
+            if (CustomerdetailsDTOs.Any())
             {
                 SubTotal = (decimal)CustomerdetailsDTOs.Sum(i => (double)(i.Price * i.Qty));
                 if (check == "True")
                 {
-                    DiscountAmount = SubTotal * (decimal)discountvalue/100;
+                    var appliedDiscount = discountvalue ?? 0;
+                    DiscountAmount = SubTotal * appliedDiscount / 100;
                     // Calculate AfterDiscount
                     AfterDiscount = SubTotal - DiscountAmount;
 
@@ -114,11 +116,10 @@ namespace CrystalByRiya.Areas.Admin.Pages.Orders
             }
 
 
-            if (ShippingDetail == null && BillingDetail == null && CustomerOrderDetails==null)
+            if (OrderId == null || (ShippingDetail == null && BillingDetail == null && !CustomerdetailsDTOs.Any()))
             {
-                DetailsNotFound = true; ;
+                DetailsNotFound = true;
             }
-            OrderId = await _context.TblOrderIds.FirstOrDefaultAsync(e => e.Orderid == orderid);
 
             return Page();
         }
@@ -126,7 +127,10 @@ namespace CrystalByRiya.Areas.Admin.Pages.Orders
         {
             // Retrieve the Order by OrderId
             var order = await _context.TblOrderIds.FirstOrDefaultAsync(e=>e.Orderid==orderid);
-          
+            if (order == null)
+            {
+                return RedirectToPage("./BillingDetails");
+            }
 
             // Update status in the OrderId table
             order.Status = Status;
@@ -169,10 +173,10 @@ namespace CrystalByRiya.Areas.Admin.Pages.Orders
             // Retrieve the required properties using Select with explicit double casting
             var customerOrderDetail = await _context.TblCustomerOrderDetails
                 .Where(e => e.SkuCode == SkuCode && e.OrderCode==orderId).FirstOrDefaultAsync();
-               
-
-
-
+            if (customerOrderDetail == null)
+            {
+                return RedirectToPage("OrderDetails", new { orderid = orderId });
+            }
 
             customerOrderDetail.Status = Status;
 
@@ -180,7 +184,7 @@ namespace CrystalByRiya.Areas.Admin.Pages.Orders
                 await _context.SaveChangesAsync();
             
 
-            return RedirectToPage("OrderDetails");
+            return RedirectToPage("OrderDetails", new { orderid = orderId });
         }
 
 
